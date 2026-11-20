@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "summary": {
+    "inventory_packages": 0,
+    "successfully_checked": 0,
+    "unknown_due_to_api_errors": 0,
+    "advisory_matches": 0,
+    "note": "Initial empty snapshot. It is populated only after maintainers provide reviewed SBOM package/version records."
+  },
+  "packages": []
+}
