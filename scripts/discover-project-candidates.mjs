@@ -11,6 +11,28 @@ const existingQueue = await readFile(outputUrl, "utf8").then(JSON.parse).catch((
 const now = new Date().toISOString();
 const headers = { "User-Agent": "global-open-source-hub-discovery/1.0", Accept: "application/json" };
 const ghToken = process.env.GITHUB_TOKEN;
+const configuredInstances = Array.isArray(config.additional_public_instances) ? config.additional_public_instances : [];
+const allowedRepositoryHosts = new Set(["github.com", "gitlab.com", "codeberg.org", "gitea.com"]);
+function validatePublicOrigin(value) {
+  const u = new URL(value);
+  if (u.protocol !== "https:" || u.username || u.password || u.port || u.pathname !== "/" || u.search || u.hash) throw new Error("Instance URL must be a plain HTTPS origin.");
+  const host = u.hostname.toLowerCase();
+  if (!host.includes(".") || host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local") || /^\d{1,3}(\.\d{1,3}){3}$/.test(host) || host.includes(":")) throw new Error("Instance hostname is not an acceptable public DNS hostname.");
+  return { origin: u.origin, host };
+}
+const validatedInstances = [];
+for (const instance of configuredInstances) {
+  try {
+    if (instance.enabled !== true || !["Forgejo", "Gitea"].includes(instance.platform)) continue;
+    const web = validatePublicOrigin(instance.web_base_url);
+    const api = new URL(instance.api_base_url);
+    if (api.protocol !== "https:" || api.origin !== web.origin || api.username || api.password || api.search || api.hash || !api.pathname.replace(/\/$/, "").endsWith("/api/v1")) throw new Error("API URL must use the same HTTPS origin and end in /api/v1.");
+    allowedRepositoryHosts.add(web.host);
+    validatedInstances.push({ ...instance, host: web.host, api_base_url: api.origin + api.pathname.replace(/\/$/, "") });
+  } catch (error) {
+    console.warn("Skipping invalid configured instance: " + error.message);
+  }
+}
 if (ghToken) headers.Authorization = `Bearer ${ghToken}`;
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -18,7 +40,7 @@ const clean = value => typeof value === "string" ? value.replace(/[\u0000-\u001f
 function canonical(raw) {
   try {
     const u = new URL(raw);
-    if (u.protocol !== "https:" || !["github.com", "gitlab.com", "codeberg.org", "gitea.com"].includes(u.hostname.toLowerCase())) return null;
+    if (u.protocol !== "https:" || !allowedRepositoryHosts.has(u.hostname.toLowerCase())) return null;
     u.hostname = u.hostname.toLowerCase();
     u.pathname = u.pathname.replace(/\\.git$/i, "").replace(/\\/+$/, "");
     u.search = ""; u.hash = "";
@@ -40,7 +62,7 @@ const seen = new Set(candidates.map(c => c.candidate_key));
 let fetched = 0, added = 0, errors = 0;
 
 async function getJson(url, providerHeaders = headers) {
-  const response = await fetch(url, { headers: providerHeaders, signal: AbortSignal.timeout(15000) });
+  const response = await fetch(url, { headers: providerHeaders, signal: AbortSignal.timeout(15000), redirect: "error" });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
 }
@@ -110,6 +132,27 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
     await sleep(config.limits.minimum_delay_between_queries_ms || 2100);
   }
 }
+
+for (const instance of validatedInstances) {
+  const provider = instance.platform + ":" + instance.host;
+  const terms = Array.isArray(instance.queries) ? instance.queries.slice(0, 30) : [];
+  for (const term of terms) {
+    try {
+      const url = new URL(instance.api_base_url + "/repos/search");
+      url.searchParams.set("q", term);
+      url.searchParams.set("limit", "30");
+      const data = await getJson(url);
+      const items = Array.isArray(data.data) ? data.data : Array.isArray(data) ? data : [];
+      for (const r of items) add(provider, r.id, r.full_name, r.html_url, r.description, r.topics, r.stars_count ?? r.stars, r.updated_at ?? r.last_activity_at, null);
+      fetched += items.length;
+    } catch (error) {
+      errors++;
+      console.warn("Discovery source failed (" + provider + ", query " + term + "): " + error.message);
+    }
+    await sleep(config.limits.minimum_delay_between_queries_ms || 2100);
+  }
+}
+
 const output = {
   schema_version: 1,
   generated_at: now,
