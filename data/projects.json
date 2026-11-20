@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "description": "Curated starter catalogue. Repository links are the source of truth; verify current features, releases and licenses there.",
+  "projects": [
+    {
+      "name": "Open Source AI Tools",
+      "category": "AI & Machine Learning",
+      "icon": "AI",
+      "description": "Community directory for discovering AI tools across writing, coding, research, image, video, audio and productivity.",
+      "repository": "https://github.com/shanraku/open-source-ai-tools",
+      "tags": [
+        "AI discovery",
+        "directory",
+        "community"
+      ],
+      "order": 1
+    },
+    {
+      "name": "ModelAtlas",
+      "category": "AI & Machine Learning",
+      "icon": "M",
+      "description": "Source-first catalogue for hosted AI APIs, open model ecosystems, local inference runtimes and model metadata.",
+      "repository": "https://github.com/shanraku/open-source-ai-api-directory",
+      "tags": [
+        "AI models",
+        "APIs",
+        "inference"
+      ],
+      "order": 2
+    },
+    {
+      "name": "Free Developer Utilities",
+      "category": "Developer Tools",
+      "icon": "DEV",
+      "description": "Privacy-first browser utilities for encoding, UUIDs, hashing, timestamps, text conversion and secure random bytes.",
+      "repository": "https://github.com/shanraku/free-developer-utilities",
+      "tags": [
+        "utilities",
+        "privacy",
+        "browser"
+      ],
+      "order": 3
+    },
+    {
+      "name": "JSON Toolkit",
+      "category": "Developer Tools",
+      "icon": "{}",
+      "description": "Format, validate and minify JSON locally in the browser, with a practical guide to free domains and hosting.",
+      "repository": "https://github.com/shanraku/json-formatter-validator",
+      "tags": [
+        "JSON",
+        "formatter",
+        "validator"
+      ],
+      "order": 4
+    },
+    {
+      "name": "Markdown Studio",
+      "category": "Developer Tools",
+      "icon": "MD",
+      "description": "A browser-based Markdown editor with live preview, word count, copy and download features.",
+      "repository": "https://github.com/shanraku/markdown-editor-preview",
+      "tags": [
+        "Markdown",
+        "editor",
+        "writing"
+      ],
+      "order": 5
+    },
+    {
+      "name": "Color Palette Generator",
+      "category": "Design & Accessibility",
+      "icon": "色",
+      "description": "Create and edit palettes, inspect colour values, preview gradients, check contrast and export CSS or JSON.",
+      "repository": "https://github.com/shanraku/color-palette-generator",
+      "tags": [
+        "colour",
+        "design",
+        "contrast"
+      ],
+      "order": 6
+    },
+    {
+      "name": "Password Security Toolkit",
+      "category": "Security & Privacy",
+      "icon": "🔐",
+      "description": "Browser-based password and passphrase tools, approximate strength guidance and optional privacy-preserving breach lookup, plus Bitcoin safety education.",
+      "repository": "https://github.com/shanraku/password-security-toolkit",
+      "tags": [
+        "passwords",
+        "security",
+        "Bitcoin safety"
+      ],
+      "order": 7
+    }
+  ]
+}
