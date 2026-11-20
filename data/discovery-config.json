@@ -218,6 +218,24 @@
       "science",
       "CLI",
       "API client"
+    ],
+    "RubyGems": [
+      "developer tools",
+      "security",
+      "privacy",
+      "database",
+      "web framework",
+      "accessibility",
+      "data visualization",
+      "AI",
+      "machine learning",
+      "automation",
+      "cryptography",
+      "Bitcoin",
+      "education",
+      "science",
+      "CLI",
+      "API client"
     ]
   },
   "limits": {
@@ -238,7 +256,8 @@
     "Only public repository metadata is collected. Private repositories and private user data are out of scope.",
     "Candidates are never added to the public catalogue automatically.",
     "Additional Forgejo/Gitea instances are opt-in. Add only reviewed public hosts with HTTPS origin URLs and public unauthenticated API access. Empty by default.",
-    "npm and crates.io are searched through their official public registry APIs. Only records with an approved public source-repository URL are converted into repository candidates; registry-only packages without a source link are not added to this queue."
+    "npm and crates.io are searched through their official public registry APIs. Only records with an approved public source-repository URL are converted into repository candidates; registry-only packages without a source link are not added to this queue.",
+    "RubyGems discovery uses the public search API and only queues explicit metadata.source_code_uri values on approved repository hosts. NuGet and Maven Central remain planned until a reliable source-repository enrichment step is designed."
   ],
   "additional_public_instances": []
 }
