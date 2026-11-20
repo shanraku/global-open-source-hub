@@ -159,9 +159,9 @@
     ]
   },
   "limits": {
-    "max_results_per_query": 300,
+    "max_results_per_query": 500,
     "github_per_page": 100,
-    "github_max_pages_per_query": 3,
+    "github_max_pages_per_query": 5,
     "minimum_delay_between_queries_ms": 1300,
     "review_required": true,
     "public_repositories_only": true,
