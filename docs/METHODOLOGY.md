@@ -34,3 +34,8 @@ The workflow uses the repository-scoped `GITHUB_TOKEN` and requests only public 
 ## Project health snapshots
 
 The workflow `.github/workflows/monitor-project-health.yml` checks listed public GitHub repositories after a successful metadata refresh, and can also be run manually. It stores reachability, archived status, last-push age and uncertainty in `data/project-health.json`. A 404 is ambiguous, API errors remain unknown, and inactivity is only a hint. The monitor does not remove or hide catalogue entries and is not an uptime or security audit. See [docs/PROJECT_HEALTH.md](PROJECT_HEALTH.md) for status definitions and limitations.
+
+ 
+## Security advisory intelligence
+
+The daily security feed workflow collects public records from GitHub Global Security Advisories, CISA KEV and NIST NVD into `data/security-intelligence.json`. It preserves prior successful source data if a feed request fails. Advisory records are not automatically matched to catalogue entries; no project is labelled vulnerable without dependency and version evidence. See [docs/SECURITY_INTELLIGENCE.md](SECURITY_INTELLIGENCE.md) for source coverage and limitations.
