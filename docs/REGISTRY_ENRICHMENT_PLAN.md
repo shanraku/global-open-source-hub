@@ -133,3 +133,10 @@ NuGet must remain `planned` until the remaining items above are reviewed, tests 
 - Trailing text nodes are also checked for malformed entity references.
 - Added unexecuted fixtures for malformed entities, invalid numeric references, duplicate metadata blocks, duplicate attributes and malformed attribute separation.
 - This remains a deliberately narrow structural scanner for candidate enrichment, not a replacement for a standards-compliant XML parser; NuGet stays `planned` pending the documented release gates.
+
+### Follow-up NuGet adapter isolation and identity checks
+- Registration leaf responses must now include an exact matching `@id`; missing or mismatched identity metadata is rejected. Optional `published` and `listed` fields are type-checked.
+- Search package IDs and versions are validated before they become deduplication keys. Duplicate version entries for one package result are treated as ambiguous and isolated as a package error.
+- Package-level failures remain isolated so later package records can still produce leads; recorded error messages are capped to a bounded length.
+- Added an adapter seam for deterministic fixtures and unexecuted tests covering package failure isolation, duplicate package/version suppression and ambiguous version entries.
+- These fixtures have **not** been run. NuGet remains `planned`; no source registry status, publication behavior, workflow or deployment was changed.
