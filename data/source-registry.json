@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "purpose": "A reviewed registry of public source APIs that may be used to discover open-source repositories. Registry entries describe sources; they do not certify projects.",
+  "policy": {
+    "public_sources_only": true,
+    "require_original_repository_url": true,
+    "require_review_before_catalogue_inclusion": true,
+    "deduplicate_by": [
+      "canonical_repository_url",
+      "hosting_provider_and_repository_id"
+    ],
+    "never_collect": [
+      "credentials",
+      "private repositories",
+      "personal contact details",
+      "private user data"
+    ],
+    "never_infer": [
+      "security",
+      "license_compliance",
+      "project_quality",
+      "active_maintenance"
+    ],
+    "respect_provider_rate_limits": true,
+    "preserve_source_provenance": true
+  },
+  "sources": [
+    {
+      "id": "github-public-repositories",
+      "name": "GitHub public repositories",
+      "provider": "GitHub",
+      "status": "supported",
+      "source_type": "official_rest_api",
+      "base_url": "https://api.github.com",
+      "discovery_endpoint": "/search/repositories",
+      "documentation_url": "https://docs.github.com/en/rest/search/search#search-repositories",
+      "authentication": "Optional token for higher rate limits; never store tokens in catalogue data",
+      "pagination": "Use API pagination and stop at provider limits",
+      "useful_fields": [
+        "id",
+        "full_name",
+        "html_url",
+        "description",
+        "topics",
+        "license.spdx_id",
+        "created_at",
+        "pushed_at",
+        "archived"
+      ],
+      "constraints": [
+        "Search results are relevance-ranked and incomplete",
+        "Search API has separate rate limits",
+        "Repository metadata is not a security or quality assessment"
+      ]
+    },
+    {
+      "id": "gitlab-public-projects",
+      "name": "GitLab public projects",
+      "provider": "GitLab",
+      "status": "supported",
+      "source_type": "official_rest_api",
+      "base_url": "https://gitlab.com/api/v4",
+      "discovery_endpoint": "/projects",
+      "documentation_url": "https://docs.gitlab.com/api/projects/",
+      "authentication": "Public project discovery can use unauthenticated requests; never store tokens in catalogue data",
+      "pagination": "Use keyset or page pagination as documented and respect instance limits",
+      "useful_fields": [
+        "id",
+        "path_with_namespace",
+        "web_url",
+        "description",
+        "topics",
+        "visibility",
+        "created_at",
+        "last_activity_at",
+        "archived"
+      ],
+      "constraints": [
+        "Only public projects are in scope",
+        "Instance policies and rate limits apply",
+        "A project's visibility can change"
+      ]
+    },
+    {
+      "id": "codeberg-public-repositories",
+      "name": "Codeberg public repositories",
+      "provider": "Codeberg / Forgejo",
+      "status": "supported",
+      "source_type": "forgejo_compatible_api",
+      "base_url": "https://codeberg.org/api/v1",
+      "discovery_endpoint": "/repos/search",
+      "documentation_url": "https://forgejo.org/docs/latest/user/api-usage/",
+      "authentication": "Use public endpoints where available; never store tokens in catalogue data",
+      "pagination": "Follow the instance API pagination behavior and documented limits",
+      "useful_fields": [
+        "id",
+        "full_name",
+        "html_url",
+        "description",
+        "stars_count",
+        "forks_count",
+        "created_at",
+        "updated_at",
+        "archived"
+      ],
+      "constraints": [
+        "Codeberg is one Forgejo host, not the whole Forgejo ecosystem",
+        "Do not assume every Forgejo instance permits anonymous discovery"
+      ]
+    },
+    {
+      "id": "configured-forgejo-instances",
+      "name": "User-configured public Forgejo instances",
+      "provider": "Forgejo-compatible hosts",
+      "status": "planned",
+      "source_type": "configurable_forgejo_api",
+      "base_url": null,
+      "discovery_endpoint": "/api/v1/repos/search",
+      "documentation_url": "https://forgejo.org/docs/latest/user/api-usage/",
+      "authentication": "Public endpoints only by default; credentials require a separate secure secret store and explicit configuration",
+      "pagination": "Respect each host's documented limits and robots or acceptable-use policies",
+      "useful_fields": [
+        "id",
+        "full_name",
+        "html_url",
+        "description",
+        "stars_count",
+        "forks_count",
+        "created_at",
+        "updated_at",
+        "archived"
+      ],
+      "constraints": [
+        "Host must be explicitly configured and validated",
+        "Reject private, local-network, loopback and otherwise unsafe targets",
+        "Never scan arbitrary hosts"
+      ]
+    }
+  ],
+  "record_requirements": [
+    "Keep the original source URL and provider identifier.",
+    "Record when and how the record was discovered.",
+    "Normalize repository URLs before duplicate comparison.",
+    "Do not treat missing fields as zero or false.",
+    "Queue candidates for human review before adding them to data/projects.json."
+  ]
+}
