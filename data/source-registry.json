@@ -242,6 +242,82 @@
         "Only crates with a valid public source repository URL on an approved host enter the repository review queue.",
         "Do not download or execute crate contents during discovery."
       ]
+    },
+    {
+      "id": "rubygems-public-packages",
+      "name": "RubyGems public packages",
+      "provider": "RubyGems",
+      "status": "supported",
+      "source_type": "official_registry_search_api",
+      "base_url": "https://rubygems.org",
+      "discovery_endpoint": "/api/v1/search.json",
+      "documentation_url": "https://guides.rubygems.org/rubygems-org-api/",
+      "authentication": "Public search is available without credentials; never send API keys.",
+      "pagination": "Use page parameter with a strict page cap; first page returns up to 30 results.",
+      "useful_fields": [
+        "name",
+        "version",
+        "info",
+        "licenses",
+        "metadata.source_code_uri",
+        "metadata.homepage_uri",
+        "version_created_at"
+      ],
+      "constraints": [
+        "Search returns active matching gems and is relevance-ranked, not exhaustive.",
+        "Only explicit source_code_uri values on approved repository hosts enter the review queue; homepage URLs are not treated as source repositories.",
+        "Registry metadata does not prove source authenticity, quality or safety."
+      ]
+    },
+    {
+      "id": "nuget-public-packages",
+      "name": "NuGet.org public packages",
+      "provider": "NuGet",
+      "status": "planned",
+      "source_type": "official_v3_search_query_service",
+      "base_url": "https://api.nuget.org/v3/index.json",
+      "discovery_endpoint": null,
+      "documentation_url": "https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource",
+      "authentication": "Public search; no credentials required.",
+      "pagination": "The service index must be read to discover the current SearchQueryService endpoint. nuget.org documents skip/take limits.",
+      "useful_fields": [
+        "id",
+        "version",
+        "description",
+        "tags",
+        "projectUrl",
+        "totalDownloads",
+        "vulnerabilities"
+      ],
+      "constraints": [
+        "Search results commonly expose projectUrl, which is not necessarily a source repository URL.",
+        "Design a trusted source-repository enrichment step before queueing repositories.",
+        "Do not treat NuGet verified-prefix status as a security endorsement."
+      ]
+    },
+    {
+      "id": "maven-central-public-artifacts",
+      "name": "Maven Central public artifacts",
+      "provider": "Maven Central",
+      "status": "planned",
+      "source_type": "official_sonatype_search_rest_api",
+      "base_url": "https://search.maven.org",
+      "discovery_endpoint": "/solrsearch/select",
+      "documentation_url": "https://central.sonatype.org/search/rest-api-guide/",
+      "authentication": "Public search API; no credentials required.",
+      "pagination": "Use bounded rows/start parameters and conservative request pacing.",
+      "useful_fields": [
+        "group",
+        "artifact",
+        "latestVersion",
+        "timestamp",
+        "versionCount"
+      ],
+      "constraints": [
+        "Artifact search metadata does not itself provide a verified source repository URL.",
+        "A future integration needs safe POM SCM metadata enrichment and URL validation.",
+        "Do not infer repository location from artifact coordinates or homepage links."
+      ]
     }
   ],
   "record_requirements": [
