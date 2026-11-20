@@ -78,6 +78,10 @@ See [docs/GLOBAL_REACH_AND_OUTREACH.md](docs/GLOBAL_REACH_AND_OUTREACH.md) for t
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 
+## Project creator and attribution
+
+**Created by SUNRAKU** (`@shanraku`). SUNRAKU is the original creator of the Global Open Source Hub project. Please preserve this project credit, the copyright notice in [LICENSE](LICENSE), and the citation metadata in [CITATION.cff](CITATION.cff) when redistributing substantial portions of this project. See [NOTICE](NOTICE) for attribution scope. Contributions are welcome and do not erase the project's original creator history.
+
 ## License
 
 MIT. See [LICENSE](LICENSE). Third-party names, code, logos and trademarks remain the property of their respective owners. Listing a project does not imply endorsement.
