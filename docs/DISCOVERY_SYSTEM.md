@@ -38,5 +38,17 @@ Use the provider's stable repository ID together with a normalized canonical rep
 ## Evidence labels
 Discovery metadata is not a security audit, license-compliance opinion, endorsement, maintenance guarantee or proof of project quality. Display source and last-checked information with clear timestamps where available.
 
+## Automated candidate discovery
+The initial engine is `scripts/discover-project-candidates.mjs`. It queries the official public APIs for GitHub, GitLab.com and Codeberg using bounded search seeds from `data/discovery-config.json`.
+
+- Runs weekly through `.github/workflows/discover-project-candidates.yml`, or manually via `workflow_dispatch`.
+- Uses short timeouts, bounded result counts and delays between provider queries.
+- Supports an optional GitHub Actions token from the built-in `GITHUB_TOKEN` secret; no token is written to files.
+- Normalizes HTTPS repository URLs, checks provider IDs and existing catalogue/queue entries, and preserves discovery provenance.
+- Writes only to `data/review-queue.json`. It never edits `data/projects.json` or publishes candidates.
+- API failures are logged as source errors; successful sources can still contribute candidates.
+
+Search seeds are intentionally small and editable; discovery is not exhaustive. The first scheduled or manual execution has not yet been verified. Review queue contents as untrusted metadata before considering inclusion.
+
 ## Current implementation boundary
-This stage defines the source registry, candidate requirements and safe workflow. It does not yet run cross-platform discovery or automatically publish candidates. Those require a separate reviewed ingestion implementation and explicit testing.
+The automated candidate discovery engine and its workflow are committed. Runtime behavior, provider response compatibility, rate-limit behavior and Pages display have not yet been tested. Do not treat a successful commit as proof that an Actions run succeeded.
