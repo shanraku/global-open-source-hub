@@ -318,3 +318,32 @@ test("rejects duplicate local offsets and overlapping ZIP entries", () => {
   archive.writeUInt32LE(archive.readUInt32LE(firstCentral + 42), secondCentral + 42);
   assert.throws(() => readNuGetRepositoryMetadata(archive), /overlapping ZIP local entries/);
 });
+
+test("rejects unterminated and unknown XML entities in text", () => {
+  for (const text of ["bad & value", "bad &unknown; value"]) {
+    const xml = '<package><metadata><description>' + text + '</description><repository type="git" url="https://github.com/example/project"/></metadata></package>';
+    const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+    assert.throws(() => readNuGetRepositoryMetadata(archive), /XML entity reference|unsupported XML entity/);
+  }
+});
+
+test("rejects invalid XML numeric character references", () => {
+  const xml = '<package><metadata><repository type="git" url="https://github.com/example/project&#0;"/></metadata></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /invalid XML character reference/);
+});
+
+test("rejects duplicate metadata elements under package", () => {
+  const xml = '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata><metadata/></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /exactly one metadata element/);
+});
+
+test("rejects duplicate and malformed attributes on XML elements", () => {
+  const duplicate = '<package><metadata><description a="1" a="2"/><repository type="git" url="https://github.com/example/project"/></metadata></package>';
+  const malformed = '<package><metadata><description a="1"b="2"/><repository type="git" url="https://github.com/example/project"/></metadata></package>';
+  for (const xml of [duplicate, malformed]) {
+    const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+    assert.throws(() => readNuGetRepositoryMetadata(archive), /duplicate XML attribute|separated by whitespace/);
+  }
+});
