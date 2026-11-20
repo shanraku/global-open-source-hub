@@ -18,7 +18,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
   const seen = new Set();
 
   for (const query of boundedQueries) {
-    if (leads.length + errors.length >= maxPackages) break;
+    if (seen.size >= maxPackages) break;
     let packages;
     try {
       packages = await searchNuGetPackages(resources.searchUrl, query, {
@@ -32,7 +32,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
     }
 
     for (const pkg of packages) {
-      if (leads.length + errors.length >= maxPackages) break;
+      if (seen.size >= maxPackages) break;
       const id = pkg.id;
       const version = pkg.version;
       const packageKey = `${String(id).toLowerCase()}@${String(version).toLowerCase()}`;
@@ -56,7 +56,9 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
           repository_metadata_type_path: metadata.metadata_type_path,
           repository_type: metadata.repository_type,
           published_at: registration.published,
-          project_url: registration.projectUrl
+          project_url: registration.projectUrl,
+          description: typeof pkg.description === "string" ? pkg.description.slice(0, 500) : "",
+          tags: Array.isArray(pkg.tags) ? pkg.tags.slice(0, 12) : []
         });
       } catch (error) {
         errors.push({ stage: "enrichment", package_id: id, package_version: version, reason: error.message });
