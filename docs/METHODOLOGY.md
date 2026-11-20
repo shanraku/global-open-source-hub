@@ -39,3 +39,8 @@ The workflow `.github/workflows/monitor-project-health.yml` checks listed public
 ## Security advisory intelligence
 
 The daily security feed workflow collects public records from GitHub Global Security Advisories, CISA KEV and NIST NVD into `data/security-intelligence.json`. It preserves prior successful source data if a feed request fails. Advisory records are not automatically matched to catalogue entries; no project is labelled vulnerable without dependency and version evidence. See [docs/SECURITY_INTELLIGENCE.md](SECURITY_INTELLIGENCE.md) for source coverage and limitations.
+
+ 
+## Software supply-chain evidence
+
+The Hub can check exact package versions from a reviewed SPDX or CycloneDX-derived inventory against OSV.dev. Inventory entries must preserve a source SBOM reference. An empty inventory means no dependency coverage, not zero vulnerabilities. Results are advisory leads only and do not certify package provenance, integrity or project security. See [docs/SOFTWARE_SUPPLY_CHAIN.md](SOFTWARE_SUPPLY_CHAIN.md).
