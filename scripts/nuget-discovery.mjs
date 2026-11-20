@@ -48,8 +48,16 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
         if (!registration || registration.listed === false) { skipped.unlisted++; continue; }
         if (typeof registration.packageContent !== "string") { skipped.missing_package_content++; continue; }
         const archive = await downloadNuGetPackageArchive(registration.packageContent, id, version, options);
-        const metadata = readNuGetRepositoryMetadata(archive);
-        if (metadata.repository_type.toLowerCase() !== "git") { skipped.non_git_repository++; continue; }
+        let metadata;
+        try {
+          metadata = readNuGetRepositoryMetadata(archive);
+        } catch (error) {
+          if (/repository must declare type=git/.test(error.message)) {
+            skipped.non_git_repository++;
+            continue;
+          }
+          throw error;
+        }
         leads.push({
           provider: "NuGet",
           provider_id: packageKey,
