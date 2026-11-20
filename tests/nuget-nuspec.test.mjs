@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { deflateRawSync } from "node:zlib";
-import { readNuGetRepositoryMetadata } from "../scripts/nuget-nuspec.mjs";
+import { readNuGetRepositoryMetadata } from "../scripts/nuget-nuspec.mjs";\nimport { expectedNuGetPackageContentUrl, validateNuGetPackageContentUrl, readBoundedNuGetResponse } from "../scripts/nuget-package-download.mjs";
 
 const CRC_TABLE = (() => {
   const table = new Uint32Array(256);
@@ -142,4 +142,69 @@ test("rejects mismatched local and central ZIP flags", () => {
   const archive = makeZip([{ name: "Example.nuspec", content: '<package><repository type="git" url="https://github.com/a/b"/></package>' }]);
   archive.writeUInt16LE(1, 6);
   assert.throws(() => readNuGetRepositoryMetadata(archive), /local and central ZIP metadata differ/);
+});
+
+
+test("builds the canonical NuGet flat-container package URL", () => {
+  assert.equal(
+    expectedNuGetPackageContentUrl("Example.Package", "1.2.3"),
+    "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg"
+  );
+});
+
+test("accepts only the exact NuGet packageContent URL for the package ID and version", () => {
+  const expected = expectedNuGetPackageContentUrl("Example.Package", "1.2.3");
+  assert.equal(validateNuGetPackageContentUrl(expected, "Example.Package", "1.2.3"), expected);
+});
+
+test("rejects lookalike hosts, alternate origins and unexpected paths", () => {
+  const valid = expectedNuGetPackageContentUrl("Example.Package", "1.2.3");
+  for (const url of [
+    valid.replace("api.nuget.org", "api.nuget.org.evil.example"),
+    valid.replace("https://", "http://"),
+    valid.replace("/v3-flatcontainer/", "/other/"),
+    valid + "?redirect=https://github.com/",
+    valid.replace("api.nuget.org", "evil.example")
+  ]) assert.throws(() => validateNuGetPackageContentUrl(url, "Example.Package", "1.2.3"));
+});
+
+test("rejects URL credentials and non-standard ports", () => {
+  const valid = expectedNuGetPackageContentUrl("Example.Package", "1.2.3");
+  assert.throws(() => validateNuGetPackageContentUrl(valid.replace("https://", "https://user@"), "Example.Package", "1.2.3"));
+  assert.throws(() => validateNuGetPackageContentUrl(valid.replace("api.nuget.org", "api.nuget.org:8443"), "Example.Package", "1.2.3"));
+});
+
+test("rejects a packageContent URL for a different package version", () => {
+  const url = expectedNuGetPackageContentUrl("Example.Package", "1.2.3");
+  assert.throws(() => validateNuGetPackageContentUrl(url, "Example.Package", "9.9.9"));
+});
+
+test("rejects oversized declared download length before reading", async () => {
+  const response = {
+    status: 200,
+    redirected: false,
+    headers: { get: () => String(1024) },
+    body: { getReader: () => ({ read: async () => ({ done: true }), releaseLock() {} }) }
+  };
+  await assert.rejects(readBoundedNuGetResponse(response, 128), /Content-Length/);
+});
+
+test("rejects streamed package bytes that exceed the hard limit", async () => {
+  let cancelled = false;
+  const response = {
+    status: 200,
+    redirected: false,
+    headers: { get: () => null },
+    body: { getReader: () => ({
+      read: async () => ({ done: false, value: new Uint8Array(129) }),
+      cancel: async () => { cancelled = true; },
+      releaseLock() {}
+    }) }
+  };
+  await assert.rejects(readBoundedNuGetResponse(response, 128), /exceeded the package size limit/);
+  assert.equal(cancelled, true);
+});
+
+test("rejects non-200 or redirected responses", async () => {
+  await assert.rejects(readBoundedNuGetResponse({ status: 302, redirected: true }), /unexpected HTTP response/);
 });
