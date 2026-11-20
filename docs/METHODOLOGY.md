@@ -22,6 +22,9 @@ A project should have a public source repository, a clear practical purpose, eno
 ## Corrections and submissions
 Open an issue or pull request with the repository URL, a concise explanation of its usefulness, its license link and authoritative documentation. Maintainers review submissions; inclusion is not automatic.
 
+## Public discovery source coverage
+The discovery registry currently supports GitHub, GitLab.com, Codeberg and Gitea.com public APIs. Gitea.com is one Gitea host; arbitrary Gitea or Forgejo instances are not scanned unless explicitly reviewed and configured. Search results are bounded and incomplete, and every new candidate remains subject to human review.
+
 ## Scope
 This is a growing curated directory, not a complete index of every open-source project worldwide. Search coverage and category choices will evolve through reviewed contributions.
 
