@@ -91,7 +91,8 @@ function extractNuspec(buffer) {
     if (offset + 46 > centralOffset + centralSize || buffer.readUInt32LE(offset) !== CENTRAL_SIGNATURE) fail("invalid ZIP central directory");
     const flags = buffer.readUInt16LE(offset + 8);
     const method = buffer.readUInt16LE(offset + 10);
-    const expectedCrc = buffer.readUInt32LE(offset + 16);\n    const compressedSize = buffer.readUInt32LE(offset + 20);
+    const expectedCrc = buffer.readUInt32LE(offset + 16);
+    const compressedSize = buffer.readUInt32LE(offset + 20);
     const uncompressedSize = buffer.readUInt32LE(offset + 24);
     const nameLength = buffer.readUInt16LE(offset + 28);
     const extraLength = buffer.readUInt16LE(offset + 30);
@@ -124,7 +125,8 @@ function extractNuspec(buffer) {
   } catch {
     fail("nuspec decompression failed");
   }
-  if (result.length !== entry.uncompressedSize || result.length > MAX_NUSPEC_BYTES) fail("nuspec length mismatch");\n  if (crc32(result) !== entry.expectedCrc) fail("nuspec CRC check failed");
+  if (result.length !== entry.uncompressedSize || result.length > MAX_NUSPEC_BYTES) fail("nuspec length mismatch");
+  if (crc32(result) !== entry.expectedCrc) fail("nuspec CRC check failed");
   return result;
 }
 
