@@ -44,7 +44,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
           : null;
         if (!versionEntry) continue;
         const registration = await getNuGetRegistrationLeaf(resources.registrationsUrl, id, version, { ...options, leafUrl: versionEntry["@id"] });
-        if (!registration || typeof registration.packageContent !== "string") continue;
+        if (!registration || registration.listed === false || typeof registration.packageContent !== "string") continue;
         const archive = await downloadNuGetPackageArchive(registration.packageContent, id, version, options);
         const metadata = readNuGetRepositoryMetadata(archive);
         if (metadata.repository_type.toLowerCase() !== "git") continue;
