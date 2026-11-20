@@ -10,6 +10,8 @@ A growing, independent directory for discovering practical open-source software.
 - Direct links to original GitHub repositories.
 - Mobile-responsive, accessible interface with reduced-motion support.
 - Curated, machine-readable project catalogue in `data/projects.json`.
+- A reviewed multi-host source registry for GitHub, GitLab and Codeberg/Forgejo discovery.
+- Safe discovery rules: provenance, duplicate detection, public-only access and human review before publication.
 - Clear methodology, contribution guidance and security policy.
 - No account, API key, application backend, analytics or tracking required by this static directory.
 
@@ -54,6 +56,10 @@ Edit `data/projects.json` and add a project object with:
 - `order` (display order)
 
 Use the contribution checklist in [CONTRIBUTING.md](CONTRIBUTING.md). Do not invent release dates, popularity numbers, safety claims or licensing conclusions.
+
+## Global source discovery
+
+The source registry is in [data/source-registry.json](data/source-registry.json). The safety and review pipeline is described in [docs/DISCOVERY_SYSTEM.md](docs/DISCOVERY_SYSTEM.md). This is the foundation for multi-host discovery; automated cross-platform ingestion is not enabled yet.
 
 ## Project policies
 
