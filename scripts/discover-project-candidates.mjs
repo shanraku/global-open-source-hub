@@ -140,6 +140,16 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
           add("crates.io", item.id, item.id, item.repository || "", item.description, item.categories || item.keywords, null, item.updated_at || null, item.license || null);
         }
         fetched += (data.crates || []).length;
+      } else if (source.provider === "RubyGems") {
+        const url = new URL("https://rubygems.org/api/v1/search.json");
+        url.searchParams.set("query", term);
+        url.searchParams.set("page", "1");
+        const data = await getJson(url);
+        for (const gem of data || []) {
+          const repoUrl = gem.metadata?.source_code_uri || "";
+          add("RubyGems", gem.name, gem.name, repoUrl, gem.info, gem.metadata?.keywords ? String(gem.metadata.keywords).split(/[ ,]+/) : [], null, gem.version_created_at || null, Array.isArray(gem.licenses) ? gem.licenses.join(" OR ") : null);
+        }
+        fetched += (data || []).length;
       } else if (source.provider === "Codeberg / Forgejo" || source.provider === "Gitea.com") {
         const url = new URL(`${source.base_url}${source.discovery_endpoint}`);
         url.searchParams.set("q", term); url.searchParams.set("limit", "30");
