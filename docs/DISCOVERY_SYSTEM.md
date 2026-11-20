@@ -14,6 +14,9 @@ The machine-readable registry lives in `data/source-registry.json`.
 - crates.io: official public crate search API; repository links are converted into candidates only when they point to an approved source host.
 - RubyGems.org: official public search API; only explicit source-code repository metadata is used for candidates.
 - NuGet.org and Maven Central: tracked as planned; search results need a separate, trusted source-repository enrichment step before candidate discovery.
+- Packagist.org: official anonymous search API; only its explicit repository field can create a candidate.
+- Go Module Index: planned; it is an incremental module-version feed, but module paths do not prove a repository URL.
+- Hex: planned; its public search and package metadata APIs need a bounded source-link enrichment design before automation.
 - PyPI: metadata and the Simple Index are available, but no equivalent public relevance-search API was verified for bounded discovery; tracked separately rather than bulk-enumerating the entire index.
 - SourceHut: planned only; public discovery API and anonymous access require verification before automation.
 - Additional Forgejo and Gitea hosts can be explicitly configured in `data/discovery-config.json`; the list is empty by default and no arbitrary hosts are scanned.
@@ -49,7 +52,7 @@ Use the provider's stable repository ID together with a normalized canonical rep
 Discovery metadata is not a security audit, license-compliance opinion, endorsement, maintenance guarantee or proof of project quality. Display source and last-checked information with clear timestamps where available.
 
 ## Automated candidate discovery
-The engine is `scripts/discover-project-candidates.mjs`. It queries public APIs for GitHub, GitLab.com, Codeberg, Gitea.com, npm, crates.io, RubyGems and explicitly enabled Forgejo/Gitea instances using editable seeds in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
+The engine is `scripts/discover-project-candidates.mjs`. It queries public APIs for GitHub, GitLab.com, Codeberg, Gitea.com, npm, crates.io, RubyGems, Packagist and explicitly enabled Forgejo/Gitea instances using editable seeds in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
 
 - Runs daily at the 06:00 IST target through `.github/workflows/discover-project-candidates.yml`, or manually via `workflow_dispatch`.
 - Uses short timeouts, bounded result counts and delays between provider queries.
@@ -70,3 +73,7 @@ npm and crates.io provide public, bounded search APIs. Their search results are 
 ### Additional package ecosystems
 
 RubyGems.org provides a documented public search endpoint. Discovery uses only its explicit `metadata.source_code_uri` field, never the homepage as a substitute, and queues a candidate only when the URL passes the existing approved-host validation. The search is limited to the first page per query to keep requests bounded. NuGet.org exposes a V3 Search Query Service whose endpoint must be discovered from the service index; however, its search result `projectUrl` is not guaranteed to be a source repository. Maven Central exposes an official REST search API, but artifact coordinates and search metadata do not establish the source repository. Both remain planned until a safe, documented SCM/source-link enrichment path is implemented. See the official [RubyGems API guide](https://guides.rubygems.org/rubygems-org-api/), [NuGet Search Query Service](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource), and [Maven Central REST API guide](https://central.sonatype.org/search/rest-api-guide/).
+
+### Go, Hex and PHP package ecosystems
+
+Packagist provides an anonymous, paginated search endpoint whose results include an explicit `repository` field. The discovery engine uses a bounded first page and accepts only HTTPS repository URLs on the approved host allowlist; the package page URL is never substituted for source code. The Go Module Index is an official newline-delimited feed of module paths, versions and timestamps, with a `since` cursor and a maximum of 2,000 entries per request. It does not provide verified repository URLs, and vanity import paths make host inference unsafe, so Go remains planned. Hex documents public package search and package metadata endpoints, but this implementation keeps it planned until response schema and a low-request metadata enrichment strategy are explicitly verified. Private Hex repository endpoints are out of scope. See [Packagist API documentation](https://packagist.org/apidoc), [Go Module Index](https://index.golang.org/), and [Hex API specifications](https://github.com/hexpm/specifications/blob/main/endpoints.md).
