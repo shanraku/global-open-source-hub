@@ -135,6 +135,34 @@
         "Reject private, local-network, loopback and otherwise unsafe targets",
         "Never scan arbitrary hosts"
       ]
+    },
+    {
+      "id": "gitea-com-public-repositories",
+      "name": "Gitea.com public repositories",
+      "provider": "Gitea.com",
+      "status": "supported",
+      "source_type": "gitea_compatible_api",
+      "base_url": "https://gitea.com/api/v1",
+      "discovery_endpoint": "/repos/search",
+      "documentation_url": "https://docs.gitea.com/development/api-usage",
+      "authentication": "Public endpoints only; never store tokens in catalogue data",
+      "pagination": "Use documented page and limit parameters and respect instance rate limits",
+      "useful_fields": [
+        "id",
+        "full_name",
+        "html_url",
+        "description",
+        "stars_count",
+        "forks_count",
+        "created_at",
+        "updated_at",
+        "archived"
+      ],
+      "constraints": [
+        "Only public repository metadata is in scope",
+        "Gitea.com is one host, not the entire Gitea ecosystem",
+        "Do not assume arbitrary Gitea instances permit anonymous discovery"
+      ]
     }
   ],
   "record_requirements": [
