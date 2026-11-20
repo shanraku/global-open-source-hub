@@ -1,0 +1,40 @@
+name: Scan discovery queue for duplicate candidates
+
+on:
+  workflow_run:
+    workflows: ["Discover public open-source projects"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scan-discovery-duplicates
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out latest default branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Annotate possible duplicates
+        run: node scripts/scan-duplicate-candidates.mjs
+      - name: Commit review hints when changed
+        run: |
+          if git diff --quiet -- data/review-queue.json; then
+            echo "No duplicate review changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+users.noreply.github.com"
+          git add data/review-queue.json
+          git commit -m "chore: annotate duplicate discovery candidates"
+          git push
