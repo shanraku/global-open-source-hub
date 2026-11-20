@@ -114,16 +114,19 @@ function parseRepositoryAttributes(source) {
   const attributes = Object.create(null);
   const attributePattern = /([A-Za-z_:][A-Za-z0-9_.:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/gy;
   let offset = 0;
+  let previousEnd = 0;
   while (offset < source.length) {
     while (/\s/.test(source[offset] || "")) offset++;
     if (offset >= source.length) break;
+    if (previousEnd > 0 && offset === previousEnd) fail("repository attributes must be separated by whitespace");
     attributePattern.lastIndex = offset;
     const match = attributePattern.exec(source);
     if (!match) fail("malformed repository attributes");
     const name = match[1].toLowerCase();
     if (Object.hasOwn(attributes, name)) fail("duplicate repository attribute");
     attributes[name] = decodeXmlAttribute(match[2] ?? match[3] ?? "");
-    offset = attributePattern.lastIndex;
+    previousEnd = attributePattern.lastIndex;
+    offset = previousEnd;
   }
   return { type: attributes.type, url: attributes.url };
 }
