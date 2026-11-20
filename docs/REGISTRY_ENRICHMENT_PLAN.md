@@ -125,3 +125,11 @@ NuGet must remain `planned` until the remaining items above are reviewed, tests 
 - Local-entry ranges, including data descriptors, are sorted and checked for overlap; NUL-containing names are rejected.
 - New unexecuted fixtures cover NUL names and duplicate local offsets/overlapping entries.
 - Remaining static-review work includes explicit ZIP64-extra, truncated-extra, signed/unsigned descriptor, malformed XML entity, duplicate metadata and adapter failure-isolation fixtures. Do not interpret these source changes as runtime verification.
+
+### Follow-up nuspec XML hardening
+- XML text and attribute values now reject unterminated/unknown entities and invalid numeric XML character references; permitted predefined and numeric references are decoded conservatively.
+- All element attributes are structurally parsed, duplicate attributes are rejected, and required whitespace between adjacent attributes is enforced.
+- Exactly one direct `metadata` child under `package` is required before accepting the one direct `repository` element.
+- Trailing text nodes are also checked for malformed entity references.
+- Added unexecuted fixtures for malformed entities, invalid numeric references, duplicate metadata blocks, duplicate attributes and malformed attribute separation.
+- This remains a deliberately narrow structural scanner for candidate enrichment, not a replacement for a standards-compliant XML parser; NuGet stays `planned` pending the documented release gates.
