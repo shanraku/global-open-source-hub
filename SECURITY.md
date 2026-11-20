@@ -12,3 +12,9 @@ Report vulnerabilities in this Hub's own code. For a listed project's vulnerabil
 - Follow links only when you trust the destination.
 - Verify repository ownership, release artifacts and licenses independently.
 - A listing is not a security audit or endorsement.
+
+## Automated security intelligence
+
+The Hub collects public advisory metadata from GitHub Security Advisories, CISA's Known Exploited Vulnerabilities catalog and the NIST National Vulnerability Database. See [docs/SECURITY_INTELLIGENCE.md](docs/SECURITY_INTELLIGENCE.md).
+
+This feed collection is not a vulnerability scan, SBOM, malware detector, exploitability assessment or security certification. An advisory is not automatically evidence that a listed project is affected. Verify package ecosystem, package name and affected version against the project's actual dependency manifests and authoritative advisory before drawing conclusions.
