@@ -118,3 +118,10 @@ The following items remain explicit pre-enablement gates; a green static review 
 
 ### Release gate
 NuGet must remain `planned` until the remaining items above are reviewed, tests are authorized and pass, a controlled integration run is inspected, and a maintainer explicitly approves enabling the provider. Do not run tests, Actions, schedules or deployment as part of this static-review-only stage.
+
+### Follow-up ZIP archive audit
+- The parser now validates every central-directory entry's disk-start field, supported flags/method, local header, local/central name and metadata agreement, and bounded data range before selecting the `.nuspec`.
+- ZIP extra-field framing is checked in both central and local headers; ZIP64 extra-field ID `0x0001` is rejected.
+- Local-entry ranges, including data descriptors, are sorted and checked for overlap; NUL-containing names are rejected.
+- New unexecuted fixtures cover NUL names and duplicate local offsets/overlapping entries.
+- Remaining static-review work includes explicit ZIP64-extra, truncated-extra, signed/unsigned descriptor, malformed XML entity, duplicate metadata and adapter failure-isolation fixtures. Do not interpret these source changes as runtime verification.
