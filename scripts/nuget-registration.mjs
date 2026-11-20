@@ -65,8 +65,8 @@ export async function discoverNuGetV3Resources(options = {}) {
     }
     return null;
   };
-  const searchUrl = findResource(type => type === "SearchQueryService/3.5.0" || type === "SearchQueryService/3.0.0" || type === "SearchQueryService/3.0.0-rc");
-  const registrationsUrl = findResource(type => type === "RegistrationsBaseUrl/3.6.0" || type === "RegistrationsBaseUrl/3.4.0" || type === "RegistrationsBaseUrl");
+  const searchUrl = findResource(type => type === "SearchQueryService/3.5.0" || type === "SearchQueryService/3.0.0" || type === "SearchQueryService/3.0.0-rc" || type === "SearchQueryService");
+  const registrationsUrl = findResource(type => type === "RegistrationsBaseUrl/3.6.0" || type === "RegistrationsBaseUrl/3.4.0" || type === "RegistrationsBaseUrl/3.0.0-rc" || type === "RegistrationsBaseUrl");
   if (!searchUrl || !registrationsUrl) fail("required SearchQueryService or RegistrationsBaseUrl resource is missing");
   return { searchUrl, registrationsUrl };
 }
