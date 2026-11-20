@@ -83,6 +83,7 @@ export async function searchNuGetPackages(searchUrl, query, options = {}) {
   url.searchParams.set("take", String(take));
   url.searchParams.set("skip", String(skip));
   url.searchParams.set("prerelease", "false");
+  url.searchParams.set("semVerLevel", "2.0.0");
   const data = await fetchJsonBounded(url.href, options);
   if (!data || !Array.isArray(data.data)) fail("invalid search response schema");
   return data.data.slice(0, take).filter(item => typeof item?.id === "string" && typeof item?.version === "string");
@@ -93,37 +94,24 @@ export async function getNuGetRegistrationLeaf(registrationsUrl, packageId, vers
   if (base.hostname !== "api.nuget.org") fail("unapproved registration service host");
   const id = typeof packageId === "string" ? packageId.toLowerCase() : "";
   if (!/^[a-z0-9][a-z0-9_.+-]{0,127}$/.test(id) || typeof version !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_.+-]{0,127}$/.test(version)) fail("invalid package ID or version");
-  if (!base.pathname.endsWith("/")) fail("registration base URL must end with a slash");
-  const indexUrl = new URL(encodeURIComponent(id) + "/index.json", base);
-  const index = await fetchJsonBounded(indexUrl.href, options);
-  if (!Array.isArray(index?.items) || index.items.length > MAX_REGISTRATION_PAGES) fail("registration index has invalid or excessive pages");
-  let pagesFetched = 0;
-  for (const page of index.items) {
-    let leaves = page.items;
-    if (!Array.isArray(leaves)) {
-      if (typeof page["@id"] !== "string" || ++pagesFetched > MAX_REGISTRATION_PAGES) continue;
-      const pageUrl = safeNuGetResourceUrl(page["@id"]);
-      if (pageUrl.origin !== base.origin || !pageUrl.pathname.startsWith(base.pathname)) continue;
-      const pageData = await fetchJsonBounded(pageUrl.href, options);
-      leaves = pageData.items;
-    }
-    if (!Array.isArray(leaves)) continue;
-    for (const leaf of leaves) {
-      const entry = leaf?.catalogEntry;
-      if (entry && typeof entry === "object" &&
-          typeof entry.id === "string" && entry.id.toLowerCase() === id &&
-          typeof entry.version === "string" && entry.version.toLowerCase() === version.toLowerCase() &&
-          typeof leaf.packageContent === "string") {
-        return {
-          id: entry.id,
-          version: entry.version,
-          packageContent: leaf.packageContent,
-          published: leaf.published ?? entry.published ?? null,
-          listed: leaf.listed ?? entry.listed ?? true,
-          projectUrl: typeof entry.projectUrl === "string" ? entry.projectUrl : null
-        };
-      }
-    }
+  if (!base.pathname.endsWith("/") || typeof options.leafUrl !== "string") fail("an exact registration leaf URL from search metadata is required");
+
+  const leafUrl = safeNuGetResourceUrl(options.leafUrl);
+  const expectedPrefix = base.pathname + encodeURIComponent(id) + "/";
+  if (leafUrl.origin !== base.origin || !leafUrl.pathname.startsWith(expectedPrefix)) {
+    fail("registration leaf URL is outside the discovered package registration path");
   }
-  return null;
+  const leaf = await fetchJsonBounded(leafUrl.href, options);
+  if (!leaf || typeof leaf.packageContent !== "string" ||
+      (typeof leaf["@id"] === "string" && leaf["@id"] !== leafUrl.href)) {
+    fail("registration leaf does not contain valid package content metadata");
+  }
+  return {
+    id: packageId,
+    version,
+    packageContent: leaf.packageContent,
+    published: leaf.published ?? null,
+    listed: leaf.listed ?? true,
+    projectUrl: null
+  };
 }
