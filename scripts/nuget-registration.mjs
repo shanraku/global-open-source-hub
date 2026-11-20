@@ -1,6 +1,5 @@
 const SERVICE_INDEX_URL = "https://api.nuget.org/v3/index.json";
 const MAX_JSON_BYTES = 2 * 1024 * 1024;
-const MAX_REGISTRATION_PAGES = 8;
 const ALLOWED_RESOURCE_HOSTS = new Set(["api.nuget.org", "api-v2v3search-0.nuget.org"]);
 
 function fail(message) {
