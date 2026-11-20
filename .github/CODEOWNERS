@@ -1,0 +1,3 @@
+# Default review owner for changes across this repository.
+# Enforced review requires a branch ruleset / protection rule on the target branch.
+* @shanraku
