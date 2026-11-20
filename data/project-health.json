@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "checked_at": null,
+  "summary": {
+    "total": 0,
+    "reachable": 0,
+    "archived": 0,
+    "unknown": 0,
+    "inactivity_hints_over_365_days": 0,
+    "interpretation": "No health snapshot until the monitor workflow runs."
+  },
+  "projects": []
+}
