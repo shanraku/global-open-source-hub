@@ -26,16 +26,96 @@ function decodeXmlAttribute(value) {
 }
 
 function parseRepositoryElement(xml) {
-  if (/<!DOCTYPE|<!ENTITY|<\?xml-stylesheet/i.test(xml)) fail("DTD, entities and stylesheets are not allowed");
-  const matches = [...xml.matchAll(/<repository\b([^>]*)\/?\s*>/gi)];
-  if (matches.length !== 1) fail("expected exactly one repository element");
+  if (/<!DOCTYPE|<!ENTITY|<\\?xml-stylesheet/i.test(xml)) fail("DTD, entities and stylesheets are not allowed");
 
+  const stack = [];
+  const repositories = [];
+  let offset = 0;
+  let rootSeen = false;
+  let rootClosed = false;
+
+  while (offset < xml.length) {
+    const open = xml.indexOf("<", offset);
+    if (open < 0) {
+      if (xml.slice(offset).trim() && !rootSeen) fail("text outside XML root");
+      break;
+    }
+    if (!rootSeen && xml.slice(offset, open).trim()) fail("text outside XML root");
+    offset = open;
+
+    if (xml.startsWith("<!--", offset)) {
+      const close = xml.indexOf("-->", offset + 4);
+      if (close < 0 || xml.slice(offset + 4, close).includes("--")) fail("malformed XML comment");
+      offset = close + 3;
+      continue;
+    }
+    if (xml.startsWith("<![CDATA[", offset)) {
+      const close = xml.indexOf("]]>", offset + 9);
+      if (close < 0 || !stack.length) fail("malformed CDATA section");
+      offset = close + 3;
+      continue;
+    }
+    if (xml.startsWith("<?", offset)) {
+      const close = xml.indexOf("?>", offset + 2);
+      if (close < 0) fail("malformed XML processing instruction");
+      offset = close + 2;
+      continue;
+    }
+    if (xml.startsWith("<!", offset)) fail("unsupported XML declaration");
+
+    let close = offset + 1;
+    let quote = null;
+    for (; close < xml.length; close++) {
+      const ch = xml[close];
+      if (quote) {
+        if (ch === quote) quote = null;
+      } else if (ch === '"' || ch === "'") {
+        quote = ch;
+      } else if (ch === ">") {
+        break;
+      }
+    }
+    if (close >= xml.length || quote) fail("unterminated XML tag");
+
+    const token = xml.slice(offset + 1, close);
+    const closing = token.startsWith("/");
+    const selfClosing = !closing && /\\/\\s*$/.test(token);
+    const body = closing ? token.slice(1).trim() : selfClosing ? token.replace(/\\/\\s*$/, "").trim() : token.trim();
+    const nameMatch = /^([A-Za-z_][A-Za-z0-9_.:-]*)([\\s\\S]*)$/.exec(body);
+    if (!nameMatch) fail("malformed XML tag");
+    const name = nameMatch[1];
+
+    if (closing) {
+      if (nameMatch[2].trim() || stack.pop() !== name) fail("mismatched XML closing tag");
+      if (!stack.length) rootClosed = true;
+    } else {
+      if (rootClosed) fail("multiple XML root elements");
+      if (!rootSeen) {
+        if (name !== "package") fail("nuspec root element must be package");
+        rootSeen = true;
+      }
+      if (name === "repository" && stack.length === 2 && stack[0] === "package" && stack[1] === "metadata") {
+        repositories.push(parseRepositoryAttributes(nameMatch[2]));
+      }
+      if (!selfClosing) stack.push(name);
+      else if (!stack.length) rootClosed = true;
+    }
+    offset = close + 1;
+  }
+
+  if (!rootSeen || !rootClosed || stack.length) fail("incomplete or malformed nuspec XML");
+  if (repositories.length !== 1) fail("expected exactly one repository element under package metadata");
+  const repository = repositories[0];
+  if (repository.type?.toLowerCase() !== "git" || !repository.url) fail("repository must declare type=git and a URL");
+  return repository;
+}
+
+function parseRepositoryAttributes(source) {
   const attributes = Object.create(null);
-  const source = matches[0][1];
-  const attributePattern = /([A-Za-z_:][A-Za-z0-9_.:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/gy;
+  const attributePattern = /([A-Za-z_:][A-Za-z0-9_.:-]*)\\s*=\\s*(?:"([^"]*)"|'([^']*)')/gy;
   let offset = 0;
   while (offset < source.length) {
-    while (/\s/.test(source[offset] || "")) offset++;
+    while (/\\s/.test(source[offset] || "")) offset++;
     if (offset >= source.length) break;
     attributePattern.lastIndex = offset;
     const match = attributePattern.exec(source);
@@ -45,7 +125,6 @@ function parseRepositoryElement(xml) {
     attributes[name] = decodeXmlAttribute(match[2] ?? match[3] ?? "");
     offset = attributePattern.lastIndex;
   }
-  if (attributes.type?.toLowerCase() !== "git" || !attributes.url) fail("repository must declare type=git and a URL");
   return { type: attributes.type, url: attributes.url };
 }
 
