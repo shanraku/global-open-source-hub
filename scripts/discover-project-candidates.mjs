@@ -69,12 +69,24 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
   for (const term of terms) {
     try {
       if (source.provider === "GitHub") {
-        const url = new URL("https://api.github.com/search/repositories");
-        url.searchParams.set("q", `${term} in:name,description,readme fork:false`);
-        url.searchParams.set("sort", "updated"); url.searchParams.set("order", "desc"); url.searchParams.set("per_page", "30");
-        const data = await getJson(url);
-        for (const r of data.items || []) add("GitHub", r.id, r.full_name, r.html_url, r.description, r.topics, r.stargazers_count, r.pushed_at, r.license?.spdx_id);
-        fetched += (data.items || []).length;
+        const perPage = Math.min(100, Math.max(1, config.limits.github_per_page || 100));
+        const maxPages = Math.max(1, config.limits.github_max_pages_per_query || 3);
+        const maxResults = Math.max(perPage, config.limits.max_results_per_query || 300);
+        const pageLimit = Math.min(maxPages, Math.ceil(maxResults / perPage));
+        for (let page = 1; page <= pageLimit; page++) {
+          const url = new URL("https://api.github.com/search/repositories");
+          url.searchParams.set("q", `${term} in:name,description,readme`);
+          url.searchParams.set("sort", "updated");
+          url.searchParams.set("order", "desc");
+          url.searchParams.set("per_page", String(perPage));
+          url.searchParams.set("page", String(page));
+          const data = await getJson(url);
+          const items = data.items || [];
+          for (const r of items) add("GitHub", r.id, r.full_name, r.html_url, r.description, r.topics, r.stargazers_count, r.pushed_at, r.license?.spdx_id);
+          fetched += items.length;
+          if (items.length < perPage || fetched >= maxResults) break;
+          await sleep(config.limits.minimum_delay_between_queries_ms || 2100);
+        }
       } else if (source.provider === "GitLab") {
         const url = new URL("https://gitlab.com/api/v4/projects");
         url.searchParams.set("search", term); url.searchParams.set("visibility", "public");
@@ -93,7 +105,7 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
       errors++;
       console.warn(`Discovery source failed (${source.provider}, query ${term}): ${error.message}`);
     }
-    await sleep(1200);
+    await sleep(config.limits.minimum_delay_between_queries_ms || 2100);
   }
 }
 const output = {
