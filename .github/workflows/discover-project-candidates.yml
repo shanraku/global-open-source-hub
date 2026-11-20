@@ -2,7 +2,7 @@ name: Discover public open-source projects
 
 on:
   schedule:
-    - cron: "41 6 * * 3"
+    - cron: "30 0 * * *"
   workflow_dispatch:
 
 permissions:
