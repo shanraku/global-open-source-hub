@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "summary": {
+    "sources": 3,
+    "successful_sources": 0,
+    "sources_using_previous_snapshot": 3,
+    "total_records_across_feeds": 0,
+    "note": "Initial empty schema. Populated after a successful workflow run. Advisory intelligence only; not a vulnerability scan."
+  },
+  "feeds": {
+    "github_advisories": {
+      "source": "GitHub Global Security Advisories API",
+      "status": "not_checked",
+      "item_count": 0,
+      "items": []
+    },
+    "cisa_kev": {
+      "source": "CISA Known Exploited Vulnerabilities Catalog",
+      "status": "not_checked",
+      "item_count": 0,
+      "items": []
+    },
+    "nvd_recent": {
+      "source": "NIST National Vulnerability Database CVE API 2.0",
+      "status": "not_checked",
+      "item_count": 0,
+      "items": []
+    }
+  }
+}
