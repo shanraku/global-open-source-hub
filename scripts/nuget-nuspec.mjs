@@ -26,7 +26,7 @@ function decodeXmlAttribute(value) {
 }
 
 function parseRepositoryElement(xml) {
-  if (/<!DOCTYPE|<!ENTITY|<\\?xml-stylesheet/i.test(xml)) fail("DTD, entities and stylesheets are not allowed");
+  if (/<!DOCTYPE|<!ENTITY|<\?xml-stylesheet/i.test(xml)) fail("DTD, entities and stylesheets are not allowed");
 
   const stack = [];
   const repositories = [];
@@ -79,9 +79,9 @@ function parseRepositoryElement(xml) {
 
     const token = xml.slice(offset + 1, close);
     const closing = token.startsWith("/");
-    const selfClosing = !closing && /\\/\\s*$/.test(token);
-    const body = closing ? token.slice(1).trim() : selfClosing ? token.replace(/\\/\\s*$/, "").trim() : token.trim();
-    const nameMatch = /^([A-Za-z_][A-Za-z0-9_.:-]*)([\\s\\S]*)$/.exec(body);
+    const selfClosing = !closing && /\/\s*$/.test(token);
+    const body = closing ? token.slice(1).trim() : selfClosing ? token.replace(/\/\s*$/, "").trim() : token.trim();
+    const nameMatch = /^([A-Za-z_][A-Za-z0-9_.:-]*)([\s\S]*)$/.exec(body);
     if (!nameMatch) fail("malformed XML tag");
     const name = nameMatch[1];
 
@@ -112,10 +112,10 @@ function parseRepositoryElement(xml) {
 
 function parseRepositoryAttributes(source) {
   const attributes = Object.create(null);
-  const attributePattern = /([A-Za-z_:][A-Za-z0-9_.:-]*)\\s*=\\s*(?:"([^"]*)"|'([^']*)')/gy;
+  const attributePattern = /([A-Za-z_:][A-Za-z0-9_.:-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/gy;
   let offset = 0;
   while (offset < source.length) {
-    while (/\\s/.test(source[offset] || "")) offset++;
+    while (/\s/.test(source[offset] || "")) offset++;
     if (offset >= source.length) break;
     attributePattern.lastIndex = offset;
     const match = attributePattern.exec(source);
