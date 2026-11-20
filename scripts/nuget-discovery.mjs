@@ -3,6 +3,12 @@ import { downloadNuGetPackageArchive } from "./nuget-package-download.mjs";
 import { readNuGetRepositoryMetadata } from "./nuget-nuspec.mjs";
 
 const MAX_PACKAGES_PER_RUN = 20;
+const MAX_ERROR_MESSAGE_LENGTH = 500;
+
+function errorReason(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.slice(0, MAX_ERROR_MESSAGE_LENGTH);
+}
 
 export async function discoverNuGetRepositoryLeads(queries, options = {}) {
   if (!Array.isArray(queries)) throw new TypeError("NuGet queries must be an array");
@@ -28,7 +34,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
         skip: 0
       });
     } catch (error) {
-      errors.push({ stage: "search", query, reason: error.message });
+      errors.push({ stage: "search", query: query.slice(0, 200), reason: errorReason(error) });
       continue;
     }
 
@@ -36,14 +42,21 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
       if (seen.size >= maxPackages) break;
       const id = pkg.id;
       const version = pkg.version;
-      const packageKey = `${String(id).toLowerCase()}@${String(version).toLowerCase()}`;
+      if (typeof id !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_.+-]{0,127}$/.test(id) ||
+          typeof version !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_.+-]{0,127}$/.test(version)) {
+        errors.push({ stage: "search_result", reason: "invalid package ID or version metadata" });
+        continue;
+      }
+      const packageKey = `${id.toLowerCase()}@${version.toLowerCase()}`;
       if (seen.has(packageKey)) continue;
       seen.add(packageKey);
       try {
-        const versionEntry = Array.isArray(pkg.versions)
-          ? pkg.versions.find(item => typeof item?.version === "string" && item.version.toLowerCase() === String(version).toLowerCase() && typeof item["@id"] === "string")
-          : null;
-        if (!versionEntry) { skipped.missing_version_leaf++; continue; }
+        const versionEntries = Array.isArray(pkg.versions)
+          ? pkg.versions.filter(item => typeof item?.version === "string" && item.version.toLowerCase() === version.toLowerCase())
+          : [];
+        if (versionEntries.length === 0 || typeof versionEntries[0]?.["@id"] !== "string") { skipped.missing_version_leaf++; continue; }
+        if (versionEntries.length !== 1) throw new Error("ambiguous duplicate package version entries");
+        const versionEntry = versionEntries[0];
         const registration = await getNuGetRegistrationLeaf(resources.registrationsUrl, id, version, { ...options, leafUrl: versionEntry["@id"] });
         if (!registration || registration.listed === false) { skipped.unlisted++; continue; }
         if (typeof registration.packageContent !== "string") { skipped.missing_package_content++; continue; }
@@ -75,7 +88,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
           tags: Array.isArray(pkg.tags) ? pkg.tags.slice(0, 12) : []
         });
       } catch (error) {
-        errors.push({ stage: "enrichment", package_id: id, package_version: version, reason: error.message });
+        errors.push({ stage: "enrichment", package_id: id, package_version: version, reason: errorReason(error) });
       }
     }
   }
