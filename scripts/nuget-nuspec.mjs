@@ -106,7 +106,8 @@ function parseRepositoryElement(xml) {
   if (!rootSeen || !rootClosed || stack.length) fail("incomplete or malformed nuspec XML");
   if (repositories.length !== 1) fail("expected exactly one repository element under package metadata");
   const repository = repositories[0];
-  if (repository.type?.toLowerCase() !== "git" || !repository.url) fail("repository must declare type=git and a URL");
+  if (repository.type?.toLowerCase() !== "git") fail("repository must declare type=git");
+  if (!repository.url) fail("repository URL is missing");
   return repository;
 }
 
