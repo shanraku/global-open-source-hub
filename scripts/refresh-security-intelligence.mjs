@@ -126,5 +126,5 @@ const output = {
   },
   feeds
 };
-await writeFile(outputUrl, JSON.stringify(output, null, 2) + "\\n");
+await writeFile(outputUrl, JSON.stringify(output, null, 2) + "\n");
 console.log(`Security intelligence refresh: ${successful}/3 sources updated; ${totalItems} records retained or fetched. No projects were scanned or automatically flagged.`);
