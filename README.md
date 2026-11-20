@@ -19,6 +19,7 @@ A growing, independent directory for discovering practical open-source software.
 - SBOM-based exact-version dependency advisory checks against OSV.dev, with a reviewed inventory and no package installation or execution.
 - Release provenance and integrity evidence register for SHA-256 digests, provenance links, signatures and verification metadata; structural validation never pretends to perform cryptographic verification.
 - Safe discovery rules: provenance, canonical URL/provider-ID duplicate detection, public-only access and human review before publication.
+- Daily 06:00 IST refresh target across configured public sources, with change-only snapshots and preservation of prior data when no new information arrives.
 - Clear methodology, contribution guidance and security policy.
 - No account, API key, application backend, analytics or tracking required by this static directory.
 
@@ -70,6 +71,7 @@ The source registry is in [data/source-registry.json](data/source-registry.json)
 
 ## Project policies
 
+- [Daily refresh policy](docs/DAILY_REFRESH_POLICY.md)
 - [Methodology](docs/METHODOLOGY.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
