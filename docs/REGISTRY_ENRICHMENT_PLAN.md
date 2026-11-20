@@ -27,12 +27,15 @@ Do not fetch arbitrary URLs from package metadata. Any enrichment fetch must use
 
 ### NuGet.org
 
-- Use the official V3 service index to discover the current Search Query Service endpoint; do not hardcode a service endpoint if the service index is intended to be authoritative.
-- Search with bounded `skip`/`take` values and conservative request pacing.
-- Treat `projectUrl` as a project homepage or landing page, not proof of a source repository.
-- Prefer documented repository metadata from the package's registration/catalog metadata when available, and inspect the repository type/URL fields rather than guessing from package ID.
-- If only a homepage exists, skip repository-candidate creation.
-- Retain package ID, version, registry URL, repository metadata evidence and any ambiguity note.
+- Use the official V3 service index (`https://api.nuget.org/v3/index.json`) to discover the current Search Query Service endpoint; do not hardcode the search host or endpoint.
+- Search with bounded `skip`/`take` values, exclude prereleases by default, and use conservative serial request pacing.
+- The official Search Query Service exposes fields such as `id`, `version`, `description`, `tags`, `projectUrl`, downloads and vulnerabilities. The documented Registration catalog-entry schema also exposes `projectUrl`, but does not define a source-repository field. Treat `projectUrl` only as a homepage/landing-page field, never as proof of a source repository.
+- NuGet's documented `.nuspec` manifest is included inside each package archive. Its optional `<repository>` metadata contains `type` and `url` attributes; NuGet documents this as the repository that built the package. This is the appropriate evidence to inspect, not a guessed URL.
+- Proposed enrichment flow: follow only a `packageContent` URL discovered from the official registration metadata; require HTTPS and the exact NuGet-controlled download origin; block redirects; enforce a strict compressed-byte cap and timeout; inspect the ZIP central directory and extract only the single bounded `.nuspec` XML entry; never extract arbitrary files, install the package, execute code, or follow links from the archive.
+- Parse XML with entity expansion/external entities disabled. Require a single unambiguous `<repository type="git" url="...">` value. Treat the URL as untrusted and pass it through the existing HTTPS source-host allowlist and canonicalizer. Reject missing, conflicting, non-git, malformed, unsupported-host or non-repository values.
+- A `.nuspec` may omit repository metadata or contain stale/incorrect values. Even a valid explicit link is only a lead for human review, not proof that the package was built from that repository or that the repository is safe.
+- Retain package ID, version, canonical NuGet package URL, exact `.nuspec` metadata evidence (`repository/@type` and `repository/@url`), and the source package-content URL as provenance. If only `projectUrl` exists, skip candidate creation.
+- Keep this provider `planned` until the bounded ZIP/XML parser, URL-origin validation and fixtures for malformed/malicious archives are implemented and explicitly tested.
 
 ### Maven Central
 
