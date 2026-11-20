@@ -49,6 +49,21 @@ function parseRepositoryElement(xml) {
   return { type: attributes.type, url: attributes.url };
 }
 
+const CRC_TABLE = (() => {
+  const table = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let value = n;
+    for (let k = 0; k < 8; k++) value = value & 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1;
+    table[n] = value >>> 0;
+  }
+  return table;
+})();
+function crc32(buffer) {
+  let value = 0xffffffff;
+  for (const byte of buffer) value = CRC_TABLE[(value ^ byte) & 0xff] ^ (value >>> 8);
+  return (value ^ 0xffffffff) >>> 0;
+}
+
 function findEndOfCentralDirectory(buffer) {
   const min = Math.max(0, buffer.length - 22 - 0xffff);
   for (let i = buffer.length - 22; i >= min; i--) {
@@ -76,7 +91,7 @@ function extractNuspec(buffer) {
     if (offset + 46 > centralOffset + centralSize || buffer.readUInt32LE(offset) !== CENTRAL_SIGNATURE) fail("invalid ZIP central directory");
     const flags = buffer.readUInt16LE(offset + 8);
     const method = buffer.readUInt16LE(offset + 10);
-    const compressedSize = buffer.readUInt32LE(offset + 20);
+    const expectedCrc = buffer.readUInt32LE(offset + 16);\n    const compressedSize = buffer.readUInt32LE(offset + 20);
     const uncompressedSize = buffer.readUInt32LE(offset + 24);
     const nameLength = buffer.readUInt16LE(offset + 28);
     const extraLength = buffer.readUInt16LE(offset + 30);
@@ -86,7 +101,7 @@ function extractNuspec(buffer) {
     if (end > centralOffset + centralSize) fail("central directory entry exceeds bounds");
     const name = buffer.subarray(offset + 46, offset + 46 + nameLength).toString("utf8");
     if (name.includes("\\") || name.startsWith("/") || name.split("/").includes("..")) fail("unsafe ZIP entry path");
-    if (name.toLowerCase().endsWith(".nuspec")) entries.push({ name, flags, method, compressedSize, uncompressedSize, localOffset });
+    if (name.toLowerCase().endsWith(".nuspec")) entries.push({ name, flags, method, expectedCrc, compressedSize, uncompressedSize, localOffset });
     offset = end;
   }
   if (offset !== centralOffset + centralSize || entries.length !== 1) fail("expected exactly one .nuspec entry");
@@ -109,7 +124,7 @@ function extractNuspec(buffer) {
   } catch {
     fail("nuspec decompression failed");
   }
-  if (result.length !== entry.uncompressedSize || result.length > MAX_NUSPEC_BYTES) fail("nuspec length mismatch");
+  if (result.length !== entry.uncompressedSize || result.length > MAX_NUSPEC_BYTES) fail("nuspec length mismatch");\n  if (crc32(result) !== entry.expectedCrc) fail("nuspec CRC check failed");
   return result;
 }
 
