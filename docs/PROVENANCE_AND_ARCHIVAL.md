@@ -9,24 +9,26 @@
 
 ## Software Heritage
 
-A "Save Code Now" origin request for the Git repository was submitted to Software Heritage on 2026-11-20. The user-facing confirmation stated that the request was accepted for processing.
+The Git origin was submitted to Software Heritage using "Save Code Now" on 2026-11-20. The save-request list supplied by the project maintainer shows two successful visits and one later request still pending.
 
 - Origin type: `git`
 - Origin URL: https://github.com/shanraku/global-open-source-hub.git
-- Request status at time of recording: accepted for processing
-- Archive completion: **not yet verified**
-- SWHID: **not yet available / not yet verified**
+- Successful visits shown in the supplied save-request list: 2026-11-20 at 17:52:28 and 17:53:45 (displayed page time)
+- Later request shown in the same list: 2026-11-20 at 17:57:31, status `pending`
+- Archive visit status: **at least two successful visits confirmed by the supplied save-request list**
+- Exact archived snapshot / SWHID: **not yet recorded; must be copied from the successful visit details**
+- Archived repository revision: **not yet independently matched to a Git commit**
 
-An accepted save request is not proof that the repository has already been archived. Check the [Software Heritage save requests list](https://archive.softwareheritage.org/save/list/) for the visit result. Once a successful visit is confirmed, add the exact origin and snapshot SWHIDs and their official browse URLs here. Do not guess or fabricate identifiers.
+A successful visit confirms that Software Heritage processed an archival visit for this origin. It does not, by itself, identify which repository revision is represented by a particular snapshot. Do not guess or fabricate SWHIDs or claim that the latest pending request succeeded.
 
 ## Verification procedure
 
 1. Open the Software Heritage [save requests list](https://archive.softwareheritage.org/save/list/).
-2. Locate the origin URL above and inspect its latest status.
-3. If the visit succeeds, open the archived origin and record the exact SWHIDs shown by Software Heritage.
-4. Confirm the archived snapshot corresponds to the intended repository state before describing it as a preserved snapshot.
-5. Keep this record factual; update the status and identifiers only after independent verification.
+2. Open one of the successful entries for the origin above.
+3. Copy the exact snapshot SWHID and official browse URL from the visit details.
+4. If possible, verify the archived snapshot's revision against the intended Git commit.
+5. Update this record with the exact identifiers and revision only after checking the archive details.
 
 ## Attribution and scope
 
-This record documents the project's stated creator attribution and an archival request. It does not make repository history or attribution technically immutable, and it does not override the licenses or rights of third-party projects, contributors, names, logos, or trademarks. GitHub administrators and archive service policies remain outside this repository's control.
+This record documents the project's stated creator attribution and the successful visit statuses visible in the maintainer-provided Software Heritage save-request list. It does not make repository history or attribution technically immutable, and it does not override the licenses or rights of third-party projects, contributors, names, logos, or trademarks. GitHub administrators and archive service policies remain outside this repository's control.
