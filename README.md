@@ -10,8 +10,8 @@ A growing, independent directory for discovering practical open-source software.
 - Direct links to original GitHub repositories.
 - Mobile-responsive, accessible interface with reduced-motion support.
 - Curated, machine-readable project catalogue in `data/projects.json`.
-- A reviewed multi-host source registry for GitHub, GitLab.com, Codeberg/Forgejo, Gitea.com, npm and crates.io discovery; SourceHut is tracked as planned pending API verification.
-- Daily broad topic- and language-based discovery across public GitHub repositories, plus configured GitLab.com, Codeberg, Gitea.com, npm and crates.io searches, with optional explicitly configured public Forgejo/Gitea hosts; candidates enter a review queue and are never auto-published. GitHub and package-registry searches are paginated up to configured limits, not complete exports of every repository or package.
+- A reviewed multi-host source registry for GitHub, GitLab.com, Codeberg/Forgejo, Gitea.com, npm, crates.io and RubyGems discovery; NuGet and Maven Central are tracked as planned pending source-repository enrichment; SourceHut is tracked as planned pending API verification.
+- Daily broad topic- and language-based discovery across public GitHub repositories, plus configured GitLab.com, Codeberg, Gitea.com, npm, crates.io and RubyGems searches, with optional explicitly configured public Forgejo/Gitea hosts; candidates enter a review queue and are never auto-published. GitHub and package-registry searches are paginated up to configured limits, not complete exports of every repository or package.
 - Transparent review triage signals and a human checklist; automated scores never approve, reject or publish projects.
 - Duplicate-candidate hints based on canonical repository URLs and cautious name matching; no automatic merges or deletions.
 - Scheduled repository health snapshots for reachability, archived status and cautious inactivity hints; uncertain API results remain unknown.
