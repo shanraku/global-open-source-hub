@@ -12,6 +12,7 @@ A growing, independent directory for discovering practical open-source software.
 - Curated, machine-readable project catalogue in `data/projects.json`.
 - A reviewed multi-host source registry for GitHub, GitLab and Codeberg/Forgejo discovery.
 - Scheduled multi-host discovery for public GitHub, GitLab.com and Codeberg repositories; candidates enter a review queue and are never auto-published.
+- Transparent review triage signals and a human checklist; automated scores never approve, reject or publish projects.
 - Safe discovery rules: provenance, canonical URL/provider-ID duplicate detection, public-only access and human review before publication.
 - Clear methodology, contribution guidance and security policy.
 - No account, API key, application backend, analytics or tracking required by this static directory.
@@ -60,7 +61,7 @@ Use the contribution checklist in [CONTRIBUTING.md](CONTRIBUTING.md). Do not inv
 
 ## Global source discovery
 
-The source registry is in [data/source-registry.json](data/source-registry.json), discovery search seeds in [data/discovery-config.json](data/discovery-config.json), and pending candidates in [data/review-queue.json](data/review-queue.json). The scheduled workflow runs [scripts/discover-project-candidates.mjs](scripts/discover-project-candidates.mjs) weekly and on manual dispatch. Candidates require human review and are never automatically published. See [docs/DISCOVERY_SYSTEM.md](docs/DISCOVERY_SYSTEM.md) for limits and safeguards.
+The source registry is in [data/source-registry.json](data/source-registry.json), discovery search seeds in [data/discovery-config.json](data/discovery-config.json), and pending candidates in [data/review-queue.json](data/review-queue.json). The scheduled workflow runs [scripts/discover-project-candidates.mjs](scripts/discover-project-candidates.mjs) weekly and on manual dispatch. Candidates require human review and are never automatically published. See [docs/DISCOVERY_SYSTEM.md](docs/DISCOVERY_SYSTEM.md) for limits and safeguards. The optional triage script [scripts/score-review-candidates.mjs](scripts/score-review-candidates.mjs) annotates metadata signals; review criteria are in [docs/QUALITY_REVIEW.md](docs/QUALITY_REVIEW.md).
 
 ## Project policies
 
