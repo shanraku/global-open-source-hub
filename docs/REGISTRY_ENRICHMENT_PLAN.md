@@ -91,4 +91,4 @@ Do not fetch arbitrary URLs from package metadata. Any enrichment fetch must use
 
 ## Current status
 
-A first-pass NuGet `.nuspec` parser has been committed but is not integrated or tested. This plan does not activate NuGet, Maven Central, Go Modules, Hex or PyPI. Their entries remain planned in `data/source-registry.json`, and no claim is made that these ecosystems are already being automatically indexed.
+The NuGet V3 adapter, bounded package downloader, `.nuspec` parser and dormant discovery integration are committed. Static review tightened registration-leaf matching to the exact package/version path, skips versions marked unlisted, and fixed escaped-newline corruption in the parser source. These changes have not been runtime-tested; no tests, Actions workflows or deployment have been run. NuGet, Maven Central, Go Modules, Hex and PyPI remain planned in `data/source-registry.json`; no claim is made that these ecosystems are already being automatically indexed.
