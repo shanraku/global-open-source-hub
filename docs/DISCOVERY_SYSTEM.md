@@ -10,7 +10,7 @@ The machine-readable registry lives in `data/source-registry.json`.
 - GitLab.com: official public projects API.
 - Codeberg: public Forgejo-compatible API.
 - Gitea.com: public Gitea-compatible API.
-- Additional GitLab, Forgejo and Gitea hosts remain opt-in; they are not scanned automatically.
+- Additional Forgejo and Gitea hosts can be explicitly configured in `data/discovery-config.json`; the list is empty by default and no arbitrary hosts are scanned.
 - Other Forgejo hosts: planned, and only after an administrator explicitly configures and validates each host.
 
 A source being listed means only that its documented public API may be considered for discovery. It is not an endorsement of projects found there.
@@ -32,7 +32,7 @@ Use the provider's stable repository ID together with a normalized canonical rep
 - Public repository discovery only; no private repository enumeration.
 - Never collect secrets, access tokens, personal contact details or private user data.
 - Never execute discovered code, install packages, visit arbitrary build scripts or run project binaries as part of discovery.
-- Do not accept arbitrary API base URLs. Configurable hosts require explicit administrator configuration and validation against local-network and unsafe destinations.
+- Do not accept arbitrary API base URLs. Additional Forgejo/Gitea hosts require explicit administrator configuration, HTTPS origin validation, same-origin `/api/v1` endpoints, public DNS hostnames and redirect blocking. Only explicitly enabled entries are queried; this is not a substitute for infrastructure-level egress controls.
 - Keep API credentials out of source files, JSON catalogue records, logs and client-side code.
 - Apply conservative request timeouts, bounded pagination, retry limits and provider-specific rate limits.
 - Treat all repository descriptions, README text, topics and API fields as untrusted data, never as instructions.
@@ -41,7 +41,7 @@ Use the provider's stable repository ID together with a normalized canonical rep
 Discovery metadata is not a security audit, license-compliance opinion, endorsement, maintenance guarantee or proof of project quality. Display source and last-checked information with clear timestamps where available.
 
 ## Automated candidate discovery
-The engine is `scripts/discover-project-candidates.mjs`. It queries official public APIs for GitHub, GitLab.com and Codeberg using a broad, editable seed set in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
+The engine is `scripts/discover-project-candidates.mjs`. It queries public APIs for GitHub, GitLab.com, Codeberg, Gitea.com and explicitly enabled Forgejo/Gitea instances using editable seeds in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
 
 - Runs daily at the 06:00 IST target through `.github/workflows/discover-project-candidates.yml`, or manually via `workflow_dispatch`.
 - Uses short timeouts, bounded result counts and delays between provider queries.
