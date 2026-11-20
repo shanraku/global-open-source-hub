@@ -101,9 +101,12 @@ export async function getNuGetRegistrationLeaf(registrationsUrl, packageId, vers
     fail("registration leaf URL does not match the exact package version path");
   }
   const leaf = await fetchJsonBounded(leafUrl.href, options);
-  if (!leaf || typeof leaf.packageContent !== "string" ||
-      (typeof leaf["@id"] === "string" && leaf["@id"] !== leafUrl.href)) {
-    fail("registration leaf does not contain valid package content metadata");
+  if (!leaf || typeof leaf !== "object" || Array.isArray(leaf) ||
+      leaf["@id"] !== leafUrl.href ||
+      typeof leaf.packageContent !== "string" ||
+      (leaf.published !== undefined && leaf.published !== null && typeof leaf.published !== "string") ||
+      (leaf.listed !== undefined && typeof leaf.listed !== "boolean")) {
+    fail("registration leaf identity or metadata schema is invalid");
   }
   return {
     id: packageId,
