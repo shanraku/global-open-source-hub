@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { writeJsonIfChanged } from "./write-json-if-changed.mjs";
 
 const root = new URL("../", import.meta.url);
 const inventoryUrl = new URL("data/provenance-evidence.json", root);
@@ -70,5 +71,5 @@ const summary = {
   declared_cryptographically_verified_records: output.filter(item => item.status === "cryptographically_verified").length,
   note: "Declared verification levels are maintainer-supplied claims. Structural validation is not cryptographic verification or a trust guarantee."
 };
-await writeFile(reportUrl, JSON.stringify({ schema_version: 1, generated_at: checkedAt, summary, records: output, issues }, null, 2) + "\n");
+await writeJsonIfChanged(reportUrl, { schema_version: 1, generated_at: checkedAt, summary, records: output, issues });
 console.log(`Provenance evidence validation: ${summary.structurally_valid_records}/${summary.total_records} structurally valid; ${invalid} invalid. No artifact was downloaded or cryptographically verified.`);
