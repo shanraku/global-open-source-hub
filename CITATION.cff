@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: >-
+  If you use or reference Global Open Source Hub, please cite this project
+  and preserve its creator attribution.
+title: Global Open Source Hub
+type: software
+authors:
+  - family-names: SUNRAKU
+    given-names: ""
+    affiliation: Independent creator
+    website: https://github.com/shanraku
+repository-code: https://github.com/shanraku/global-open-source-hub
+url: https://shanraku.github.io/global-open-source-hub/
+license: MIT
