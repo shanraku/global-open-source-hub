@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "summary": {
+    "fetched_records": 0,
+    "new_candidates": 0,
+    "source_errors": 0,
+    "publication": "manual_review_required"
+  },
+  "candidates": []
+}
