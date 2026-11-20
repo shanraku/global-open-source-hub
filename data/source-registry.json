@@ -112,12 +112,12 @@
       "id": "configured-forgejo-instances",
       "name": "User-configured public Forgejo instances",
       "provider": "Forgejo-compatible hosts",
-      "status": "planned",
+      "status": "supported",
       "source_type": "configurable_forgejo_api",
       "base_url": null,
       "discovery_endpoint": "/api/v1/repos/search",
       "documentation_url": "https://forgejo.org/docs/latest/user/api-usage/",
-      "authentication": "Public endpoints only by default; credentials require a separate secure secret store and explicit configuration",
+      "authentication": "Public unauthenticated endpoints only; no credentials are sent to configured instances.",
       "pagination": "Respect each host's documented limits and robots or acceptable-use policies",
       "useful_fields": [
         "id",
@@ -131,9 +131,11 @@
         "archived"
       ],
       "constraints": [
-        "Host must be explicitly configured and validated",
-        "Reject private, local-network, loopback and otherwise unsafe targets",
-        "Never scan arbitrary hosts"
+        "Only explicitly enabled HTTPS hosts in data/discovery-config.json are queried",
+        "API and repository URLs must use the same configured host",
+        "Hostnames must be public DNS names; local, loopback and IP-literal targets are rejected",
+        "Redirects are blocked; network-level egress controls are still recommended",
+        "Each host must be reviewed by a maintainer before enabling"
       ]
     },
     {
