@@ -39,16 +39,16 @@ Use the provider's stable repository ID together with a normalized canonical rep
 Discovery metadata is not a security audit, license-compliance opinion, endorsement, maintenance guarantee or proof of project quality. Display source and last-checked information with clear timestamps where available.
 
 ## Automated candidate discovery
-The initial engine is `scripts/discover-project-candidates.mjs`. It queries the official public APIs for GitHub, GitLab.com and Codeberg using bounded search seeds from `data/discovery-config.json`.
+The engine is `scripts/discover-project-candidates.mjs`. It queries official public APIs for GitHub, GitLab.com and Codeberg using a broad, editable seed set in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
 
-- Runs weekly through `.github/workflows/discover-project-candidates.yml`, or manually via `workflow_dispatch`.
+- Runs daily at the 06:00 IST target through `.github/workflows/discover-project-candidates.yml`, or manually via `workflow_dispatch`.
 - Uses short timeouts, bounded result counts and delays between provider queries.
 - Supports an optional GitHub Actions token from the built-in `GITHUB_TOKEN` secret; no token is written to files.
 - Normalizes HTTPS repository URLs, checks provider IDs and existing catalogue/queue entries, and preserves discovery provenance.
 - Writes only to `data/review-queue.json`. It never edits `data/projects.json` or publishes candidates.
 - API failures are logged as source errors; successful sources can still contribute candidates.
 
-Search seeds are intentionally small and editable; discovery is not exhaustive. The first scheduled or manual execution has not yet been verified. Review queue contents as untrusted metadata before considering inclusion.
+Search seeds are broad and editable, but discovery is not exhaustive: GitHub search relevance ranking, the 1,000-result search ceiling, page caps, rate limits, indexing delays and query coverage prevent a guarantee that every public repository is found. Forks and archived repositories are not categorically excluded. The first scheduled or manual execution has not yet been verified. Review queue contents as untrusted metadata before considering inclusion.
 
 ## Current implementation boundary
 The automated candidate discovery engine and its workflow are committed. Runtime behavior, provider response compatibility, rate-limit behavior and Pages display have not yet been tested. Do not treat a successful commit as proof that an Actions run succeeded.
