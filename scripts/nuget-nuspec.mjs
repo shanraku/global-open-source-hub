@@ -147,6 +147,21 @@ function crc32(buffer) {
   return (value ^ 0xffffffff) >>> 0;
 }
 
+function validateExtraFields(buffer, start, length) {
+  const end = start + length;
+  if (end > buffer.length) fail("ZIP extra fields exceed archive bounds");
+  let offset = start;
+  while (offset < end) {
+    if (offset + 4 > end) fail("truncated ZIP extra field");
+    const id = buffer.readUInt16LE(offset);
+    const size = buffer.readUInt16LE(offset + 2);
+    offset += 4;
+    if (offset + size > end) fail("ZIP extra field exceeds declared bounds");
+    if (id === 0x0001) fail("ZIP64 extra fields are not supported");
+    offset += size;
+  }
+}
+
 function findEndOfCentralDirectory(buffer) {
   const min = Math.max(0, buffer.length - 22 - 0xffff);
   for (let i = buffer.length - 22; i >= min; i--) {
@@ -182,43 +197,66 @@ function extractNuspec(buffer) {
     const nameLength = buffer.readUInt16LE(offset + 28);
     const extraLength = buffer.readUInt16LE(offset + 30);
     const entryCommentLength = buffer.readUInt16LE(offset + 32);
+    const diskStart = buffer.readUInt16LE(offset + 34);
     const localOffset = buffer.readUInt32LE(offset + 42);
-    const end = offset + 46 + nameLength + extraLength + entryCommentLength;
+    const nameStart = offset + 46;
+    const extraStart = nameStart + nameLength;
+    const end = extraStart + extraLength + entryCommentLength;
     if (end > centralOffset + centralSize) fail("central directory entry exceeds bounds");
+    if (diskStart !== 0) fail("multi-disk ZIP entries are not supported");
     if (compressedSize === 0xffffffff || uncompressedSize === 0xffffffff || localOffset === 0xffffffff) fail("ZIP64 entries are not supported");
+    validateExtraFields(buffer, extraStart, extraLength);
     let name;
-    try { name = new TextDecoder("utf-8", { fatal: true }).decode(buffer.subarray(offset + 46, offset + 46 + nameLength)); }
+    try { name = new TextDecoder("utf-8", { fatal: true }).decode(buffer.subarray(nameStart, extraStart)); }
     catch { fail("invalid ZIP entry name encoding"); }
-    if (name.includes("\\") || name.startsWith("/") || name.split("/").includes("..")) fail("unsafe ZIP entry path");
-    if (name.toLowerCase().endsWith(".nuspec")) entries.push({ name, flags, method, expectedCrc, compressedSize, uncompressedSize, localOffset });
+    if (name.includes("\\") || name.includes("\0") || name.startsWith("/") || name.split("/").includes("..")) fail("unsafe ZIP entry path");
+    const allowedFlags = 0x0808 | (method === 8 ? 0x0006 : 0);
+    if ((flags & ~allowedFlags) !== 0 || ![0, 8].includes(method)) fail("encrypted or unsupported ZIP entry flags");
+    if (localOffset + 30 > centralOffset || buffer.readUInt32LE(localOffset) !== LOCAL_SIGNATURE) fail("invalid local ZIP header");
+    const localFlags = buffer.readUInt16LE(localOffset + 6);
+    const localMethod = buffer.readUInt16LE(localOffset + 8);
+    const localCrc = buffer.readUInt32LE(localOffset + 14);
+    const localCompressedSize = buffer.readUInt32LE(localOffset + 18);
+    const localUncompressedSize = buffer.readUInt32LE(localOffset + 22);
+    const localNameLength = buffer.readUInt16LE(localOffset + 26);
+    const localExtraLength = buffer.readUInt16LE(localOffset + 28);
+    const localNameStart = localOffset + 30;
+    const localExtraStart = localNameStart + localNameLength;
+    const dataStart = localExtraStart + localExtraLength;
+    const dataEnd = dataStart + compressedSize;
+    if (dataStart > centralOffset || dataEnd > centralOffset) fail("ZIP entry data exceeds archive bounds");
+    validateExtraFields(buffer, localExtraStart, localExtraLength);
+    let localName;
+    try { localName = new TextDecoder("utf-8", { fatal: true }).decode(buffer.subarray(localNameStart, localExtraStart)); }
+    catch { fail("invalid local ZIP entry name encoding"); }
+    if (localName !== name || localFlags !== flags || localMethod !== method) fail("local and central ZIP metadata differ");
+    const hasDataDescriptor = Boolean(flags & 0x0008);
+    if (!hasDataDescriptor && (localCrc !== expectedCrc || localCompressedSize !== compressedSize || localUncompressedSize !== uncompressedSize)) fail("local and central ZIP sizes or CRC differ");
+    if (hasDataDescriptor && !((localCrc === 0 && localCompressedSize === 0 && localUncompressedSize === 0) || (localCrc === expectedCrc && localCompressedSize === compressedSize && localUncompressedSize === uncompressedSize))) fail("invalid ZIP data descriptor header");
+    let rangeEnd = dataEnd;
+    if (hasDataDescriptor) {
+      let descriptorOffset = dataEnd;
+      if (descriptorOffset + 12 <= centralOffset && buffer.readUInt32LE(descriptorOffset) === 0x08074b50) descriptorOffset += 4;
+      if (descriptorOffset + 12 > centralOffset) fail("truncated ZIP data descriptor");
+      const descriptorCrc = buffer.readUInt32LE(descriptorOffset);
+      const descriptorCompressed = buffer.readUInt32LE(descriptorOffset + 4);
+      const descriptorUncompressed = buffer.readUInt32LE(descriptorOffset + 8);
+      if (descriptorCrc !== expectedCrc || descriptorCompressed !== compressedSize || descriptorUncompressed !== uncompressedSize) fail("invalid ZIP data descriptor");
+      rangeEnd = descriptorOffset + 12;
+    }
+    entries.push({ name, flags, method, expectedCrc, compressedSize, uncompressedSize, localOffset, dataStart, dataEnd, rangeEnd });
     offset = end;
   }
-  if (offset !== centralOffset + centralSize || entries.length !== 1) fail("expected exactly one .nuspec entry");
-  const entry = entries[0];
-  const allowedFlags = 0x0808 | (entry.method === 8 ? 0x0006 : 0);
-  if ((entry.flags & ~allowedFlags) !== 0 || ![0, 8].includes(entry.method)) fail("encrypted or unsupported ZIP entry flags");
+  if (offset !== centralOffset + centralSize) fail("invalid ZIP central directory length");
+  const ranges = [...entries].sort((a, b) => a.localOffset - b.localOffset);
+  for (let i = 0; i < ranges.length; i++) {
+    if (ranges[i].rangeEnd > (ranges[i + 1]?.localOffset ?? centralOffset)) fail("overlapping ZIP local entries");
+  }
+  const nuspecEntries = entries.filter(entry => entry.name.toLowerCase().endsWith(".nuspec"));
+  if (nuspecEntries.length !== 1) fail("expected exactly one .nuspec entry");
+  const entry = nuspecEntries[0];
   if (entry.uncompressedSize > MAX_NUSPEC_BYTES || entry.compressedSize > MAX_NUSPEC_BYTES || entry.uncompressedSize > entry.compressedSize * MAX_COMPRESSION_RATIO) fail("nuspec size or compression ratio exceeds limit");
-  const local = entry.localOffset;
-  if (local < 0 || local + 30 > centralOffset || buffer.readUInt32LE(local) !== LOCAL_SIGNATURE) fail("invalid local ZIP header");
-  const localFlags = buffer.readUInt16LE(local + 6);
-  const localMethod = buffer.readUInt16LE(local + 8);
-  const localCrc = buffer.readUInt32LE(local + 14);
-  const localCompressedSize = buffer.readUInt32LE(local + 18);
-  const localUncompressedSize = buffer.readUInt32LE(local + 22);
-  if (localFlags !== entry.flags || localMethod !== entry.method) fail("local and central ZIP flags or methods differ");
-  const hasDataDescriptor = Boolean(entry.flags & 0x0008);
-  if (!hasDataDescriptor && (localCrc !== entry.expectedCrc || localCompressedSize !== entry.compressedSize || localUncompressedSize !== entry.uncompressedSize)) fail("local and central ZIP sizes or CRC differ");
-  if (hasDataDescriptor && !((localCrc === 0 && localCompressedSize === 0 && localUncompressedSize === 0) || (localCrc === entry.expectedCrc && localCompressedSize === entry.compressedSize && localUncompressedSize === entry.uncompressedSize))) fail("invalid ZIP data descriptor header");
-  const localNameLength = buffer.readUInt16LE(local + 26);
-  const localExtraLength = buffer.readUInt16LE(local + 28);
-  const dataStart = local + 30 + localNameLength + localExtraLength;
-  const dataEnd = dataStart + entry.compressedSize;
-  if (dataStart > centralOffset || dataEnd > centralOffset) fail("compressed nuspec exceeds archive bounds");
-  let localName;
-  try { localName = new TextDecoder("utf-8", { fatal: true }).decode(buffer.subarray(local + 30, local + 30 + localNameLength)); }
-  catch { fail("invalid local ZIP entry name encoding"); }
-  if (localName !== entry.name) fail("local and central entry names differ");
-  const compressed = buffer.subarray(dataStart, dataEnd);
+  const compressed = buffer.subarray(entry.dataStart, entry.dataEnd);
   let result;
   try {
     result = entry.method === 0 ? Buffer.from(compressed) : inflateRawSync(compressed, { maxOutputLength: MAX_NUSPEC_BYTES });
@@ -229,6 +267,8 @@ function extractNuspec(buffer) {
   if (crc32(result) !== entry.expectedCrc) fail("nuspec CRC check failed");
   return result;
 }
+
+
 
 export function readNuGetRepositoryMetadata(archive) {
   const nuspec = extractNuspec(archive);
