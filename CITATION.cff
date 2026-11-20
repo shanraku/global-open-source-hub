@@ -5,8 +5,7 @@ message: >-
 title: Global Open Source Hub
 type: software
 authors:
-  - family-names: SUNRAKU
-    given-names: ""
+  - name: SUNRAKU
     affiliation: Independent creator
     website: https://github.com/shanraku
 repository-code: https://github.com/shanraku/global-open-source-hub
