@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "purpose": "Transparent triage signals to help a human reviewer prioritize candidates. This rubric is not a quality certification, security audit, legal opinion, or endorsement.",
+  "signals": {
+    "has_description": { "points": 1, "meaning": "A non-empty repository description is present." },
+    "has_topics": { "points": 1, "meaning": "One or more repository topics are present." },
+    "license_identifier_present": { "points": 1, "meaning": "The provider API reports an SPDX identifier; this does not prove license correctness or compliance." },
+    "recent_activity": { "points": 1, "meaning": "Provider-reported activity is within the last 365 days; this does not prove active maintenance." },
+    "documentation_evidence": { "points": 0, "meaning": "Must be checked manually from the original project; not inferred by this script." },
+    "security_evidence": { "points": 0, "meaning": "Must be checked separately; this system does not scan or certify security." }
+  },
+  "score_interpretation": {
+    "0-1": "Sparse public metadata; review manually if relevant.",
+    "2-3": "Some useful metadata signals; human review still required.",
+    "4": "More metadata signals are present; human review still required."
+  },
+  "hard_rules": [
+    "A score never auto-approves, rejects, ranks as best, or publishes a project.",
+    "Missing license metadata is unknown, not proof of an unlicensed project.",
+    "Stars and popularity are not quality or safety measures.",
+    "A stale activity date is a prompt for review, not proof of abandonment.",
+    "Always inspect the original repository, documentation, license file, contribution activity and project purpose before inclusion."
+  ]
+}
