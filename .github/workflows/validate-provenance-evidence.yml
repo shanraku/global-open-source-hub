@@ -1,0 +1,43 @@
+name: Validate software provenance evidence
+
+on:
+  push:
+    paths:
+      - "data/provenance-evidence.json"
+      - "scripts/validate-provenance-evidence.mjs"
+      - ".github/workflows/validate-provenance-evidence.yml"
+  schedule:
+    - cron: "19 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: provenance-evidence-validation
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate provenance evidence metadata
+        run: node scripts/validate-provenance-evidence.mjs
+      - name: Commit validation report when changed
+        run: |
+          if git diff --quiet -- data/provenance-validation.json; then
+            echo "No provenance validation report changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/provenance-validation.json
+          git commit -m "chore: refresh provenance evidence validation"
+          git push
