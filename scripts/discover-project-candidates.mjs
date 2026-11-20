@@ -42,7 +42,7 @@ function canonical(raw) {
     const u = new URL(raw);
     if (u.protocol !== "https:" || !allowedRepositoryHosts.has(u.hostname.toLowerCase())) return null;
     u.hostname = u.hostname.toLowerCase();
-    u.pathname = u.pathname.replace(/\\.git$/i, "").replace(/\\/+$/, "");
+    u.pathname = u.pathname.replace(/\.git$/i, "").replace(/\/+$/, "");
     u.search = ""; u.hash = "";
     return u.toString();
   } catch { return null; }
@@ -118,6 +118,28 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
         const data = await getJson(url);
         for (const r of data || []) add("GitLab", r.id, r.path_with_namespace, r.web_url, r.description, r.topics, r.star_count, r.last_activity_at, null);
         fetched += (data || []).length;
+      } else if (source.provider === "npm") {
+        const url = new URL("https://registry.npmjs.org/-/v1/search");
+        url.searchParams.set("text", term);
+        url.searchParams.set("size", "30");
+        url.searchParams.set("from", "0");
+        const data = await getJson(url);
+        for (const item of data.objects || []) {
+          const p = item.package || {};
+          const repoUrl = p.links?.repository || p.repository?.url || "";
+          add("npm", p.name, p.name, repoUrl, p.description, p.keywords, null, p.date || null, p.license || null);
+        }
+        fetched += (data.objects || []).length;
+      } else if (source.provider === "crates.io") {
+        const url = new URL("https://crates.io/api/v1/crates");
+        url.searchParams.set("q", term);
+        url.searchParams.set("per_page", "30");
+        url.searchParams.set("page", "1");
+        const data = await getJson(url, { ...headers, "User-Agent": "global-open-source-hub-discovery/1.0 (public metadata index)" });
+        for (const item of data.crates || []) {
+          add("crates.io", item.id, item.id, item.repository || "", item.description, item.categories || item.keywords, null, item.updated_at || null, item.license || null);
+        }
+        fetched += (data.crates || []).length;
       } else if (source.provider === "Codeberg / Forgejo" || source.provider === "Gitea.com") {
         const url = new URL(`${source.base_url}${source.discovery_endpoint}`);
         url.searchParams.set("q", term); url.searchParams.set("limit", "30");
