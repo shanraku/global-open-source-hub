@@ -150,6 +150,15 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
           add("RubyGems", gem.name, gem.name, repoUrl, gem.info, gem.metadata?.keywords ? String(gem.metadata.keywords).split(/[ ,]+/) : [], null, gem.version_created_at || null, Array.isArray(gem.licenses) ? gem.licenses.join(" OR ") : null);
         }
         fetched += (data || []).length;
+      } else if (source.provider === "Packagist") {
+        const url = new URL("https://packagist.org/search.json");
+        url.searchParams.set("q", term);
+        url.searchParams.set("per_page", "30");
+        const data = await getJson(url);
+        for (const pkg of data.results || []) {
+          add("Packagist", pkg.name, pkg.name, pkg.repository || "", pkg.description, [], null, null, null);
+        }
+        fetched += (data.results || []).length;
       } else if (source.provider === "Codeberg / Forgejo" || source.provider === "Gitea.com") {
         const url = new URL(`${source.base_url}${source.discovery_endpoint}`);
         url.searchParams.set("q", term); url.searchParams.set("limit", "30");
