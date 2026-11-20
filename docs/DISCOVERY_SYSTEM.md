@@ -10,8 +10,11 @@ The machine-readable registry lives in `data/source-registry.json`.
 - GitLab.com: official public projects API.
 - Codeberg: public Forgejo-compatible API.
 - Gitea.com: public Gitea-compatible API.
+- SourceHut: planned only; public discovery API and anonymous access require verification before automation.
 - Additional Forgejo and Gitea hosts can be explicitly configured in `data/discovery-config.json`; the list is empty by default and no arbitrary hosts are scanned.
 - Other Forgejo hosts: planned, and only after an administrator explicitly configures and validates each host.
+
+SourceHut is registered as planned only. Its current public discovery API, anonymous access, pagination and acceptable-use limits must be confirmed before any automated integration. The status page is service-health information, not a project index. Do not scrape pages or bypass access controls.
 
 A source being listed means only that its documented public API may be considered for discovery. It is not an endorsement of projects found there.
 
