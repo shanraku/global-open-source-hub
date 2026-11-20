@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { writeJsonIfChanged } from "./write-json-if-changed.mjs";
 
 const root = new URL("../", import.meta.url);
 const inventoryUrl = new URL("data/sbom-inventory.json", root);
@@ -86,5 +87,5 @@ const output = {
   },
   packages: results
 };
-await writeFile(outputUrl, JSON.stringify(output, null, 2) + "\n");
+await writeJsonIfChanged(outputUrl, output);
 console.log(`SBOM dependency check: ${successful} package versions checked, ${failed} unknown, ${vulnerabilities} advisory matches. No dependencies were installed or executed.`);
