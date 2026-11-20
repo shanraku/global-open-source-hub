@@ -293,3 +293,9 @@ test("rejects invalid stream chunks and unsafe configured byte limits", async ()
 test("rejects non-200 or redirected responses", async () => {
   await assert.rejects(readBoundedNuGetResponse({ status: 302, redirected: true }), /unexpected HTTP response/);
 });
+
+test("rejects repository attributes without required separating whitespace", () => {
+  const xml = '<package><metadata><repository type="git"url="https://github.com/example/project"/></metadata></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /separated by whitespace/);
+});
