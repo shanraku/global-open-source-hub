@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "queries": {
+    "GitHub": ["privacy tools", "developer utilities", "accessibility tools", "open source education"],
+    "GitLab": ["privacy tools", "developer utilities", "accessibility"],
+    "Codeberg / Forgejo": ["privacy tools", "developer utilities", "accessibility"]
+  },
+  "limits": {
+    "max_results_per_query": 30,
+    "minimum_delay_between_queries_ms": 1200,
+    "review_required": true
+  },
+  "notes": [
+    "Queries are discovery seeds, not an exhaustive list of topics.",
+    "Only public metadata from the explicitly supported providers is queried.",
+    "Candidates are never added to data/projects.json automatically."
+  ]
+}
