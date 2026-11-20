@@ -1,4 +1,5 @@
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, mkdir } from "node:fs/promises";
+import { writeJsonIfChanged } from "./write-json-if-changed.mjs";
 import { dirname } from "node:path";
 
 const root = new URL("../", import.meta.url);
@@ -102,5 +103,5 @@ const output = {
   candidates
 };
 await mkdir(dirname(new URL(outputUrl).pathname), { recursive: true });
-await writeFile(outputUrl, JSON.stringify(output, null, 2) + "\n");
+await writeJsonIfChanged(outputUrl, output);
 console.log(`Discovery finished: ${fetched} records scanned, ${added} new candidates, ${errors} source errors. Nothing was auto-published.`);
