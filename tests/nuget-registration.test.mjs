@@ -51,6 +51,7 @@ test("searches with bounded pagination and excludes prereleases", async t => {
   assert.equal(requested.searchParams.get("take"), "10");
   assert.equal(requested.searchParams.get("skip"), "20");
   assert.equal(requested.searchParams.get("prerelease"), "false");
+  assert.equal(requested.searchParams.get("semVerLevel"), "2.0.0");
   assert.equal(result[0].id, "Example.Package");
 });
 
@@ -58,52 +59,51 @@ test("rejects search pagination outside configured limits", async () => {
   await assert.rejects(searchNuGetPackages("https://api-v2v3search-0.nuget.org/query", "x", { take: 100 }), /pagination/);
 });
 
-test("finds only the exact package version in registration metadata", async t => {
+test("fetches only the exact registration leaf URL supplied for the package version", async t => {
+  const leafUrl = "https://api.nuget.org/v3/registration6-gz-semver2/example.package/1.2.3.json";
   const calls = [];
   globalThis.fetch = async url => {
     calls.push(String(url));
     return jsonResponse({
-      count: 1,
-      items: [{
-        count: 1,
-        items: [{
-          packageContent: "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg",
-          published: "2025-01-01T00:00:00Z",
-          listed: true,
-          catalogEntry: { id: "Example.Package", version: "1.2.3", projectUrl: "https://example.org/" }
-        }]
-      }]
+      "@id": leafUrl,
+      packageContent: "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg",
+      published: "2025-01-01T00:00:00Z",
+      listed: true
     });
   };
   t.after(() => { globalThis.fetch = originalFetch; });
-  const leaf = await getNuGetRegistrationLeaf("https://api.nuget.org/v3/registration6-gz-semver2/", "Example.Package", "1.2.3");
+  const leaf = await getNuGetRegistrationLeaf(
+    "https://api.nuget.org/v3/registration6-gz-semver2/",
+    "Example.Package",
+    "1.2.3",
+    { leafUrl }
+  );
   assert.equal(leaf.id, "Example.Package");
   assert.equal(leaf.version, "1.2.3");
-  assert.equal(leaf.projectUrl, "https://example.org/");
+  assert.equal(leaf.packageContent.includes("example.package"), true);
   assert.equal(calls.length, 1);
-  assert.match(calls[0], /example\.package\/index\.json$/);
+  assert.equal(calls[0], leafUrl);
 });
 
-test("does not fetch registration page URLs outside the official registration origin", async t => {
-  const calls = [];
-  globalThis.fetch = async url => {
-    calls.push(String(url));
-    return jsonResponse({
-      items: [{
-        "@id": "https://evil.example/payload.json",
-        lower: "1.0.0",
-        upper: "9.0.0"
-      }]
-    });
-  };
-  t.after(() => { globalThis.fetch = originalFetch; });
-  const leaf = await getNuGetRegistrationLeaf("https://api.nuget.org/v3/registration6-gz-semver2/", "Example.Package", "1.2.3");
-  assert.equal(leaf, null);
-  assert.equal(calls.length, 1);
+test("rejects registration leaf URLs outside the official registration path", async () => {
+  await assert.rejects(
+    getNuGetRegistrationLeaf(
+      "https://api.nuget.org/v3/registration6-gz-semver2/",
+      "Example.Package",
+      "1.2.3",
+      { leafUrl: "https://api.nuget.org/v3/catalog0/payload.json" }
+    ),
+    /outside the discovered package registration path/
+  );
 });
 
-test("rejects excessive registration page counts", async t => {
-  globalThis.fetch = async () => jsonResponse({ items: Array.from({ length: 9 }, () => ({ items: [] })) });
-  t.after(() => { globalThis.fetch = originalFetch; });
-  await assert.rejects(getNuGetRegistrationLeaf("https://api.nuget.org/v3/registration6-gz-semver2/", "Example.Package", "1.2.3"), /excessive pages/);
+test("requires an exact registration leaf URL", async () => {
+  await assert.rejects(
+    getNuGetRegistrationLeaf(
+      "https://api.nuget.org/v3/registration6-gz-semver2/",
+      "Example.Package",
+      "1.2.3"
+    ),
+    /exact registration leaf URL/
+  );
 });
