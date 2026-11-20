@@ -35,7 +35,7 @@ Do not fetch arbitrary URLs from package metadata. Any enrichment fetch must use
 - Parse XML with entity expansion/external entities disabled. Require a single unambiguous `<repository type="git" url="...">` value. Treat the URL as untrusted and pass it through the existing HTTPS source-host allowlist and canonicalizer. Reject missing, conflicting, non-git, malformed, unsupported-host or non-repository values.
 - A `.nuspec` may omit repository metadata or contain stale/incorrect values. Even a valid explicit link is only a lead for human review, not proof that the package was built from that repository or that the repository is safe.
 - Retain package ID, version, canonical NuGet package URL, exact `.nuspec` metadata evidence (`repository/@type` and `repository/@url`), and the source package-content URL as provenance. If only `projectUrl` exists, skip candidate creation.
-- Keep this provider `planned` until the bounded ZIP/XML parser, URL-origin validation and fixtures for malformed/malicious archives are implemented and explicitly tested.
+- A first-pass bounded ZIP/.nuspec metadata parser now exists at `scripts/nuget-nuspec.mjs`. It supports stored/deflate entries, caps archive and metadata sizes, rejects encrypted/multi-disk/unsupported archives, requires exactly one `.nuspec`, rejects DTD/entity declarations, and accepts only one explicit `repository type=git` element. This parser is not yet wired into discovery, does not fetch packages, and has not been tested. Before integration, add adversarial fixtures, verify ZIP integrity/header consistency, validate the official package-content origin and implement bounded package downloads. Keep this provider `planned` until those checks and the full adapter are explicitly tested.
 
 ### Maven Central
 
@@ -91,4 +91,4 @@ Do not fetch arbitrary URLs from package metadata. Any enrichment fetch must use
 
 ## Current status
 
-This plan does not activate NuGet, Maven Central, Go Modules, Hex or PyPI. Their entries remain planned in `data/source-registry.json`, and no claim is made that these ecosystems are already being automatically indexed.
+A first-pass NuGet `.nuspec` parser has been committed but is not integrated or tested. This plan does not activate NuGet, Maven Central, Go Modules, Hex or PyPI. Their entries remain planned in `data/source-registry.json`, and no claim is made that these ecosystems are already being automatically indexed.
