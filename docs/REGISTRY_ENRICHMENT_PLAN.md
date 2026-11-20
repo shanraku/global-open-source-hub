@@ -1,0 +1,91 @@
+# Package registry source-repository enrichment plan
+
+## Purpose
+
+Expand discovery beyond the currently supported registries without mistaking a package page, homepage, namespace, or vanity import path for an original source repository.
+
+This document is an implementation gate. A registry remains `planned` until its API behavior, acceptable-use policy, source-link semantics, bounded pagination and error handling are reviewed and the integration is implemented and tested.
+
+## Universal acceptance contract
+
+A package search result is a discovery lead, not automatically a repository candidate.
+
+A record may enter `data/review-queue.json` only when all of these conditions hold:
+
+1. The registry result came from its documented public API.
+2. The package identifier and registry URL are retained as provenance.
+3. An explicit source-control URL is obtained from documented package metadata or a documented metadata file.
+4. The source URL is HTTPS, has no credentials or non-standard port, and resolves to an approved source-host allowlist.
+5. The URL is normalized and deduplicated using the same canonical repository and provider-ID checks as other sources.
+6. The candidate records the registry provider, package identifier, source metadata field/path, discovery timestamp and the original repository URL.
+7. Missing, ambiguous, conflicting or unsupported source links are skipped and counted; they are never guessed.
+8. Candidates remain pending human review. No registry result is added directly to `data/projects.json`.
+
+Do not fetch arbitrary URLs from package metadata. Any enrichment fetch must use a fixed, provider-owned API origin and a narrowly validated path. Block redirects, impose timeouts and response-size limits, and never execute package contents or build scripts.
+
+## Provider-specific design
+
+### NuGet.org
+
+- Use the official V3 service index to discover the current Search Query Service endpoint; do not hardcode a service endpoint if the service index is intended to be authoritative.
+- Search with bounded `skip`/`take` values and conservative request pacing.
+- Treat `projectUrl` as a project homepage or landing page, not proof of a source repository.
+- Prefer documented repository metadata from the package's registration/catalog metadata when available, and inspect the repository type/URL fields rather than guessing from package ID.
+- If only a homepage exists, skip repository-candidate creation.
+- Retain package ID, version, registry URL, repository metadata evidence and any ambiguity note.
+
+### Maven Central
+
+- Use the official Search REST API with bounded `rows` and `start` values.
+- Artifact coordinates, SCM URL strings and POM metadata are separate evidence fields.
+- If SCM metadata enrichment is implemented, obtain POM content only from a fixed Maven Central-controlled artifact endpoint derived from validated group/artifact/version coordinates. Encode path segments safely; reject traversal and unexpected hosts.
+- Parse the POM's `scm` connection/developerConnection/url fields as untrusted metadata. Accept only an explicit HTTPS browseable repository URL on an approved host. Do not infer a repository from group IDs, artifact IDs, organization names or homepage URLs.
+- Handle parent POMs and missing SCM metadata conservatively; do not recursively crawl arbitrary POM references.
+- Retain coordinates, selected version, POM artifact URL and the exact SCM field used.
+
+### Go Module Index
+
+- Treat the official index as an incremental module/version feed, not a source repository API.
+- Preserve module path, version and timestamp as feed provenance.
+- Do not convert module paths into GitHub/GitLab URLs. Vanity import domains and custom VCS mappings make that unsafe.
+- A future resolver must use a documented, bounded, non-executing metadata mechanism and explicit host validation. If source ownership cannot be established, keep the item as an unresolved registry lead or skip it; do not queue a guessed repository.
+
+### Hex.pm
+
+- Use only documented public search and package metadata endpoints.
+- Confirm the current response schema and pagination behavior before enabling the provider.
+- Read explicit source-code links from package metadata only. Do not substitute documentation, homepage or package-page URLs.
+- Accept only approved HTTPS repository hosts; skip ambiguous or absent links.
+- Do not access private endpoints or send credentials.
+
+### PyPI
+
+- Do not enumerate or download the full Simple Index as a discovery shortcut.
+- Use bounded, targeted project lookups only when a relevant package name is already known from a curated seed or another trusted public source.
+- Treat project URLs and classifiers as metadata, not source proof.
+- Accept an explicit source repository URL only when its field semantics are clear and the URL passes the common allowlist. A homepage alone is insufficient.
+- Preserve the PyPI project name/version and exact metadata field used.
+
+## Error and quality behavior
+
+- One provider or package failure must not erase candidates from successful providers.
+- Distinguish `not_found`, `no_source_link`, `ambiguous_source_link`, `unsupported_host`, `rate_limited`, `provider_error` and `invalid_metadata` in logs or provider summaries.
+- Do not convert missing counts to zero or report partial results as exhaustive.
+- Avoid logging full untrusted metadata or query strings that may contain sensitive values.
+- Keep requests serial and bounded initially; optimize only after observing documented limits and successful workflow runs.
+- Record a source-check timestamp and the registry's canonical package URL so maintainers can revisit stale evidence.
+
+## Rollout checklist
+
+- [ ] Verify official API documentation and acceptable-use terms immediately before implementation.
+- [ ] Add a planned registry entry with documentation and explicit limitations.
+- [ ] Implement a provider adapter with fixed origins and bounded pagination.
+- [ ] Add unit fixtures for valid, missing, ambiguous, malicious and unsupported repository URLs.
+- [ ] Add URL validation tests for credentials, ports, redirects, non-HTTPS schemes, IP literals and lookalike domains.
+- [ ] Confirm failures preserve existing queue data and successful provider results.
+- [ ] Run the workflow manually and inspect the generated queue before enabling the daily schedule for that provider.
+- [ ] Keep the provider marked planned until all checks pass.
+
+## Current status
+
+This plan does not activate NuGet, Maven Central, Go Modules, Hex or PyPI. Their entries remain planned in `data/source-registry.json`, and no claim is made that these ecosystems are already being automatically indexed.
