@@ -299,3 +299,22 @@ test("rejects repository attributes without required separating whitespace", () 
   const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
   assert.throws(() => readNuGetRepositoryMetadata(archive), /separated by whitespace/);
 });
+
+test("rejects NUL bytes in ZIP entry names", () => {
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' }]);
+  const central = archive.indexOf(Buffer.from([0x50, 0x4b, 0x01, 0x02]));
+  archive[central + 46 + 2] = 0;
+  archive[30 + 2] = 0;
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /unsafe ZIP entry path/);
+});
+
+test("rejects duplicate local offsets and overlapping ZIP entries", () => {
+  const archive = makeZip([
+    { name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' },
+    { name: "content.txt", content: "harmless" }
+  ]);
+  const firstCentral = archive.indexOf(Buffer.from([0x50, 0x4b, 0x01, 0x02]));
+  const secondCentral = archive.indexOf(Buffer.from([0x50, 0x4b, 0x01, 0x02]), firstCentral + 4);
+  archive.writeUInt32LE(archive.readUInt32LE(firstCentral + 42), secondCentral + 42);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /overlapping ZIP local entries/);
+});
