@@ -200,6 +200,8 @@
     "Forks are not excluded by default because useful independent work can exist in forks; duplicates are handled as review hints.",
     "Archived repositories remain discoverable and must be labelled accurately during review.",
     "Only public repository metadata is collected. Private repositories and private user data are out of scope.",
-    "Candidates are never added to the public catalogue automatically."
-  ]
+    "Candidates are never added to the public catalogue automatically.",
+    "Additional Forgejo/Gitea instances are opt-in. Add only reviewed public hosts with HTTPS origin URLs and public unauthenticated API access. Empty by default."
+  ],
+  "additional_public_instances": []
 }
