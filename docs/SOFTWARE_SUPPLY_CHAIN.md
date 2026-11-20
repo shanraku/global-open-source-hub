@@ -26,3 +26,10 @@ Only exact version matches supplied by the inventory are checked. Results are wr
 
 ## Important limitations
 This checker does not discover dependencies, parse arbitrary lockfiles, generate SBOMs, verify signatures, validate package provenance, detect typosquatting or malware, scan containers, or assess exploitability. It is not a security audit or compliance certification. A match is an investigation lead, not a final verdict.
+
+ 
+## Release provenance and integrity evidence
+
+The Hub also maintains `data/provenance-evidence.json` for reviewed release evidence: artifact version, SHA-256 digest, source repository/commit, provenance attestation URL and optional signature reference. The validator checks record structure and writes `data/provenance-validation.json`.
+
+This validation is metadata-only. It does not download artifacts, recompute digests, verify signatures, or validate SLSA/in-toto attestations. A declared verification status is not independently proven by the validator. See [PROVENANCE_AND_INTEGRITY.md](PROVENANCE_AND_INTEGRITY.md).
