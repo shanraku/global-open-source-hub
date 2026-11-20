@@ -97,9 +97,9 @@ export async function getNuGetRegistrationLeaf(registrationsUrl, packageId, vers
   if (!base.pathname.endsWith("/") || typeof options.leafUrl !== "string") fail("an exact registration leaf URL from search metadata is required");
 
   const leafUrl = safeNuGetResourceUrl(options.leafUrl);
-  const expectedPrefix = base.pathname + encodeURIComponent(id) + "/";
-  if (leafUrl.origin !== base.origin || !leafUrl.pathname.startsWith(expectedPrefix)) {
-    fail("registration leaf URL is outside the discovered package registration path");
+  const expectedPath = base.pathname + encodeURIComponent(id) + "/" + encodeURIComponent(version.toLowerCase()) + ".json";
+  if (leafUrl.origin !== base.origin || leafUrl.pathname !== expectedPath) {
+    fail("registration leaf URL does not match the exact package version path");
   }
   const leaf = await fetchJsonBounded(leafUrl.href, options);
   if (!leaf || typeof leaf.packageContent !== "string" ||
