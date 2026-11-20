@@ -39,7 +39,11 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
       if (seen.has(packageKey)) continue;
       seen.add(packageKey);
       try {
-        const registration = await getNuGetRegistrationLeaf(resources.registrationsUrl, id, version, options);
+        const versionEntry = Array.isArray(pkg.versions)
+          ? pkg.versions.find(item => typeof item?.version === "string" && item.version.toLowerCase() === String(version).toLowerCase() && typeof item["@id"] === "string")
+          : null;
+        if (!versionEntry) continue;
+        const registration = await getNuGetRegistrationLeaf(resources.registrationsUrl, id, version, { ...options, leafUrl: versionEntry["@id"] });
         if (!registration || typeof registration.packageContent !== "string") continue;
         const archive = await downloadNuGetPackageArchive(registration.packageContent, id, version, options);
         const metadata = readNuGetRepositoryMetadata(archive);
@@ -56,7 +60,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
           repository_metadata_type_path: metadata.metadata_type_path,
           repository_type: metadata.repository_type,
           published_at: registration.published,
-          project_url: registration.projectUrl,
+          project_url: typeof pkg.projectUrl === "string" ? pkg.projectUrl : null,
           description: typeof pkg.description === "string" ? pkg.description.slice(0, 500) : "",
           tags: Array.isArray(pkg.tags) ? pkg.tags.slice(0, 12) : []
         });
