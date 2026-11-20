@@ -137,3 +137,57 @@ test("requires an exact registration leaf URL", async () => {
     /exact registration leaf URL/
   );
 });
+
+test("rejects a registration response with a missing leaf identity", async t => {
+  const leafUrl = "https://api.nuget.org/v3/registration6-gz-semver2/example.package/1.2.3.json";
+  globalThis.fetch = async () => jsonResponse({
+    packageContent: "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg"
+  });
+  t.after(() => { globalThis.fetch = originalFetch; });
+  await assert.rejects(
+    getNuGetRegistrationLeaf(
+      "https://api.nuget.org/v3/registration6-gz-semver2/",
+      "Example.Package",
+      "1.2.3",
+      { leafUrl }
+    ),
+    /identity or metadata schema/
+  );
+});
+
+test("rejects a registration response with a mismatched leaf identity", async t => {
+  const leafUrl = "https://api.nuget.org/v3/registration6-gz-semver2/example.package/1.2.3.json";
+  globalThis.fetch = async () => jsonResponse({
+    "@id": leafUrl.replace("1.2.3.json", "9.9.9.json"),
+    packageContent: "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg"
+  });
+  t.after(() => { globalThis.fetch = originalFetch; });
+  await assert.rejects(
+    getNuGetRegistrationLeaf(
+      "https://api.nuget.org/v3/registration6-gz-semver2/",
+      "Example.Package",
+      "1.2.3",
+      { leafUrl }
+    ),
+    /identity or metadata schema/
+  );
+});
+
+test("rejects non-boolean listed metadata", async t => {
+  const leafUrl = "https://api.nuget.org/v3/registration6-gz-semver2/example.package/1.2.3.json";
+  globalThis.fetch = async () => jsonResponse({
+    "@id": leafUrl,
+    packageContent: "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg",
+    listed: "false"
+  });
+  t.after(() => { globalThis.fetch = originalFetch; });
+  await assert.rejects(
+    getNuGetRegistrationLeaf(
+      "https://api.nuget.org/v3/registration6-gz-semver2/",
+      "Example.Package",
+      "1.2.3",
+      { leafUrl }
+    ),
+    /identity or metadata schema/
+  );
+});
