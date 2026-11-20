@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": null,
+  "generated_at": "2026-11-20T10:37:06.375Z",
   "summary": {
     "total_records": 0,
     "structurally_valid_records": 0,
@@ -8,7 +8,7 @@
     "unverified_records": 0,
     "manually_reviewed_records": 0,
     "declared_cryptographically_verified_records": 0,
-    "note": "Initial empty report; no release artifact evidence has been submitted."
+    "note": "Declared verification levels are maintainer-supplied claims. Structural validation is not cryptographic verification or a trust guarantee."
   },
   "records": [],
   "issues": []
