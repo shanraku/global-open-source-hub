@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "description": "Reviewed package/version inventory derived from SPDX or CycloneDX SBOM documents. Empty until maintainers add verified SBOM components.",
+  "accepted_sbom_formats": [
+    "SPDX JSON",
+    "CycloneDX JSON"
+  ],
+  "package_limit": 1000,
+  "packages": [],
+  "policy": {
+    "require_exact_version": true,
+    "require_ecosystem_and_name": true,
+    "require_source_sbom_reference": true,
+    "allowed_ecosystems": [
+      "npm",
+      "PyPI",
+      "Go",
+      "crates.io",
+      "Maven",
+      "NuGet",
+      "Packagist",
+      "RubyGems",
+      "Hex",
+      "Pub",
+      "Linux"
+    ],
+    "never_execute_or_install_components": true,
+    "manual_review_required": true
+  }
+}
