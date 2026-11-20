@@ -1,2 +1,67 @@
-# global-open-source-hub
-An open-source directory to discover AI tools for everyone
+# Global Open Source Hub
+
+**Useful projects. Open to everyone.**
+
+A growing, independent directory for discovering practical open-source software. Explore projects, inspect their original source repositories, learn how they work and contribute improvements.
+
+## What is included
+
+- Searchable project directory with category filters and A–Z sorting.
+- Direct links to original GitHub repositories.
+- Mobile-responsive, accessible interface with reduced-motion support.
+- Curated, machine-readable project catalogue in `data/projects.json`.
+- Clear methodology, contribution guidance and security policy.
+- No account, API key, application backend, analytics or tracking required by this static directory.
+
+## Browse the current catalogue
+
+The starter catalogue includes projects for:
+- AI tools and model/API discovery
+- Developer utilities and JSON
+- Markdown writing
+- Colour design and accessibility
+- Password and Bitcoin safety education
+
+See `data/projects.json` for the current entries. This is a curated starter collection, not a complete index of every open-source project worldwide. Each listing links to its original repository; check that repository for current features, license, releases and security information.
+
+## Run locally
+
+Requires a modern browser. Serve the repository using any static file server; for example:
+
+```bash
+python -m http.server 8000
+```
+
+Open `http://localhost:8000`.
+
+The directory fetches its catalogue from `data/projects.json`, so use a local server rather than opening the HTML file directly.
+
+## Publish with GitHub Pages
+
+1. Open this repository's **Settings → Pages**.
+2. Under **Build and deployment**, choose **Deploy from a branch**.
+3. Select the `main` branch and `/(root)` folder, then save.
+4. Wait for GitHub Pages to publish and use the URL shown in Settings → Pages.
+
+Publishing is not configured or verified by this repository change.
+
+## Update the directory
+
+Edit `data/projects.json` and add a project object with:
+- `name`, `category`, `description`
+- `repository` (the original public repository URL)
+- `tags` (short search keywords)
+- `order` (display order)
+
+Use the contribution checklist in [CONTRIBUTING.md](CONTRIBUTING.md). Do not invent release dates, popularity numbers, safety claims or licensing conclusions.
+
+## Project policies
+
+- [Methodology](docs/METHODOLOGY.md)
+- [Contributing](CONTRIBUTING.md)
+- [Security](SECURITY.md)
+
+## License
+
+MIT. See [LICENSE](LICENSE). Third-party names, code, logos and trademarks remain the property of their respective owners. Listing a project does not imply endorsement.
+
