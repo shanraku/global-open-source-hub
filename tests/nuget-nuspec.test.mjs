@@ -130,3 +130,16 @@ test("rejects malformed ZIP input", () => {
 test("rejects archives larger than the configured hard cap", () => {
   assert.throws(() => readNuGetRepositoryMetadata(Buffer.alloc(8 * 1024 * 1024 + 1)), /size is outside/);
 });
+
+test("rejects a nuspec whose ZIP CRC does not match its contents", () => {
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><repository type="git" url="https://github.com/a/b"/></package>' }]);
+  const central = archive.indexOf(Buffer.from([0x50, 0x4b, 0x01, 0x02]));
+  archive.writeUInt32LE(0x12345678, central + 16);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /CRC/);
+});
+
+test("rejects mismatched local and central ZIP flags", () => {
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><repository type="git" url="https://github.com/a/b"/></package>' }]);
+  archive.writeUInt16LE(1, 6);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /local and central ZIP metadata differ/);
+});
