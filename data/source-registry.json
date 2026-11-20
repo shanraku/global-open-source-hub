@@ -165,6 +165,32 @@
         "Gitea.com is one host, not the entire Gitea ecosystem",
         "Do not assume arbitrary Gitea instances permit anonymous discovery"
       ]
+    },
+    {
+      "id": "sourcehut-public-projects",
+      "name": "SourceHut public projects",
+      "provider": "SourceHut",
+      "status": "planned",
+      "source_type": "api_schema_and_anonymous_access_review_required",
+      "base_url": "https://meta.sr.ht",
+      "discovery_endpoint": null,
+      "documentation_url": "https://man.sr.ht/",
+      "status_url": "https://status.sr.ht/",
+      "authentication": "Do not send credentials. Anonymous public project discovery must be confirmed before enabling.",
+      "pagination": "Not configured; confirm official API pagination and rate-limit behavior first.",
+      "useful_fields": [
+        "public_project_identifier",
+        "canonical_project_url",
+        "description",
+        "source_repository_url",
+        "updated_at"
+      ],
+      "constraints": [
+        "Not queried by the automated discovery workflow",
+        "Confirm current official API schema and anonymous public access before implementation",
+        "Do not scrape authenticated pages or bypass anti-abuse controls",
+        "SourceHut service status can change; a status page is not a repository discovery API"
+      ]
     }
   ],
   "record_requirements": [
