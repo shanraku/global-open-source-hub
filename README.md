@@ -11,7 +11,7 @@ A growing, independent directory for discovering practical open-source software.
 - Mobile-responsive, accessible interface with reduced-motion support.
 - Curated, machine-readable project catalogue in `data/projects.json`.
 - A reviewed multi-host source registry for GitHub, GitLab.com, Codeberg/Forgejo and Gitea.com discovery.
-- Daily broad topic- and language-based discovery across public GitHub repositories, plus configured GitLab.com, Codeberg and Gitea.com searches; candidates enter a review queue and are never auto-published. GitHub search is paginated up to configured limits, not a complete export of every repository.
+- Daily broad topic- and language-based discovery across public GitHub repositories, plus configured GitLab.com, Codeberg and Gitea.com searches, with optional explicitly configured public Forgejo/Gitea hosts; candidates enter a review queue and are never auto-published. GitHub search is paginated up to configured limits, not a complete export of every repository.
 - Transparent review triage signals and a human checklist; automated scores never approve, reject or publish projects.
 - Duplicate-candidate hints based on canonical repository URLs and cautious name matching; no automatic merges or deletions.
 - Scheduled repository health snapshots for reachability, archived status and cautious inactivity hints; uncertain API results remain unknown.
