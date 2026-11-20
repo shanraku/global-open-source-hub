@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { deflateRawSync } from "node:zlib";
-import { readNuGetRepositoryMetadata } from "../scripts/nuget-nuspec.mjs";\nimport { expectedNuGetPackageContentUrl, validateNuGetPackageContentUrl, readBoundedNuGetResponse } from "../scripts/nuget-package-download.mjs";
+import { readNuGetRepositoryMetadata } from "../scripts/nuget-nuspec.mjs";
+import { expectedNuGetPackageContentUrl, validateNuGetPackageContentUrl, readBoundedNuGetResponse } from "../scripts/nuget-package-download.mjs";
 
 const CRC_TABLE = (() => {
   const table = new Uint32Array(256);
