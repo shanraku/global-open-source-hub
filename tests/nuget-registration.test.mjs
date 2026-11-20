@@ -93,8 +93,38 @@ test("rejects registration leaf URLs outside the official registration path", as
       "1.2.3",
       { leafUrl: "https://api.nuget.org/v3/catalog0/payload.json" }
     ),
-    /outside the discovered package registration path/
+    /exact package version path/
   );
+});
+
+
+test("rejects a registration leaf path for a different package version", async () => {
+  await assert.rejects(
+    getNuGetRegistrationLeaf(
+      "https://api.nuget.org/v3/registration6-gz-semver2/",
+      "Example.Package",
+      "1.2.3",
+      { leafUrl: "https://api.nuget.org/v3/registration6-gz-semver2/example.package/9.9.9.json" }
+    ),
+    /exact package version path/
+  );
+});
+
+test("preserves the listed=false state from registration metadata", async t => {
+  const leafUrl = "https://api.nuget.org/v3/registration6-gz-semver2/example.package/1.2.3.json";
+  globalThis.fetch = async () => jsonResponse({
+    "@id": leafUrl,
+    packageContent: "https://api.nuget.org/v3-flatcontainer/example.package/1.2.3/example.package.1.2.3.nupkg",
+    listed: false
+  });
+  t.after(() => { globalThis.fetch = originalFetch; });
+  const leaf = await getNuGetRegistrationLeaf(
+    "https://api.nuget.org/v3/registration6-gz-semver2/",
+    "Example.Package",
+    "1.2.3",
+    { leafUrl }
+  );
+  assert.equal(leaf.listed, false);
 });
 
 test("requires an exact registration leaf URL", async () => {
