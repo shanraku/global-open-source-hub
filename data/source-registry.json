@@ -318,6 +318,77 @@
         "A future integration needs safe POM SCM metadata enrichment and URL validation.",
         "Do not infer repository location from artifact coordinates or homepage links."
       ]
+    },
+    {
+      "id": "packagist-public-packages",
+      "name": "Packagist public packages",
+      "provider": "Packagist",
+      "status": "supported",
+      "source_type": "official_search_api",
+      "base_url": "https://packagist.org",
+      "discovery_endpoint": "/search.json",
+      "documentation_url": "https://packagist.org/apidoc",
+      "authentication": "Anonymous public search; no credentials required.",
+      "pagination": "Use a strict per_page cap and first page per query; follow returned next links only in future incremental implementations.",
+      "useful_fields": [
+        "name",
+        "description",
+        "repository",
+        "url",
+        "downloads",
+        "favers"
+      ],
+      "constraints": [
+        "Search is relevance-ranked and not a complete package export.",
+        "Only the explicit repository field is considered; package page URL is not a source repository.",
+        "Only HTTPS repository URLs on approved source hosts enter the repository review queue."
+      ]
+    },
+    {
+      "id": "go-module-index",
+      "name": "Go module index",
+      "provider": "Go Modules",
+      "status": "planned",
+      "source_type": "official_new_module_version_feed",
+      "base_url": "https://index.golang.org",
+      "discovery_endpoint": "/index",
+      "documentation_url": "https://index.golang.org/",
+      "authentication": "Public feed; no credentials required.",
+      "pagination": "Incremental RFC3339 since cursor; maximum 2,000 records per request.",
+      "useful_fields": [
+        "Path",
+        "Version",
+        "Timestamp"
+      ],
+      "constraints": [
+        "Feed reports module paths and versions, not verified source repository URLs.",
+        "Module paths may use vanity import domains; do not infer a Git host or repository URL.",
+        "A future design must resolve source provenance safely without downloading or executing module code."
+      ]
+    },
+    {
+      "id": "hex-public-packages",
+      "name": "Hex public packages",
+      "provider": "Hex",
+      "status": "planned",
+      "source_type": "official_package_search_and_metadata_api",
+      "base_url": "https://hex.pm/api",
+      "discovery_endpoint": "/packages?search=QUERY",
+      "documentation_url": "https://github.com/hexpm/specifications/blob/main/endpoints.md",
+      "authentication": "Public package search and metadata; no credentials required for public packages.",
+      "pagination": "Search API documented; bounded search required.",
+      "useful_fields": [
+        "name",
+        "meta.description",
+        "meta.links",
+        "meta.licenses",
+        "latest_version"
+      ],
+      "constraints": [
+        "Search endpoint is documented, but implementation must verify response schema and a bounded metadata enrichment strategy before activation.",
+        "Only explicit source repository links may be accepted; do not treat package homepage as repository.",
+        "Never access private repository endpoints or send credentials."
+      ]
     }
   ],
   "record_requirements": [
