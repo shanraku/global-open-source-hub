@@ -9,6 +9,8 @@ The machine-readable registry lives in `data/source-registry.json`.
 - GitHub: official public repository search API.
 - GitLab.com: official public projects API.
 - Codeberg: public Forgejo-compatible API.
+- Gitea.com: public Gitea-compatible API.
+- Additional GitLab, Forgejo and Gitea hosts remain opt-in; they are not scanned automatically.
 - Other Forgejo hosts: planned, and only after an administrator explicitly configures and validates each host.
 
 A source being listed means only that its documented public API may be considered for discovery. It is not an endorsement of projects found there.
