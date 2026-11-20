@@ -1,0 +1,40 @@
+name: Refresh open security intelligence feeds
+
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-security-intelligence
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Refresh public vulnerability advisory feeds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/refresh-security-intelligence.mjs
+      - name: Commit security intelligence snapshot when changed
+        run: |
+          if git diff --quiet -- data/security-intelligence.json; then
+            echo "No security intelligence changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/security-intelligence.json
+          git commit -m "chore: refresh public security intelligence"
+          git push
