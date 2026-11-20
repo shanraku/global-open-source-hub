@@ -1,0 +1,26 @@
+# Directory methodology
+
+## Purpose
+The Global Open Source Hub is an independent discovery portal for practical open-source projects. It is not a ranking authority, security auditor, endorsement service or guarantee that a project is maintained.
+
+## Inclusion policy
+A project should have a public source repository, a clear practical purpose, enough documentation for a visitor to understand it, and a legitimate license or an explicit note that licensing needs verification. Entries should link directly to the original repository.
+
+## Evidence and freshness
+- Repository documentation is the starting point for descriptions.
+- Features, release activity, license status, security and compatibility can change. Verify them at the repository before relying on them.
+- Do not infer that a project is actively maintained from its presence in this directory.
+- Do not display fabricated stars, download counts, ratings, uptime or update timestamps.
+- Project records are curated in `data/projects.json`. Changes are visible in Git history.
+
+## Safety and privacy
+- Never add secrets, access tokens, private contact details or personal data.
+- Do not claim a project is safe, audited, certified or privacy-preserving without specific evidence.
+- Clearly distinguish local browser processing from network requests to external services.
+- Respect project licenses, trademarks and upstream terms.
+
+## Corrections and submissions
+Open an issue or pull request with the repository URL, a concise explanation of its usefulness, its license link and authoritative documentation. Maintainers review submissions; inclusion is not automatic.
+
+## Scope
+This is a growing curated directory, not a complete index of every open-source project worldwide. Search coverage and category choices will evolve through reviewed contributions.
