@@ -58,17 +58,38 @@ function makeZip(entries, options = {}) {
   }
   const centralBytes = Buffer.concat(centrals);
   const localBytes = Buffer.concat(locals);
+  const comment = Buffer.from(options.comment ?? "");
   const end = Buffer.alloc(22);
   end.writeUInt32LE(0x06054b50, 0);
   end.writeUInt16LE(entries.length, 8);
   end.writeUInt16LE(entries.length, 10);
   end.writeUInt32LE(centralBytes.length, 12);
   end.writeUInt32LE(localBytes.length, 16);
-  return Buffer.concat([localBytes, centralBytes, end]);
+  end.writeUInt16LE(comment.length, 20);
+  return Buffer.concat([localBytes, centralBytes, end, comment]);
 }
 
 const nuspec = (repository = '<repository type="git" url="https://github.com/example/project" />') =>
   Buffer.from(`<?xml version="1.0"?><package><metadata><id>Example</id><${repository.startsWith("<repository") ? "" : ""}></metadata></package>`.replace("<></metadata>", "</metadata>"));
+
+
+test("finds the real end record when the ZIP comment contains a fake signature", () => {
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' }], { comment: "fake PK\\x05\\x06 signature" });
+  assert.equal(readNuGetRepositoryMetadata(archive).repository_url, "https://github.com/example/project");
+});
+
+test("rejects mismatched local and central compression methods", () => {
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' }]);
+  archive.writeUInt16LE(8, 8);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /local and central ZIP flags or methods differ/);
+});
+
+test("rejects non-matching central directory bounds", () => {
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' }]);
+  const eocd = archive.length - 22;
+  archive.writeUInt32LE(archive.readUInt32LE(eocd + 16) + 1, eocd + 16);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /central directory bounds/);
+});
 
 test("reads one explicit git repository from a stored nuspec", () => {
   const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project" /></metadata></package>' }]);
