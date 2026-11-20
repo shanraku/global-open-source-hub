@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "description": "Maintainer-reviewed evidence references for release artifacts. Records are claims and links, not proof until independently verified.",
+  "records": [],
+  "required_fields": [
+    "id",
+    "artifact",
+    "version",
+    "sha256",
+    "provenance_url"
+  ],
+  "optional_fields": [
+    "signature_url",
+    "source_repository",
+    "source_commit",
+    "verification"
+  ],
+  "verification_statuses": [
+    "unverified",
+    "manual_reviewed",
+    "cryptographically_verified"
+  ],
+  "policy": {
+    "sha256_required": true,
+    "provenance_url_https_only": true,
+    "signatures_optional_but_encouraged": true,
+    "no_artifact_download_or_execution": true,
+    "human_review_required": true,
+    "declared_verification_is_not_self_proving": true
+  }
+}
