@@ -1,6 +1,7 @@
 import { readFile, mkdir } from "node:fs/promises";
 import { writeJsonIfChanged } from "./write-json-if-changed.mjs";
 import { dirname } from "node:path";
+import { discoverNuGetRepositoryLeads } from "./nuget-discovery.mjs";
 
 const root = new URL("../", import.meta.url);
 const registry = JSON.parse(await readFile(new URL("data/source-registry.json", root), "utf8"));
@@ -40,7 +41,7 @@ const clean = value => typeof value === "string" ? value.replace(/[\u0000-\u001f
 function canonical(raw) {
   try {
     const u = new URL(raw);
-    if (u.protocol !== "https:" || !allowedRepositoryHosts.has(u.hostname.toLowerCase())) return null;
+    if (u.protocol !== "https:" || u.username || u.password || u.port || !allowedRepositoryHosts.has(u.hostname.toLowerCase())) return null;
     u.hostname = u.hostname.toLowerCase();
     u.pathname = u.pathname.replace(/\.git$/i, "").replace(/\/+$/, "");
     u.search = ""; u.hash = "";
@@ -66,7 +67,7 @@ async function getJson(url, providerHeaders = headers) {
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
 }
-function add(provider, id, name, url, description, topics, stars, updatedAt, license) {
+function add(provider, id, name, url, description, topics, stars, updatedAt, license, provenance = null) {
   const canonicalUrl = canonical(url);
   if (!canonicalUrl || knownUrls.has(canonicalUrl)) return;
   const providerId = String(id);
@@ -79,7 +80,7 @@ function add(provider, id, name, url, description, topics, stars, updatedAt, lic
     repository_url: url, canonical_url: canonicalUrl,
     description: clean(description), topics: Array.isArray(topics) ? topics.map(clean).filter(Boolean).slice(0, 12) : [],
     stars: Number.isFinite(stars) ? stars : null,
-    last_activity_at: updatedAt || null, license_spdx: license || null,
+    last_activity_at: updatedAt || null, license_spdx: license || null, provenance,
     discovered_at: now, discovery_source: provider, review_status: "pending",
     review_note: "Unreviewed public metadata. Not a quality, security, maintenance or license-compliance assessment."
   };
@@ -159,6 +160,37 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
           add("Packagist", pkg.name, pkg.name, pkg.repository || "", pkg.description, [], null, null, null);
         }
         fetched += (data.results || []).length;
+      } else if (source.provider === "NuGet") {
+        const result = await discoverNuGetRepositoryLeads([term], { maxPackages: 10 });
+        fetched += result.packages_examined;
+        for (const lead of result.leads) {
+          add(
+            "NuGet",
+            lead.provider_id,
+            lead.package_id,
+            lead.repository_url,
+            lead.description,
+            lead.tags,
+            null,
+            lead.published_at,
+            null,
+            {
+              registry: "NuGet",
+              package_id: lead.package_id,
+              package_version: lead.package_version,
+              package_url: lead.package_url,
+              package_content_url: lead.package_content_url,
+              repository_type: lead.repository_type,
+              repository_metadata_path: lead.repository_metadata_path,
+              repository_metadata_type_path: lead.repository_metadata_type_path,
+              project_url: lead.project_url
+            }
+          );
+        }
+        for (const issue of result.errors) {
+          errors++;
+          console.warn(`NuGet enrichment skipped (${issue.stage || "package"}, ${issue.package_id || issue.query || "unknown"}): ${issue.reason}`);
+        }
       } else if (source.provider === "Codeberg / Forgejo" || source.provider === "Gitea.com") {
         const url = new URL(`${source.base_url}${source.discovery_endpoint}`);
         url.searchParams.set("q", term); url.searchParams.set("limit", "30");
