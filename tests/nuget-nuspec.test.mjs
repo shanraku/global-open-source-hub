@@ -258,6 +258,38 @@ test("rejects streamed package bytes that exceed the hard limit", async () => {
   assert.equal(cancelled, true);
 });
 
+
+test("rejects malformed Content-Length values", async () => {
+  for (const value of ["-1", "1.5", "12bytes", ""]) {
+    const response = {
+      status: 200,
+      redirected: false,
+      headers: { get: () => value },
+      body: { getReader: () => ({ read: async () => ({ done: true }), releaseLock() {} }) }
+    };
+    await assert.rejects(readBoundedNuGetResponse(response, 128), /Content-Length/);
+  }
+});
+
+test("rejects empty and non-streaming package responses", async () => {
+  await assert.rejects(readBoundedNuGetResponse({
+    status: 200, redirected: false, headers: { get: () => null }, body: null
+  }), /streaming response body/);
+  await assert.rejects(readBoundedNuGetResponse({
+    status: 200, redirected: false, headers: { get: () => null },
+    body: { getReader: () => ({ read: async () => ({ done: true }), releaseLock() {} }) }
+  }), /empty package response/);
+});
+
+test("rejects invalid stream chunks and unsafe configured byte limits", async () => {
+  const response = {
+    status: 200, redirected: false, headers: { get: () => null },
+    body: { getReader: () => ({ read: async () => ({ done: false, value: "not bytes" }), releaseLock() {} }) }
+  };
+  await assert.rejects(readBoundedNuGetResponse(response, 128), /invalid response chunk/);
+  await assert.rejects(readBoundedNuGetResponse(response, 8 * 1024 * 1024 + 1), /invalid byte limit/);
+});
+
 test("rejects non-200 or redirected responses", async () => {
   await assert.rejects(readBoundedNuGetResponse({ status: 302, redirected: true }), /unexpected HTTP response/);
 });
