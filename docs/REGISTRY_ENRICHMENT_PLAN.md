@@ -92,3 +92,29 @@ Do not fetch arbitrary URLs from package metadata. Any enrichment fetch must use
 ## Current status
 
 The NuGet V3 adapter, bounded package downloader, `.nuspec` parser and dormant discovery integration are committed. Static review tightened registration-leaf matching to the exact package/version path, skips versions marked unlisted, and hardened `.nuspec` parsing to ignore comment/CDATA lookalikes, require the repository element under `package/metadata`, reject malformed nesting and reject non-whitespace text outside the root. ZIP review also validates the EOCD comment boundary, requires exact central-directory bounds, rejects ZIP64 sentinels and unsupported flags, validates UTF-8 entry names, and cross-checks local versus central header flags, methods, sizes and CRC fields. Network download review confirms exact-origin/path URL validation, redirects disabled, bounded 15-second default timeout (maximum 30 seconds), Content-Length precheck, streaming hard byte cap, stream cancellation on overflow, and rejection of empty, malformed or non-streaming responses; additional response-boundary fixtures were added without execution. These changes have not been runtime-tested; no tests, Actions workflows or deployment have been run. NuGet, Maven Central, Go Modules, Hex and PyPI remain planned in `data/source-registry.json`; no claim is made that these ecosystems are already being automatically indexed.
+
+## NuGet final static-review checklist
+
+The following items remain explicit pre-enablement gates; a green static review is not a substitute for tests or a controlled run.
+
+### Remaining ZIP/XML hardening and fixtures
+- [ ] Validate local-header offsets and data ranges for every central-directory entry, not only the selected `.nuspec`; reject overlapping local headers/data ranges and duplicate local offsets.
+- [ ] Parse ZIP extra-field framing safely and reject ZIP64 extra-field ID `0x0001`, including when 32-bit header fields are not sentinel values.
+- [ ] Validate central-directory disk-start fields and local name/extra-field boundaries for all entries.
+- [ ] Add fixtures for overlapping entries, duplicate local offsets, ZIP64 extra fields, truncated extra fields, malformed data descriptors, NUL-containing names and invalid UTF-8 names.
+- [ ] Add fixtures for XML attributes concatenated without required whitespace, malformed entity references, duplicate metadata elements and multiple root-level metadata blocks. The parser remains a deliberately narrow structural scanner, not a general-purpose XML validator.
+
+### Remaining network/registration fixtures
+- [ ] Exercise the actual download helper with mocked fetch responses for redirect rejection, timeout/abort, non-200 status, missing body, streamed overflow and fetch rejection.
+- [ ] Cover bounded JSON response overflow, invalid UTF-8, malformed service-index resource records, unsupported resource aliases, registration leaf schema mismatch, missing packageContent and mismatched leaf `@id`.
+- [ ] Confirm service-index and registration resource selection against current official NuGet documentation before enabling; retain the narrow host allowlist.
+- [ ] Add adapter-level fixtures proving duplicate package versions are examined once, non-git metadata increments the skip counter, malformed packages do not erase successful leads, and all emitted leads remain marked for manual review.
+- [ ] Add integration fixtures proving candidate creation uses the shared canonicalizer, deduplication and review queue only; no direct write to the published projects dataset.
+
+### Static-review corrections made in this pass
+- Repository XML attributes must now be separated by whitespace; malformed adjacent attributes are rejected and a fixture was added.
+- Non-git repository metadata now has a distinct parser rejection reason and increments the adapter's `non_git_repository` skip counter instead of being recorded as a generic enrichment error.
+- The corresponding fixtures have been added but **not executed**.
+
+### Release gate
+NuGet must remain `planned` until the remaining items above are reviewed, tests are authorized and pass, a controlled integration run is inspected, and a maintainer explicitly approves enabling the provider. Do not run tests, Actions, schedules or deployment as part of this static-review-only stage.
