@@ -191,6 +191,57 @@
         "Do not scrape authenticated pages or bypass anti-abuse controls",
         "SourceHut service status can change; a status page is not a repository discovery API"
       ]
+    },
+    {
+      "id": "npm-public-packages",
+      "name": "npm public packages",
+      "provider": "npm",
+      "status": "supported",
+      "source_type": "official_registry_search_api",
+      "base_url": "https://registry.npmjs.org",
+      "discovery_endpoint": "/-/v1/search",
+      "documentation_url": "https://api-docs.npmjs.com/",
+      "authentication": "Public search and package metadata are read without credentials; never store tokens.",
+      "pagination": "Use bounded size/from offsets and conservative serial requests.",
+      "useful_fields": [
+        "package.name",
+        "package.description",
+        "package.version",
+        "package.date",
+        "package.links.repository",
+        "package.license",
+        "package.keywords"
+      ],
+      "constraints": [
+        "Search is relevance-ranked and not a complete export of npm.",
+        "Only packages with a valid public source repository URL on an approved host enter the repository review queue.",
+        "Registry publication does not establish source authenticity, quality or safety."
+      ]
+    },
+    {
+      "id": "crates-io-public-packages",
+      "name": "crates.io public crates",
+      "provider": "crates.io",
+      "status": "supported",
+      "source_type": "official_registry_web_api",
+      "base_url": "https://crates.io/api/v1",
+      "discovery_endpoint": "/crates",
+      "documentation_url": "https://doc.rust-lang.org/cargo/reference/registry-web-api.html",
+      "authentication": "Public search metadata is read without credentials; never store tokens.",
+      "pagination": "Use bounded page/per_page parameters; respect crates.io data-access policy and identify the client.",
+      "useful_fields": [
+        "crate.id",
+        "crate.description",
+        "crate.repository",
+        "crate.max_version",
+        "crate.updated_at",
+        "crate.license"
+      ],
+      "constraints": [
+        "Search is ranked and capped; it is not a complete export of all crates.",
+        "Only crates with a valid public source repository URL on an approved host enter the repository review queue.",
+        "Do not download or execute crate contents during discovery."
+      ]
     }
   ],
   "record_requirements": [
