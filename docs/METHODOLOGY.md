@@ -24,3 +24,8 @@ Open an issue or pull request with the repository URL, a concise explanation of 
 
 ## Scope
 This is a growing curated directory, not a complete index of every open-source project worldwide. Search coverage and category choices will evolve through reviewed contributions.
+
+## Automated repository metadata refresh
+The workflow `.github/workflows/refresh-project-metadata.yml` requests public repository metadata from the GitHub REST API every Monday and can be started manually from the Actions tab. It records fields such as star/fork counts, detected SPDX license identifier, archived status, default branch and last push timestamp. These are GitHub repository metadata, not independent quality, security or maintenance assessments.
+
+The workflow uses the repository-scoped `GITHUB_TOKEN` and requests only public repository metadata. If an API request fails, the last known good metadata is retained and the failure is recorded. A failed request is not interpreted as zero stars or as proof that a repository is deleted. Scheduled GitHub Actions can be delayed or disabled by repository settings and service limits. The first snapshot is not available until a workflow run succeeds.
