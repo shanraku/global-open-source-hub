@@ -44,3 +44,8 @@ The daily security feed workflow collects public records from GitHub Global Secu
 ## Software supply-chain evidence
 
 The Hub can check exact package versions from a reviewed SPDX or CycloneDX-derived inventory against OSV.dev. Inventory entries must preserve a source SBOM reference. An empty inventory means no dependency coverage, not zero vulnerabilities. Results are advisory leads only and do not certify package provenance, integrity or project security. See [docs/SOFTWARE_SUPPLY_CHAIN.md](SOFTWARE_SUPPLY_CHAIN.md).
+
+ 
+## Release integrity evidence
+
+The provenance register stores exact artifact versions, SHA-256 digest strings and source attestation/signature references. Its automated report validates structure only; it does not recompute hashes or verify signatures and attestations. No trust score or endorsement is inferred from a populated record. See [PROVENANCE_AND_INTEGRITY.md](PROVENANCE_AND_INTEGRITY.md).
