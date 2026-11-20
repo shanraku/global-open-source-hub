@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10101d">
+  <meta name="description" content="Discover useful open-source projects for developers, learners, creators and researchers. Explore tools, inspect source code and contribute.">
+  <meta property="og:title" content="Global Open Source Hub">
+  <meta property="og:description" content="Discover useful open-source projects. Use, learn and contribute.">
+  <meta property="og:type" content="website">
+  <title>Global Open Source Hub — Discover useful open source</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#projects">Skip to projects</a>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Global Open Source Hub home"><span class="brand-mark">G</span><span>Open Source <b>Hub</b></span></a>
+    <nav aria-label="Main navigation"><a href="#projects">Explore</a><a href="#principles">Principles</a><a href="https://github.com/shanraku/global-open-source-hub" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="pulse"></span> OPEN KNOWLEDGE · GLOBAL COMMUNITY</div>
+      <h1>Useful projects.<br><span>Open to everyone.</span></h1>
+      <p class="hero-copy">Discover practical open-source software, explore how it works, and help make useful technology accessible to more people.</p>
+      <div class="hero-actions"><a class="button primary" href="#projects">Explore projects <span aria-hidden="true">↓</span></a><a class="button secondary" href="https://github.com/shanraku" target="_blank" rel="noopener noreferrer">View repositories ↗</a></div>
+      <div class="hero-foot"><span>COMMUNITY-DRIVEN DIRECTORY</span><span>FREE TO EXPLORE · OPEN TO CONTRIBUTE</span></div>
+    </section>
+    <section class="directory section" id="projects">
+      <div class="section-heading"><div><div class="eyebrow">THE DIRECTORY</div><h2>Find your next useful tool.</h2><p>Browse independent projects and go straight to their source.</p></div><span class="count" id="project-count" aria-live="polite">Loading projects…</span></div>
+      <div class="controls"><label class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search projects, skills or keywords…" autocomplete="off"></label><label class="filter-label" for="category">Category</label><select id="category"><option value="all">All categories</option></select><label class="filter-label" for="sort">Sort</label><select id="sort"><option value="featured">Featured</option><option value="az">Name A–Z</option></select></div>
+      <div class="chips" id="category-chips" aria-label="Quick category filters"></div>
+      <div class="project-grid" id="project-grid" aria-live="polite"><p class="loading">Loading the open-source directory…</p></div>
+      <p class="empty" id="empty-state" hidden>No matching projects. Try another search or category.</p>
+      <p class="directory-note">Project information is curated from repository documentation. Check each repository for the latest features, license and release status.</p>
+    </section>
+    <section class="principles section" id="principles">
+      <div class="eyebrow">HOW THIS HUB WORKS</div><h2>Open by principle.<br><span>Honest by design.</span></h2>
+      <div class="principle-grid">
+        <article><span>01</span><h3>Source first</h3><p>Every listed project links to its original repository. Verify the code, documentation and license at the source.</p></article>
+        <article><span>02</span><h3>No fake claims</h3><p>We do not invent usage numbers, security certifications, release activity or project capabilities.</p></article>
+        <article><span>03</span><h3>Useful for everyone</h3><p>Prioritise practical value, accessibility, privacy, maintainability and a welcoming contribution path.</p></article>
+      </div>
+    </section>
+    <section class="join">
+      <div><div class="eyebrow">BUILD IN THE OPEN</div><h2>Good ideas get better<br>when more people contribute.</h2><p>Explore the code, report an issue, improve documentation or suggest a useful project.</p></div>
+      <a class="button primary" href="https://github.com/shanraku/global-open-source-hub" target="_blank" rel="noopener noreferrer">Contribute on GitHub ↗</a>
+    </section>
+  </main>
+  <footer><a class="brand" href="#"><span class="brand-mark">G</span><span>Open Source <b>Hub</b></span></a><p>Independent directory · Not an endorsement of listed projects.</p><span>© <span id="year"></span> Global Open Source Hub</span></footer>
+</body>
+</html>
