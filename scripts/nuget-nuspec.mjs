@@ -37,10 +37,10 @@ function parseRepositoryElement(xml) {
   while (offset < xml.length) {
     const open = xml.indexOf("<", offset);
     if (open < 0) {
-      if (xml.slice(offset).trim() && !rootSeen) fail("text outside XML root");
+      if (xml.slice(offset).trim() && (!rootSeen || rootClosed)) fail("text outside XML root");
       break;
     }
-    if (!rootSeen && xml.slice(offset, open).trim()) fail("text outside XML root");
+    if ((!rootSeen || rootClosed) && xml.slice(offset, open).trim()) fail("text outside XML root");
     offset = open;
 
     if (xml.startsWith("<!--", offset)) {
