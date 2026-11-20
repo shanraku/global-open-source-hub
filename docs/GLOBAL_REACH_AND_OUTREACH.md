@@ -62,4 +62,9 @@ Prefer privacy-respecting aggregate measures where available:
 Do not add invasive tracking by default. Report limitations and avoid collecting personal data.
 
 ## Current launch status
-The repository's public GitHub URL is known, but the production website URL and publishing status must be confirmed before creating a sitemap, canonical URLs, search-console verification or claiming that the public site is live.
+- Public website: https://shanraku.github.io/global-open-source-hub/
+- Public source repository: https://github.com/shanraku/global-open-source-hub
+- The homepage, canonical URL, robots.txt, sitemap.xml and Google Search Console HTML verification tag have been added to the repository. The owner has completed the Google Search Console verification, submitted the sitemap and requested homepage indexing.
+- Bing Webmaster Tools import was initiated by the owner; account-side import status has not been independently verified.
+- Search-engine indexing and ranking are not guaranteed. Confirm current crawl/index status in the respective webmaster tools before making public claims.
+- Complete mobile, accessibility and production QA before broad promotion; no such QA is claimed by this document.
