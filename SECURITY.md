@@ -22,3 +22,8 @@ This feed collection is not a vulnerability scan, SBOM, malware detector, exploi
 ## SBOM and dependency intelligence
 
 The optional OSV checker uses exact package ecosystem, name and version records from a reviewed SBOM inventory. It does not install or execute packages, discover dependencies automatically, or prove that a project is secure. Advisory matches require manual validation against the upstream affected-version range and source advisory. See [docs/SOFTWARE_SUPPLY_CHAIN.md](docs/SOFTWARE_SUPPLY_CHAIN.md).
+
+ 
+## Artifact provenance and integrity
+
+Release digest and attestation references are stored as evidence records. The automated validator checks metadata shape only; it does not cryptographically verify artifacts, signatures, certificates or provenance attestations. Treat all submitted evidence as untrusted until independently checked against the original publisher. See [docs/PROVENANCE_AND_INTEGRITY.md](docs/PROVENANCE_AND_INTEGRITY.md).
