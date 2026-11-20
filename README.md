@@ -2,6 +2,9 @@
 
 **Useful projects. Open to everyone.**
 
+🌐 **Live website:** https://shanraku.github.io/global-open-source-hub/  
+📦 **Source repository:** https://github.com/shanraku/global-open-source-hub
+
 A growing, independent directory for discovering practical open-source software. Explore projects, inspect their original source repositories, learn how they work and contribute improvements.
 
 ## What is included
@@ -46,14 +49,9 @@ Open `http://localhost:8000`.
 
 The directory fetches its catalogue from `data/projects.json`, so use a local server rather than opening the HTML file directly.
 
-## Publish with GitHub Pages
+## Live website and GitHub Pages
 
-1. Open this repository's **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select the `main` branch and `/(root)` folder, then save.
-4. Wait for GitHub Pages to publish and use the URL shown in Settings → Pages.
-
-Publishing is not configured or verified by this repository change.
+The project is published at https://shanraku.github.io/global-open-source-hub/. The public website is the easiest way to explore the directory; this repository remains the source of truth for its code, data and documentation. If the site becomes unavailable, check **Settings → Pages** and the repository's deployment workflow before changing hosting settings.
 
 ## Update the directory
 
@@ -71,7 +69,7 @@ The source registry is in [data/source-registry.json](data/source-registry.json)
 
 ## Reach and community
 
-See [docs/GLOBAL_REACH_AND_OUTREACH.md](docs/GLOBAL_REACH_AND_OUTREACH.md) for the responsible public-launch plan, community channels, share-ready introduction and anti-spam rules. The production website URL must be confirmed before adding canonical URLs, a sitemap or search-engine verification files.
+See [docs/GLOBAL_REACH_AND_OUTREACH.md](docs/GLOBAL_REACH_AND_OUTREACH.md) for the responsible public-launch plan, community channels, share-ready introduction and anti-spam rules. The public website URL, canonical URL, sitemap, robots.txt and Google Search Console verification are set up; search indexing is not guaranteed. Complete mobile, accessibility and production QA before broad promotion.
 
 ## Project policies
 
