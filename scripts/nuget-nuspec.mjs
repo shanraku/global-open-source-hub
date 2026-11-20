@@ -12,17 +12,51 @@ function fail(message) {
 }
 
 function decodeXmlAttribute(value) {
-  return value.replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (entity, token) => {
+  let output = "";
+  for (let i = 0; i < value.length; i++) {
+    if (value[i] !== "&") {
+      const code = value.charCodeAt(i);
+      if (code < 0x20 && ![0x09, 0x0a, 0x0d].includes(code)) fail("invalid XML control character");
+      output += value[i];
+      continue;
+    }
+    const end = value.indexOf(";", i + 1);
+    if (end < 0) fail("unterminated XML entity reference");
+    const token = value.slice(i + 1, end);
     const key = token.toLowerCase();
-    if (key === "amp") return "&";
-    if (key === "lt") return "<";
-    if (key === "gt") return ">";
-    if (key === "quot") return '"';
-    if (key === "apos") return "'";
-    const codePoint = key.startsWith("#x") ? Number.parseInt(key.slice(2), 16) : Number.parseInt(key.slice(1), 10);
-    if (!Number.isInteger(codePoint) || codePoint < 1 || codePoint > 0x10ffff || (codePoint >= 0xd800 && codePoint <= 0xdfff)) fail("invalid XML character reference");
-    return String.fromCodePoint(codePoint);
-  }).replace(/&[^;\s]+;/g, () => fail("unsupported XML entity"));
+    const named = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'" };
+    if (Object.hasOwn(named, key)) output += named[key];
+    else if (/^#x[0-9a-f]+$/i.test(token) || /^#\d+$/.test(token)) {
+      const point = key.startsWith("#x") ? Number.parseInt(key.slice(2), 16) : Number.parseInt(key.slice(1), 10);
+      const valid = point === 0x9 || point === 0xa || point === 0xd ||
+        (point >= 0x20 && point <= 0xd7ff) || (point >= 0xe000 && point <= 0xfffd) ||
+        (point >= 0x10000 && point <= 0x10ffff);
+      if (!valid) fail("invalid XML character reference");
+      output += String.fromCodePoint(point);
+    } else fail("unsupported XML entity");
+    i = end;
+  }
+  return output;
+}
+
+function validateXmlAttributes(source) {
+  const attributes = Object.create(null);
+  const pattern = /([A-Za-z_:][A-Za-z0-9_.:-]*)\s*=\s*("[^"]*"|'[^']*')/gy;
+  let offset = 0;
+  while (offset < source.length) {
+    const beforeWhitespace = offset;
+    while (/\s/.test(source[offset] || "")) offset++;
+    if (offset >= source.length) break;
+    if (offset === beforeWhitespace && beforeWhitespace !== 0) fail("XML attributes must be separated by whitespace");
+    pattern.lastIndex = offset;
+    const match = pattern.exec(source);
+    if (!match) fail("malformed XML attributes");
+    const name = match[1];
+    if (Object.hasOwn(attributes, name)) fail("duplicate XML attribute");
+    attributes[name] = decodeXmlAttribute(match[2].slice(1, -1));
+    offset = pattern.lastIndex;
+  }
+  return attributes;
 }
 
 function parseRepositoryElement(xml) {
@@ -33,6 +67,7 @@ function parseRepositoryElement(xml) {
   let offset = 0;
   let rootSeen = false;
   let rootClosed = false;
+  let metadataCount = 0;
 
   while (offset < xml.length) {
     const open = xml.indexOf("<", offset);
@@ -40,7 +75,9 @@ function parseRepositoryElement(xml) {
       if (xml.slice(offset).trim() && (!rootSeen || rootClosed)) fail("text outside XML root");
       break;
     }
-    if ((!rootSeen || rootClosed) && xml.slice(offset, open).trim()) fail("text outside XML root");
+    const textNode = xml.slice(offset, open);
+    if ((!rootSeen || rootClosed) && textNode.trim()) fail("text outside XML root");
+    if (rootSeen && !rootClosed) decodeXmlAttribute(textNode);
     offset = open;
 
     if (xml.startsWith("<!--", offset)) {
@@ -94,8 +131,10 @@ function parseRepositoryElement(xml) {
         if (name !== "package") fail("nuspec root element must be package");
         rootSeen = true;
       }
+      if (name === "metadata" && stack.length === 1 && stack[0] === "package") metadataCount++;
+      const parsedAttributes = validateXmlAttributes(nameMatch[2]);
       if (name === "repository" && stack.length === 2 && stack[0] === "package" && stack[1] === "metadata") {
-        repositories.push(parseRepositoryAttributes(nameMatch[2]));
+        repositories.push({ type: parsedAttributes.type, url: parsedAttributes.url });
       }
       if (!selfClosing) stack.push(name);
       else if (!stack.length) rootClosed = true;
@@ -104,6 +143,7 @@ function parseRepositoryElement(xml) {
   }
 
   if (!rootSeen || !rootClosed || stack.length) fail("incomplete or malformed nuspec XML");
+  if (metadataCount !== 1) fail("expected exactly one metadata element under package");
   if (repositories.length !== 1) fail("expected exactly one repository element under package metadata");
   const repository = repositories[0];
   if (repository.type?.toLowerCase() !== "git") fail("repository must declare type=git");
