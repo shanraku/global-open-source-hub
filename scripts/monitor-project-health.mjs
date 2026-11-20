@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { writeJsonIfChanged } from "./write-json-if-changed.mjs";
 
 const root = new URL("../", import.meta.url);
 const catalogue = JSON.parse(await readFile(new URL("data/projects.json", root), "utf8"));
@@ -94,5 +95,5 @@ const output = {
   },
   projects: results
 };
-await writeFile(reportUrl, JSON.stringify(output, null, 2) + "\\n");
+await writeJsonIfChanged(reportUrl, output);
 console.log(`Project health check finished: ${reachable} reachable, ${archived} archived, ${unknown} unknown, ${stale} inactivity hints. No catalogue entries were changed.`);
