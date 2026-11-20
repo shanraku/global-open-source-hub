@@ -100,6 +100,37 @@ test("rejects duplicate repository elements", () => {
   assert.throws(() => readNuGetRepositoryMetadata(archive), /exactly one repository/);
 });
 
+
+test("ignores repository-like markup inside XML comments", () => {
+  const xml = '<package><!-- <repository type="svn" url="https://evil.example/repo"/> --><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.equal(readNuGetRepositoryMetadata(archive).repository_url, "https://github.com/example/project");
+});
+
+test("ignores repository-like markup inside CDATA", () => {
+  const xml = '<package><metadata><description><![CDATA[<repository type="svn" url="https://evil.example/repo"/>]]></description><repository type="git" url="https://github.com/example/project"/></metadata></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.equal(readNuGetRepositoryMetadata(archive).repository_url, "https://github.com/example/project");
+});
+
+test("rejects repository elements outside package metadata", () => {
+  const xml = '<package><repository type="git" url="https://github.com/example/project"/><metadata/></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /exactly one repository element under package metadata/);
+});
+
+test("rejects mismatched XML nesting", () => {
+  const xml = '<package><metadata><repository type="git" url="https://github.com/example/project"></metadata></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /mismatched XML closing tag/);
+});
+
+test("rejects malformed XML comments", () => {
+  const xml = '<package><!-- broken -- comment --><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>';
+  const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
+  assert.throws(() => readNuGetRepositoryMetadata(archive), /malformed XML comment/);
+});
+
 test("rejects DTD and entity expansion payloads", () => {
   const xml = '<!DOCTYPE package [<!ENTITY x "boom">]><package><metadata><repository type="git" url="https://github.com/a/b"/></metadata></package>';
   const archive = makeZip([{ name: "Example.nuspec", content: xml }]);
