@@ -74,7 +74,7 @@ const nuspec = (repository = '<repository type="git" url="https://github.com/exa
 
 
 test("finds the real end record when the ZIP comment contains a fake signature", () => {
-  const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' }], { comment: "fake PK\\x05\\x06 signature" });
+  const archive = makeZip([{ name: "Example.nuspec", content: '<package><metadata><repository type="git" url="https://github.com/example/project"/></metadata></package>' }], { comment: "fake PK\x05\x06 signature" });
   assert.equal(readNuGetRepositoryMetadata(archive).repository_url, "https://github.com/example/project");
 });
 
