@@ -18,7 +18,15 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
     throw new RangeError("NuGet package limit is outside configured bounds");
   }
 
-  const resources = await discoverNuGetV3Resources(options);
+  const adapters = options.adapters ?? {};
+  const requestOptions = { ...options };
+  delete requestOptions.adapters;
+  const discoverResources = adapters.discoverNuGetV3Resources ?? discoverNuGetV3Resources;
+  const searchPackages = adapters.searchNuGetPackages ?? searchNuGetPackages;
+  const registrationLeaf = adapters.getNuGetRegistrationLeaf ?? getNuGetRegistrationLeaf;
+  const downloadArchive = adapters.downloadNuGetPackageArchive ?? downloadNuGetPackageArchive;
+  const readRepositoryMetadata = adapters.readNuGetRepositoryMetadata ?? readNuGetRepositoryMetadata;
+  const resources = await discoverResources(requestOptions);
   const leads = [];
   const errors = [];
   const skipped = { missing_version_leaf: 0, unlisted: 0, missing_package_content: 0, non_git_repository: 0 };
@@ -28,8 +36,8 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
     if (seen.size >= maxPackages) break;
     let packages;
     try {
-      packages = await searchNuGetPackages(resources.searchUrl, query, {
-        ...options,
+      packages = await searchPackages(resources.searchUrl, query, {
+        ...requestOptions,
         take: Math.min(10, maxPackages),
         skip: 0
       });
@@ -57,13 +65,13 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
         if (versionEntries.length === 0 || typeof versionEntries[0]?.["@id"] !== "string") { skipped.missing_version_leaf++; continue; }
         if (versionEntries.length !== 1) throw new Error("ambiguous duplicate package version entries");
         const versionEntry = versionEntries[0];
-        const registration = await getNuGetRegistrationLeaf(resources.registrationsUrl, id, version, { ...options, leafUrl: versionEntry["@id"] });
+        const registration = await registrationLeaf(resources.registrationsUrl, id, version, { ...requestOptions, leafUrl: versionEntry["@id"] });
         if (!registration || registration.listed === false) { skipped.unlisted++; continue; }
         if (typeof registration.packageContent !== "string") { skipped.missing_package_content++; continue; }
-        const archive = await downloadNuGetPackageArchive(registration.packageContent, id, version, options);
+        const archive = await downloadArchive(registration.packageContent, id, version, requestOptions);
         let metadata;
         try {
-          metadata = readNuGetRepositoryMetadata(archive);
+          metadata = readRepositoryMetadata(archive);
         } catch (error) {
           if (/repository must declare type=git/.test(error.message)) {
             skipped.non_git_repository++;
