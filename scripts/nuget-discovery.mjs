@@ -15,6 +15,7 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
   const resources = await discoverNuGetV3Resources(options);
   const leads = [];
   const errors = [];
+  const skipped = { missing_version_leaf: 0, unlisted: 0, missing_package_content: 0, non_git_repository: 0 };
   const seen = new Set();
 
   for (const query of boundedQueries) {
@@ -42,12 +43,13 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
         const versionEntry = Array.isArray(pkg.versions)
           ? pkg.versions.find(item => typeof item?.version === "string" && item.version.toLowerCase() === String(version).toLowerCase() && typeof item["@id"] === "string")
           : null;
-        if (!versionEntry) continue;
+        if (!versionEntry) { skipped.missing_version_leaf++; continue; }
         const registration = await getNuGetRegistrationLeaf(resources.registrationsUrl, id, version, { ...options, leafUrl: versionEntry["@id"] });
-        if (!registration || registration.listed === false || typeof registration.packageContent !== "string") continue;
+        if (!registration || registration.listed === false) { skipped.unlisted++; continue; }
+        if (typeof registration.packageContent !== "string") { skipped.missing_package_content++; continue; }
         const archive = await downloadNuGetPackageArchive(registration.packageContent, id, version, options);
         const metadata = readNuGetRepositoryMetadata(archive);
-        if (metadata.repository_type.toLowerCase() !== "git") continue;
+        if (metadata.repository_type.toLowerCase() !== "git") { skipped.non_git_repository++; continue; }
         leads.push({
           provider: "NuGet",
           provider_id: packageKey,
@@ -59,8 +61,8 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
           repository_metadata_path: metadata.metadata_path,
           repository_metadata_type_path: metadata.metadata_type_path,
           repository_type: metadata.repository_type,
-          published_at: registration.published,
-          project_url: typeof pkg.projectUrl === "string" ? pkg.projectUrl : null,
+          published_at: typeof registration.published === "string" ? registration.published.slice(0, 64) : null,
+          project_url: typeof pkg.projectUrl === "string" ? pkg.projectUrl.slice(0, 2048) : null,
           description: typeof pkg.description === "string" ? pkg.description.slice(0, 500) : "",
           tags: Array.isArray(pkg.tags) ? pkg.tags.slice(0, 12) : []
         });
@@ -70,5 +72,5 @@ export async function discoverNuGetRepositoryLeads(queries, options = {}) {
     }
   }
 
-  return { leads, errors, packages_examined: seen.size, publication: "manual_review_required" };
+  return { leads, errors, skipped, packages_examined: seen.size, publication: "manual_review_required" };
 }
