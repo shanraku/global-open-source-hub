@@ -6,7 +6,7 @@ The automated refresh workflows are scheduled for `00:30 UTC`, which is `06:00 I
 ## Refresh scope
 The daily jobs re-check the configured public sources and current records:
 - Public repository metadata for listed GitHub projects.
-- New public project candidates from the configured GitHub, GitLab.com and Codeberg/Forgejo searches.
+- New public project candidates from broad topic- and language-based GitHub searches plus configured GitLab.com and Codeberg/Forgejo searches.
 - Public security advisory feeds (GitHub Security Advisories, CISA KEV and NIST NVD).
 - Exact package/version entries already present in the reviewed SBOM inventory via OSV.dev.
 - Existing project health and provenance evidence records.
