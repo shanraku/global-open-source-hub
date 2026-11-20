@@ -72,7 +72,9 @@ function parseRepositoryElement(xml) {
   while (offset < xml.length) {
     const open = xml.indexOf("<", offset);
     if (open < 0) {
-      if (xml.slice(offset).trim() && (!rootSeen || rootClosed)) fail("text outside XML root");
+      const trailingText = xml.slice(offset);
+      if (trailingText.trim() && (!rootSeen || rootClosed)) fail("text outside XML root");
+      if (rootSeen && !rootClosed) decodeXmlAttribute(trailingText);
       break;
     }
     const textNode = xml.slice(offset, open);
