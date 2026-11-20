@@ -18,7 +18,7 @@ const clean = value => typeof value === "string" ? value.replace(/[\u0000-\u001f
 function canonical(raw) {
   try {
     const u = new URL(raw);
-    if (u.protocol !== "https:" || !["github.com", "gitlab.com", "codeberg.org"].includes(u.hostname.toLowerCase())) return null;
+    if (u.protocol !== "https:" || !["github.com", "gitlab.com", "codeberg.org", "gitea.com"].includes(u.hostname.toLowerCase())) return null;
     u.hostname = u.hostname.toLowerCase();
     u.pathname = u.pathname.replace(/\\.git$/i, "").replace(/\\/+$/, "");
     u.search = ""; u.hash = "";
@@ -96,11 +96,11 @@ for (const source of registry.sources.filter(s => s.status === "supported")) {
         const data = await getJson(url);
         for (const r of data || []) add("GitLab", r.id, r.path_with_namespace, r.web_url, r.description, r.topics, r.star_count, r.last_activity_at, null);
         fetched += (data || []).length;
-      } else if (source.provider === "Codeberg / Forgejo") {
-        const url = new URL("https://codeberg.org/api/v1/repos/search");
+      } else if (source.provider === "Codeberg / Forgejo" || source.provider === "Gitea.com") {
+        const url = new URL(`${source.base_url}${source.discovery_endpoint}`);
         url.searchParams.set("q", term); url.searchParams.set("limit", "30");
         const data = await getJson(url);
-        for (const r of data.data || []) add("Codeberg", r.id, r.full_name, r.html_url, r.description, r.topics, r.stars_count, r.updated_at, null);
+        for (const r of data.data || []) add(source.provider === "Gitea.com" ? "Gitea.com" : "Codeberg", r.id, r.full_name, r.html_url, r.description, r.topics, r.stars_count, r.updated_at, null);
         fetched += (data.data || []).length;
       }
     } catch (error) {
