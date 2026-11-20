@@ -14,6 +14,7 @@ A growing, independent directory for discovering practical open-source software.
 - Scheduled multi-host discovery for public GitHub, GitLab.com and Codeberg repositories; candidates enter a review queue and are never auto-published.
 - Transparent review triage signals and a human checklist; automated scores never approve, reject or publish projects.
 - Duplicate-candidate hints based on canonical repository URLs and cautious name matching; no automatic merges or deletions.
+- Scheduled repository health snapshots for reachability, archived status and cautious inactivity hints; uncertain API results remain unknown.
 - Safe discovery rules: provenance, canonical URL/provider-ID duplicate detection, public-only access and human review before publication.
 - Clear methodology, contribution guidance and security policy.
 - No account, API key, application backend, analytics or tracking required by this static directory.
@@ -62,7 +63,7 @@ Use the contribution checklist in [CONTRIBUTING.md](CONTRIBUTING.md). Do not inv
 
 ## Global source discovery
 
-The source registry is in [data/source-registry.json](data/source-registry.json), discovery search seeds in [data/discovery-config.json](data/discovery-config.json), and pending candidates in [data/review-queue.json](data/review-queue.json). The scheduled workflow runs [scripts/discover-project-candidates.mjs](scripts/discover-project-candidates.mjs) weekly and on manual dispatch. Candidates require human review and are never automatically published. See [docs/DISCOVERY_SYSTEM.md](docs/DISCOVERY_SYSTEM.md) for limits and safeguards. The optional triage script [scripts/score-review-candidates.mjs](scripts/score-review-candidates.mjs) annotates metadata signals; review criteria are in [docs/QUALITY_REVIEW.md](docs/QUALITY_REVIEW.md). The duplicate scanner [scripts/scan-duplicate-candidates.mjs](scripts/scan-duplicate-candidates.mjs) adds cautious match hints without merging or removing records; see [docs/DUPLICATE_INTELLIGENCE.md](docs/DUPLICATE_INTELLIGENCE.md).
+The source registry is in [data/source-registry.json](data/source-registry.json), discovery search seeds in [data/discovery-config.json](data/discovery-config.json), and pending candidates in [data/review-queue.json](data/review-queue.json). The scheduled workflow runs [scripts/discover-project-candidates.mjs](scripts/discover-project-candidates.mjs) weekly and on manual dispatch. Candidates require human review and are never automatically published. See [docs/DISCOVERY_SYSTEM.md](docs/DISCOVERY_SYSTEM.md) for limits and safeguards. The optional triage script [scripts/score-review-candidates.mjs](scripts/score-review-candidates.mjs) annotates metadata signals; review criteria are in [docs/QUALITY_REVIEW.md](docs/QUALITY_REVIEW.md). The duplicate scanner [scripts/scan-duplicate-candidates.mjs](scripts/scan-duplicate-candidates.mjs) adds cautious match hints without merging or removing records; see [docs/DUPLICATE_INTELLIGENCE.md](docs/DUPLICATE_INTELLIGENCE.md). The health monitor [scripts/monitor-project-health.mjs](scripts/monitor-project-health.mjs) creates a separate snapshot in [data/project-health.json](data/project-health.json); see [docs/PROJECT_HEALTH.md](docs/PROJECT_HEALTH.md).
 
 ## Project policies
 
