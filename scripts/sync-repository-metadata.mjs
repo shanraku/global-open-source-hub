@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { writeJsonIfChanged } from "./write-json-if-changed.mjs";
 
 const dataPath = new URL("../data/projects.json", import.meta.url);
 const data = JSON.parse(await readFile(dataPath, "utf8"));
@@ -60,5 +61,5 @@ for (const project of data.projects) {
 }
 
 data.metadata_snapshot = { checked_at: now, updated, failed, source: "GitHub REST API repository metadata" };
-await writeFile(dataPath, JSON.stringify(data, null, 2) + "\n");
+await writeJsonIfChanged(dataPath, data);
 console.log(`Repository metadata sync finished: ${updated} updated, ${failed} failed.`);
