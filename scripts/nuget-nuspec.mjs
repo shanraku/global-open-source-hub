@@ -235,14 +235,17 @@ function extractNuspec(buffer) {
     if (hasDataDescriptor && !((localCrc === 0 && localCompressedSize === 0 && localUncompressedSize === 0) || (localCrc === expectedCrc && localCompressedSize === compressedSize && localUncompressedSize === uncompressedSize))) fail("invalid ZIP data descriptor header");
     let rangeEnd = dataEnd;
     if (hasDataDescriptor) {
-      let descriptorOffset = dataEnd;
-      if (descriptorOffset + 12 <= centralOffset && buffer.readUInt32LE(descriptorOffset) === 0x08074b50) descriptorOffset += 4;
-      if (descriptorOffset + 12 > centralOffset) fail("truncated ZIP data descriptor");
-      const descriptorCrc = buffer.readUInt32LE(descriptorOffset);
-      const descriptorCompressed = buffer.readUInt32LE(descriptorOffset + 4);
-      const descriptorUncompressed = buffer.readUInt32LE(descriptorOffset + 8);
-      if (descriptorCrc !== expectedCrc || descriptorCompressed !== compressedSize || descriptorUncompressed !== uncompressedSize) fail("invalid ZIP data descriptor");
-      rangeEnd = descriptorOffset + 12;
+      const unsignedMatches = dataEnd + 12 <= centralOffset &&
+        buffer.readUInt32LE(dataEnd) === expectedCrc &&
+        buffer.readUInt32LE(dataEnd + 4) === compressedSize &&
+        buffer.readUInt32LE(dataEnd + 8) === uncompressedSize;
+      const signedMatches = dataEnd + 16 <= centralOffset &&
+        buffer.readUInt32LE(dataEnd) === 0x08074b50 &&
+        buffer.readUInt32LE(dataEnd + 4) === expectedCrc &&
+        buffer.readUInt32LE(dataEnd + 8) === compressedSize &&
+        buffer.readUInt32LE(dataEnd + 12) === uncompressedSize;
+      if (!unsignedMatches && !signedMatches) fail("invalid or truncated ZIP data descriptor");
+      rangeEnd = dataEnd + (signedMatches ? 16 : 12);
     }
     entries.push({ name, flags, method, expectedCrc, compressedSize, uncompressedSize, localOffset, dataStart, dataEnd, rangeEnd });
     offset = end;
