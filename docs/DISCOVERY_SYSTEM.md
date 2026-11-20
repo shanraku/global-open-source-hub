@@ -10,6 +10,9 @@ The machine-readable registry lives in `data/source-registry.json`.
 - GitLab.com: official public projects API.
 - Codeberg: public Forgejo-compatible API.
 - Gitea.com: public Gitea-compatible API.
+- npm: official public package search API; repository links are converted into candidates only when they point to an approved source host.
+- crates.io: official public crate search API; repository links are converted into candidates only when they point to an approved source host.
+- PyPI: metadata and the Simple Index are available, but no equivalent public relevance-search API was verified for bounded discovery; tracked separately rather than bulk-enumerating the entire index.
 - SourceHut: planned only; public discovery API and anonymous access require verification before automation.
 - Additional Forgejo and Gitea hosts can be explicitly configured in `data/discovery-config.json`; the list is empty by default and no arbitrary hosts are scanned.
 - Other Forgejo hosts: planned, and only after an administrator explicitly configures and validates each host.
@@ -44,7 +47,7 @@ Use the provider's stable repository ID together with a normalized canonical rep
 Discovery metadata is not a security audit, license-compliance opinion, endorsement, maintenance guarantee or proof of project quality. Display source and last-checked information with clear timestamps where available.
 
 ## Automated candidate discovery
-The engine is `scripts/discover-project-candidates.mjs`. It queries public APIs for GitHub, GitLab.com, Codeberg, Gitea.com and explicitly enabled Forgejo/Gitea instances using editable seeds in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
+The engine is `scripts/discover-project-candidates.mjs`. It queries public APIs for GitHub, GitLab.com, Codeberg, Gitea.com, npm, crates.io and explicitly enabled Forgejo/Gitea instances using editable seeds in `data/discovery-config.json`. GitHub seeds cover many software topics and programming languages, with up to five pages of 100 results per query (subject to provider limits).
 
 - Runs daily at the 06:00 IST target through `.github/workflows/discover-project-candidates.yml`, or manually via `workflow_dispatch`.
 - Uses short timeouts, bounded result counts and delays between provider queries.
@@ -57,3 +60,7 @@ Search seeds are broad and editable, but discovery is not exhaustive: GitHub sea
 
 ## Current implementation boundary
 The automated candidate discovery engine and its workflow are committed. Runtime behavior, provider response compatibility, rate-limit behavior and Pages display have not yet been tested. Do not treat a successful commit as proof that an Actions run succeeded.
+
+## Package registry discovery boundary
+
+npm and crates.io provide public, bounded search APIs. Their search results are treated as leads, not as source repositories: a candidate is queued only when registry metadata includes a valid HTTPS repository URL on an approved host. Package names, registry IDs, descriptions and license strings remain unverified metadata. PyPI exposes JSON metadata and a standards-based Simple Index, but its index lists all projects rather than providing a comparable relevance-search endpoint; this project does not bulk-download that entire index as a substitute for targeted discovery. Registry search remains incomplete and rate limits/acceptable-use policies apply. See the official [npm Registry API](https://api-docs.npmjs.com/), [Cargo registry Web API](https://doc.rust-lang.org/cargo/reference/registry-web-api.html), and [PyPI API documentation](https://docs.pypi.org/api/).
