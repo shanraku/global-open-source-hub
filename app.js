@@ -9,12 +9,13 @@ function setupFilters(){
  chips.innerHTML=["all",...categories()].map(c=>`<button class="chip ${c==="all"?"active":""}" type="button" data-category="${safe(c)}">${c==="all"?"All":safe(c)}</button>`).join("");
  chips.addEventListener("click",event=>{const button=event.target.closest("button[data-category]");if(!button)return;state.category=button.dataset.category;select.value=state.category;chips.querySelectorAll("button").forEach(b=>b.classList.toggle("active",b===button));render();});
 }
+function formatDate(value){if(!value)return "Unknown";const date=new Date(value);return Number.isNaN(date.getTime())?"Unknown":new Intl.DateTimeFormat(undefined,{year:"numeric",month:"short",day:"numeric",timeZone:"UTC"}).format(date);}
 function render(){
  const query=state.query.trim().toLowerCase();
  let projects=state.projects.filter(p=>(state.category==="all"||p.category===state.category)&&[p.name,p.description,p.category,...(p.tags||[])].join(" ").toLowerCase().includes(query));
  if(state.sort==="az")projects.sort((a,b)=>a.name.localeCompare(b.name));else projects.sort((a,b)=>(a.order??999)-(b.order??999));
  $("project-count").textContent=`${projects.length} of ${state.projects.length} projects`;
- $("project-grid").innerHTML=projects.map(p=>`<article class="project-card"><div class="card-top"><span class="project-icon" aria-hidden="true">${safe(p.icon||p.name.slice(0,1))}</span><span class="tag">${safe(p.category)}</span></div><h3>${safe(p.name)}</h3><p>${safe(p.description)}</p><div class="card-bottom"><span>${safe((p.tags||[]).slice(0,2).join(" · "))}</span><a href="${safe(p.repository)}" target="_blank" rel="noopener noreferrer">View source ↗</a></div></article>`).join("");
+ $("project-grid").innerHTML=projects.map(p=>`<article class="project-card"><div class="card-top"><span class="project-icon" aria-hidden="true">${safe(p.icon||p.name.slice(0,1))}</span><span class="tag">${safe(p.category)}</span></div><h3>${safe(p.name)}</h3><p>${safe(p.description)}</p><div class="card-bottom"><span>${safe((p.tags||[]).slice(0,2).join(" · "))}</span><a href="${safe(p.repository)}" target="_blank" rel="noopener noreferrer">View source ↗</a></div><div class="repo-meta"><span>★ ${p.repository_metadata?.stars==null?"—":safe(p.repository_metadata.stars.toLocaleString())} stars</span><span>${safe(p.repository_metadata?.license_spdx||"License not detected")}</span><span>Pushed ${safe(formatDate(p.repository_metadata?.pushed_at))}</span></div></article>`).join("");
  $("empty-state").hidden=projects.length!==0;
 }
 async function init(){
