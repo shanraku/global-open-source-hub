@@ -7,7 +7,7 @@ on:
       - "scripts/validate-provenance-evidence.mjs"
       - ".github/workflows/validate-provenance-evidence.yml"
   schedule:
-    - cron: "19 5 * * 1"
+    - cron: "30 0 * * *"
   workflow_dispatch:
 
 permissions:
