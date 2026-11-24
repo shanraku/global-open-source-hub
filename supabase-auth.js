@@ -8,7 +8,7 @@ host.id = 'hub-account';
 host.setAttribute('aria-labelledby', 'hub-account-title');
 host.innerHTML = `
   <div class="eyebrow">YOUR GLOBAL HUB ACCOUNT</div>
-  <h2 id="hub-account-title">Sign in to save opportunities.</h2>
+  <h2 id="hub-account-title">Sign in to save and contribute.</h2>
   <p class="auth-intro">Create a free account with your email to save opportunities and suggest useful resources for human review. Your account is separate from Mauqify and GrowTrust.</p>
   <form id="hub-auth-form" class="auth-form">
     <label>Email address<input id="hub-auth-email" type="email" autocomplete="email" required maxlength="254"></label>
