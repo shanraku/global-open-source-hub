@@ -44,3 +44,11 @@ The Global Jobs page lets authenticated users save external Jobicy feed listings
 ## Submission moderation policy
 
 The migration `20261124070000_lock_submissions_to_pending.sql` restricts the authenticated insert policy on `public.submissions`: users may insert only rows whose `user_id` matches `auth.uid()` and whose `status` is `pending`. Users cannot self-approve submissions. The table remains RLS-protected, and users can read only their own submissions.
+
+## Admin review and publishing
+
+The private `admin-review.html` page is a moderation workspace. Admin authorization uses the Supabase JWT `app_metadata.hub_role = admin` claim; never use user-editable `user_metadata` for authorization. The initial administrator role is assigned server-side to the confirmed owner account.
+
+The migration `20261124080000_admin_review_dashboard.sql` adds administrator-only RLS policies and the `review_community_submission` transaction. The function runs as SECURITY INVOKER, verifies the admin claim, locks a pending submission, and records the decision atomically. Approving a job, project, resource, or other suggestion creates a published row in `public.opportunities`; approving a correction records the decision without creating a duplicate listing. Rejecting a suggestion does not publish it.
+
+The browser uses only the publishable key. Admin-only reads, status updates, and publishing are enforced by database policies and function permissions, not by hiding the page. After the first role assignment, the administrator must sign out and sign in again so the JWT contains the refreshed app metadata claim. Admin review should include checking the original source, eligibility, legitimacy, and current availability before approval.
