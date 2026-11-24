@@ -14,6 +14,13 @@ const liveJobList = document.getElementById('live-job-list');
 const savedStatus = document.getElementById('saved-status');
 const savedList = document.getElementById('saved-opportunity-list');
 const savedSection = document.getElementById('saved-opportunities');
+const contributionSection = document.getElementById('community-submit');
+const mySubmissionsSection = document.getElementById('my-submissions');
+const submissionForm = document.getElementById('opportunity-submit-form');
+const submissionStatus = document.getElementById('submission-status');
+const submissionButton = document.getElementById('submission-submit');
+const mySubmissionsStatus = document.getElementById('my-submissions-status');
+const mySubmissionsList = document.getElementById('my-submissions-list');
 const sources = [
   { name: 'Indeed', url: q => `https://www.indeed.com/jobs?q=${encodeURIComponent(q)}` },
   { name: 'LinkedIn Jobs', url: q => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(q)}` },
@@ -143,6 +150,105 @@ async function loadSavedOpportunities() {
   renderSavedOpportunities();
 }
 
+function setSubmissionStatus(message, isError = false) {
+  if (!submissionStatus) return;
+  submissionStatus.textContent = message;
+  submissionStatus.dataset.state = isError ? 'error' : 'info';
+}
+
+async function loadMySubmissions() {
+  if (!currentUser || !mySubmissionsList || !mySubmissionsStatus) return;
+  mySubmissionsStatus.textContent = 'Loading your submissions…';
+  mySubmissionsList.replaceChildren();
+  const { data, error } = await supabase.from('submissions')
+    .select('id,submission_type,title,url,notes,status,created_at')
+    .eq('user_id', currentUser.id)
+    .order('created_at', { ascending: false })
+    .limit(50);
+  if (error) {
+    mySubmissionsStatus.textContent = error.message || 'Could not load your submissions.';
+    mySubmissionsStatus.dataset.state = 'error';
+    return;
+  }
+  const items = data || [];
+  mySubmissionsStatus.textContent = items.length
+    ? `${items.length} recent submission${items.length === 1 ? '' : 's'}.`
+    : 'You have not submitted anything yet.';
+  items.forEach(item => {
+    const card = document.createElement('article');
+    card.className = 'source-card user-submission-card';
+    const title = document.createElement('h3');
+    title.textContent = item.title;
+    const type = document.createElement('p');
+    const labels = { job_source: 'Job or internship', project: 'Open-source project', resource: 'Grant or learning resource', correction: 'Correction', other: 'Other' };
+    type.textContent = labels[item.submission_type] || 'Community suggestion';
+    const status = document.createElement('span');
+    status.className = 'submission-status';
+    status.dataset.status = item.status;
+    status.textContent = item.status === 'pending' ? 'Pending review' : item.status === 'approved' ? 'Approved' : 'Not approved';
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Open submitted source ↗';
+    const date = document.createElement('small');
+    date.textContent = 'Submitted ' + new Date(item.created_at).toLocaleDateString();
+    card.append(title, type, status, link, date);
+    if (item.notes) {
+      const notes = document.createElement('p');
+      notes.textContent = item.notes;
+      card.append(notes);
+    }
+    mySubmissionsList.append(card);
+  });
+}
+
+submissionForm?.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!currentUser) {
+    setSubmissionStatus('Please sign in before submitting an opportunity.', true);
+    return;
+  }
+  const type = document.getElementById('submission-type').value;
+  const title = document.getElementById('submission-title').value.trim();
+  const rawUrl = document.getElementById('submission-url').value.trim();
+  const notes = document.getElementById('submission-notes').value.trim();
+  let url;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    setSubmissionStatus('Enter a valid HTTPS link.', true);
+    return;
+  }
+  if (url.protocol !== 'https:') {
+    setSubmissionStatus('Only secure HTTPS links can be submitted.', true);
+    return;
+  }
+  if (title.length < 3 || title.length > 200 || notes.length > 3000) {
+    setSubmissionStatus('Check the title and notes length, then try again.', true);
+    return;
+  }
+  submissionButton.disabled = true;
+  submissionButton.textContent = 'Sending…';
+  setSubmissionStatus('Sending your suggestion for human review…');
+  const { error } = await supabase.from('submissions').insert({
+    user_id: currentUser.id,
+    submission_type: type,
+    title,
+    url: url.href,
+    notes: notes || null
+  });
+  submissionButton.disabled = false;
+  submissionButton.textContent = 'Send for review';
+  if (error) {
+    setSubmissionStatus(error.message || 'Could not send your suggestion. Please try again.', true);
+    return;
+  }
+  submissionForm.reset();
+  setSubmissionStatus('Submitted successfully. It is pending human review and is not public yet.');
+  await loadMySubmissions();
+});
+
 function renderLiveJobs() {
   if (!liveJobList) return;
   const term = (keyword?.value || '').trim().toLowerCase();
@@ -238,9 +344,13 @@ form?.addEventListener('submit', event => {
 supabase.auth.onAuthStateChange((_event, session) => {
   currentUser = session?.user ?? null;
   if (savedSection) savedSection.hidden = !currentUser;
-  void loadSavedOpportunities().then(renderLiveJobs);
+  if (contributionSection) contributionSection.hidden = !currentUser;
+  if (mySubmissionsSection) mySubmissionsSection.hidden = !currentUser;
+  void Promise.all([loadSavedOpportunities(), loadMySubmissions()]).then(renderLiveJobs);
 });
 const { data: { session } } = await supabase.auth.getSession();
 currentUser = session?.user ?? null;
 if (savedSection) savedSection.hidden = !currentUser;
-await Promise.all([loadSavedOpportunities(), loadLiveJobs()]);
+if (contributionSection) contributionSection.hidden = !currentUser;
+if (mySubmissionsSection) mySubmissionsSection.hidden = !currentUser;
+await Promise.all([loadSavedOpportunities(), loadMySubmissions(), loadLiveJobs()]);
