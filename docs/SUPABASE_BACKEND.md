@@ -18,6 +18,12 @@ The Global Open Source Hub uses a dedicated Supabase project. It is intentionall
 
 All four public-schema tables have Row Level Security enabled. The browser must use only a Supabase publishable key. Never expose a service-role or secret key in client-side code, GitHub Pages, commits, or public workflows.
 
+## Website integration
+
+The Global Jobs page now loads `supabase-client.js` and `supabase-auth.js` for browser-side email signup, sign-in, session display and sign-out. The browser uses only the project's publishable key. The client library is loaded from a pinned jsDelivr ESM URL.
+
+Before enabling public signup, configure the Supabase Auth Site URL and allowed redirect URLs for `https://shanraku.github.io/global-open-source-hub/**`, and confirm the email provider and confirmation template. The current UI reports the confirmation state to the user. The saved-opportunities UI is a separate next step and must use rows from `public.opportunities`; external Jobicy feed links are not saved into that table.
+
 ## Migrations
 
 The initial schema is in `supabase/migrations/20261124033636_global_hub_foundation_schema.sql`.
