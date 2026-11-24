@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "source": "Jobicy public Jobs API",
+  "sourceUrl": "https://jobicy.com/jobs-rss-feed",
+  "apiUrl": "https://jobicy.com/api/jobs?count=100",
+  "fetchedAt": null,
+  "publicationWindow": "The provider API returns listings published in the last 7 days; new listings may appear after a 3-hour delay.",
+  "attribution": "Every listing is attributed to Jobicy and links to its canonical Jobicy page.",
+  "jobs": []
+}
