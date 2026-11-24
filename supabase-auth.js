@@ -47,7 +47,7 @@ function showSession(user) {
   signout.hidden = !signedIn;
   userLabel.hidden = !signedIn;
   userLabel.textContent = signedIn ? 'Signed in as ' + user.email : '';
-  if (signedIn) setStatus('You are signed in. Saved opportunities will be available when the saved-items feature is enabled.');
+  if (signedIn) setStatus('You are signed in. Your saved opportunities are available below.');
 }
 async function signIn() {
   const { error } = await supabase.auth.signInWithPassword({ email: email.value.trim(), password: password.value });

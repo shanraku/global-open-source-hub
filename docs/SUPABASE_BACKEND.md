@@ -35,3 +35,8 @@ The initial schema is in `supabase/migrations/20261124033636_global_hub_foundati
 - Public publishing and moderation must remain human-reviewed until a separate, audited admin workflow exists.
 - Do not create a public policy that lets anonymous visitors insert, update, or delete opportunity records.
 - Configure Auth providers and redirect URLs before enabling user signup in the website.
+
+
+## Saved external opportunities
+
+The Global Jobs page lets authenticated users save external Jobicy feed listings to `public.saved_external_opportunities`. This table stores only a small listing snapshot and canonical Jobicy URL; it does not copy the full job description or claim the listing is verified. Rows are private to their owner through RLS. The browser uses the publishable key only. The feature is intentionally limited to HTTPS URLs on the exact `jobicy.com` hostname.
