@@ -24,7 +24,7 @@ A growing, independent directory for discovering practical open-source software.
 - Safe discovery rules: provenance, canonical URL/provider-ID duplicate detection, public-only access and human review before publication.
 - Daily 06:00 IST refresh target across configured public sources, with change-only snapshots and preservation of prior data when no new information arrives.
 - Clear methodology, contribution guidance and security policy.
-- No account, API key, application backend, analytics or tracking required by this static directory.
+- The public project directory is browsable without an account; optional saved-opportunity and community-submission features use a separate Supabase backend. No analytics or tracking is required.
 
 ## Browse the current catalogue
 
