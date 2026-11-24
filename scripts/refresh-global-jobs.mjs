@@ -14,7 +14,7 @@ if (payload.success === false || !Array.isArray(payload.jobs)) {
   throw new Error('Jobicy API response did not contain a valid jobs array.');
 }
 const clean = (value, max = 500) => typeof value === 'string'
-  ? value.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/gi, ' ').replace(/&amp;/gi, '&').replace(/\\s+/g, ' ').trim().slice(0, max)
+  ? value.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/gi, ' ').replace(/&amp;/gi, '&').replace(/\s+/g, ' ').trim().slice(0, max)
   : '';
 const jobs = payload.jobs.map((job) => {
   let url;
