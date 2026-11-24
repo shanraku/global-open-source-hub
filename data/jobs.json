@@ -3,8 +3,1729 @@
   "source": "Jobicy public Jobs API",
   "sourceUrl": "https://jobicy.com/jobs-rss-feed",
   "apiUrl": "https://jobicy.com/api/jobs?count=100",
-  "fetchedAt": null,
+  "fetchedAt": "2026-11-24T06:05:35.222Z",
   "publicationWindow": "The provider API returns listings published in the last 7 days; new listings may appear after a 3-hour delay.",
   "attribution": "Every listing is attributed to Jobicy and links to its canonical Jobicy page.",
-  "jobs": []
+  "jobs": [
+    {
+      "id": "164029",
+      "title": "New Business Account Executive (Hebrew speaker)",
+      "company": "Twilio",
+      "location": "Ireland, Spain, UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Who we are At Twilio, we’re shaping the future of communications, all from the comfort of our homes. We deliver innovative solutions to hundreds of thousands of businesses and empower millions of developers worldwide to craft personalized customer experiences. Our dedication to remote-first work, and strong culture of connection and global inclusion means th",
+      "publishedAt": "2026-11-23T18:35:14+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164029-new-business-account-executive-hebrew-speaker",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164027",
+      "title": "New Business Account Executive (French speaker)",
+      "company": "Twilio",
+      "location": "Ireland, Spain, UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Who we are At Twilio, we’re shaping the future of communications, all from the comfort of our homes. We deliver innovative solutions to hundreds of thousands of businesses and empower millions of developers worldwide to craft personalized customer experiences. Our dedication to remote-first work, and strong culture of connection and global inclusion means th",
+      "publishedAt": "2026-11-23T18:34:42+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164027-new-business-account-executive-french-speaker",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164025",
+      "title": "Senior Technical Product Manager",
+      "company": "Airalo",
+      "location": "Spain",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Help Us Build The Future of Travel At Airalo, we're making it easier for people to stay connected wherever they travel. As the world's first eSIM store, we help millions of travelers access affordable mobile data in 200+ countries and regions around the world. Today, we're a team of 400+ people across 60+ countries, building&hellip;",
+      "publishedAt": "2026-11-23T18:34:00+00:00",
+      "salary": {
+        "min": 81600,
+        "max": 122400,
+        "currency": "EUR",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/164025-senior-technical-product-manager-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164022",
+      "title": "System Software Engineer - GCC/LLVM compiler, tooling, and ecosystem",
+      "company": "Canonical",
+      "location": "LATAM, Canada, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Canonical is a leading provider of open source software and operating systems to the global enterprise and technology markets. Our platform, Ubuntu, is very widely used in breakthrough enterprise initiatives such as public cloud, data science, AI, engineering innovation and IoT. Our customers include the world's leading public cloud and silicon providers, an",
+      "publishedAt": "2026-11-23T18:31:54+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164022-system-software-engineer-gcc-llvm-compiler-tooling-and-ecosystem",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164021",
+      "title": "Software Engineer - Ubuntu Server Certification",
+      "company": "Canonical",
+      "location": "LATAM, Canada, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Canonical is hiring a software engineer to join the Server Certification team. The Certification team develops Python based testing tools used to test Ubuntu Server on the latest enterprise hardware ensuring Ubuntu users have the best experience with their hardware. We work at the interface of hardware and software, so the ideal candidate is a&hellip;",
+      "publishedAt": "2026-11-23T18:31:52+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164021-software-engineer-ubuntu-server-certification",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164020",
+      "title": "Software Engineer (Python/Linux/Packaging)",
+      "company": "Canonical",
+      "location": "LATAM, Canada, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "Canonical is a leading provider of open source software and operating systems to the global enterprise and technology markets. Our platform, Ubuntu, is very widely used in breakthrough enterprise initiatives such as public cloud, data science, AI, engineering innovation, and IoT. Our customers include the world's leading public cloud and silicon providers, a",
+      "publishedAt": "2026-11-23T18:31:32+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164020-software-engineer-python-linux-packaging",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164019",
+      "title": "Software Engineer - Python - Cloud - graduate level",
+      "company": "Canonical",
+      "location": "LATAM, Canada, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "Canonical is a leading provider of open source software and operating systems to the global enterprise and technology markets. Our platform, Ubuntu, is very widely used in breakthrough enterprise initiatives such as public cloud, data science, AI, engineering innovation, and IoT. Our customers include the world's leading public cloud and silicon providers, a",
+      "publishedAt": "2026-11-23T18:31:30+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164019-software-engineer-python-cloud-graduate-level",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164017",
+      "title": "MuleSoft Development Engineer",
+      "company": "Veeam Software",
+      "location": "Czechia",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Entry-Level, Junior",
+      "excerpt": "Veeam is the Data and AI Trust Company, specializing in helping organizations ensure their data and AI are fully understood, secured, and resilient to enable the acceleration of safe AI at scale. As the market leader in both data resilience and data security posture management, Veeam is built for the convergence of identity, data, security,&hellip;",
+      "publishedAt": "2026-11-23T18:30:24+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164017-mulesoft-development-engineer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164016",
+      "title": "Senior Technical Support Engineer, EMEA",
+      "company": "Horizon3.ai",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Get to Know Us Horizon3.ai is a fast-growing, remote cybersecurity company dedicated to the mission of enabling organizations to proactively find, fix and verify exploitable attack vectors before criminals exploit them. Our flagship product, the NodeZeroTM platform, delivers production-safe autonomous pentests and other key assessment operations that scale a",
+      "publishedAt": "2026-11-23T18:30:21+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164016-senior-technical-support-engineer-emea",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164015",
+      "title": "Solutions Architect, Onchain Compliance - EMEA",
+      "company": "TRM Labs",
+      "location": "EMEA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Build a Safer World. TRM Labs provides AI-powered intelligence solutions that help public and private sector agencies investigate and disrupt crime. TRM's platforms enable investigators to trace illicit activity, build cases, and construct operating pictures of threat networks. Leading agencies and businesses worldwide rely on TRM to make the world safer and",
+      "publishedAt": "2026-11-23T18:30:18+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164015-solutions-architect-onchain-compliance-emea",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164013",
+      "title": "Senior Account Executive - ANZ",
+      "company": "Dropbox",
+      "location": "Australia, New Zealand",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Role Description As an Senior Account Executive in ANZ, you will grow customer relationships and revenue with Dropbox Core as your primary product. You will be developing existing accounts, and also creating and closing new-business opportunities across your assigned territory. You will understand how customers work, identify where they can gain more value f",
+      "publishedAt": "2026-11-23T18:25:43+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164013-senior-account-executive-anz",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164012",
+      "title": "Technical Fashion Designer",
+      "company": "Fresh Prints",
+      "location": "Philippines",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Help Build the Next Chapter of Product Development at Fresh Prints Hi, I’m Andy, the Product Development Manager at Fresh Prints. Before Fresh Prints, I spent five years with a national fashion retail group in the Philippines, working my way from graphic designer to creative lead. When I joined Fresh Prints as a graphic designer&hellip;",
+      "publishedAt": "2026-11-23T18:25:42+00:00",
+      "salary": {
+        "min": 700,
+        "max": 900,
+        "currency": "",
+        "period": "monthly"
+      },
+      "url": "https://jobicy.com/jobs/164012-technical-fashion-designer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164011",
+      "title": "Senior Technical Recruiter (Global)",
+      "company": "BJAK",
+      "location": "Singapore",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T18:25:21+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164011-senior-technical-recruiter-global",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164010",
+      "title": "APJ Communications Lead",
+      "company": "Dropbox",
+      "location": "Australia",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Role Description Dropbox is looking for an APJ Communications Lead based in Australia or Japan to strengthen our reputation and support business priorities across Australia, Japan, South Korea, Singapore, and India. You’ll shape how customers, media, and industry leaders understand Dropbox as we expand beyond file storage into AI-powered work. You’ll partner",
+      "publishedAt": "2026-11-23T18:25:02+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164010-apj-communications-lead",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164009",
+      "title": "Senior Customer AI Engineer - Token Factory",
+      "company": "Nebius",
+      "location": "Singapore",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Nebius: Nebius is leading a new era in cloud infrastructure for the global AI economy. We are building a full-stack AI cloud platform that supports developers and enterprises from data and model training through to production deployment, without the cost and complexity of building large in-house AI/ML infrastructure. Built by engineers, for engineers. ",
+      "publishedAt": "2026-11-23T18:25:01+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164009-senior-customer-ai-engineer-token-factory-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164008",
+      "title": "In-House CRA ( Australia)",
+      "company": "Alimentiv",
+      "location": "Australia",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "Alimentiv is a global CRO with a singular focus: advancing therapies for patients with gastrointestinal diseases. GI is our WHY and for more than 30 years that purpose has driven our scientific rigour, operational excellence, and deep therapeutic expertise, including supporting more than 70% of IBD compounds in development.We operate as a private, profit-wit",
+      "publishedAt": "2026-11-23T18:24:59+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164008-in-house-cra-australia",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164007",
+      "title": "Product Development Associate (Fashion Designer)",
+      "company": "Fresh Prints",
+      "location": "Philippines",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Help Build the Next Chapter of Product Development at Fresh Prints Hi, I’m Andy, the Product Development Manager at Fresh Prints. Before Fresh Prints, I spent five years with a national fashion retail group in the Philippines, working my way from graphic designer to creative lead. When I joined Fresh Prints as a graphic designer&hellip;",
+      "publishedAt": "2026-11-23T18:24:57+00:00",
+      "salary": {
+        "min": 700,
+        "max": 900,
+        "currency": "USD",
+        "period": "monthly"
+      },
+      "url": "https://jobicy.com/jobs/164007-product-development-associate-fashion-designer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164006",
+      "title": "Senior Manager, Revenue Operations Systems",
+      "company": "Karbon",
+      "location": "Philippines",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "About Karbon Karbon is the global leader in AI-powered practice management software for accounting firms. We provide an award-winning cloud platform that helps tens of thousands of accounting professionals work more efficiently and collaboratively every day. With customers in 40 countries, we have grown into a globally distributed team across the US, Austral",
+      "publishedAt": "2026-11-23T18:24:55+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164006-senior-manager-revenue-operations-systems",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164005",
+      "title": "VIP Relationship Manager",
+      "company": "Consensys",
+      "location": "APAC",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "Please note that we are unable to consider applications from candidates based in France, Italy, or Germany for this role. Money is moving onto the internet, and the shift has a name: Open Money. This is money that is open, portable, agentic, and owned by you. MetaMask spent the last ten years building it; with&hellip;",
+      "publishedAt": "2026-11-23T18:24:53+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164005-vip-relationship-manager",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164004",
+      "title": "Senior Account Executive, APAC",
+      "company": "Paddle",
+      "location": "Singapore",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "What do we do? Paddle offers digital product companies a completely different approach to their payment infrastructure. Instead of assembling and maintaining a complex stack of payments-related apps and services, we’re a Merchant of Record for our customers. That means we take away 100% of the pain of payment fragmentation. It’s faster, safer, cheaper, and,&",
+      "publishedAt": "2026-11-23T18:24:51+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/164004-senior-account-executive-apac",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164003",
+      "title": "Key Partner Executive",
+      "company": "Rithum",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Rithum™ is the world’s most trusted commerce network, accelerating how brands, suppliers, and retailers work together to deliver seamless e-commerce experiences. We provide an unmatched platform for brands and retailers, enabling them to accelerate growth, optimize operations across channels, scale product offerings and enhance margins. Today, more than 40,0",
+      "publishedAt": "2026-11-23T17:56:20+00:00",
+      "salary": {
+        "min": 150000,
+        "max": 210000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/164003-key-partner-executive",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164002",
+      "title": "Director, Enhanced Care Management",
+      "company": "Vynca",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Join the dynamic journey at Vynca, where we're passionate about transforming care for individuals with complex needs. We’re more than just a team; we're a close-knit community. Our shared commitment to caring for each other and those we serve is what sets us apart. Guided by our unwavering core values: Excellence, Compassion, Curiosity, and Integrity,&hellip",
+      "publishedAt": "2026-11-23T17:56:07+00:00",
+      "salary": {
+        "min": 145000,
+        "max": 160000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/164002-director-enhanced-care-management",
+      "source": "Jobicy"
+    },
+    {
+      "id": "164000",
+      "title": "Welding Sales Manager",
+      "company": "Standard Bots",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Standard Bots Standard Bots is America's largest manufacturer of AI-native industrial robots. Full-stack robots—hardware, software, and AI—all designed and assembled in Glen Cove, New York. The company makes AI-native robots anyone can buy and deploy, with customers ranging from family-owned machine shops to the Fortune 500. Customers include Sunoco, L",
+      "publishedAt": "2026-11-23T17:56:05+00:00",
+      "salary": {
+        "min": 190000,
+        "max": 225000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/164000-welding-sales-manager",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163999",
+      "title": "Enterprise Account Executive (Manufacturing)",
+      "company": "AssetWatch",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "AssetWatch serves global manufacturers by powering manufacturing uptime through the delivery of an unparalleled condition monitoring experience, with a passion to care about the assets our customers care for every day. We are a devoted and capable team that includes world-renowned engineers and distinguished business leaders united by a common goal – To buil",
+      "publishedAt": "2026-11-23T17:55:40+00:00",
+      "salary": {
+        "min": 245000,
+        "max": 361000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163999-enterprise-account-executive-manufacturing-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163997",
+      "title": "Performance Marketer (Remote - Worldwide)",
+      "company": "EverAI",
+      "location": "Anywhere",
+      "types": [
+        "Contract"
+      ],
+      "level": "Director",
+      "excerpt": "Our Vision & Products EverAI — Building the Future of AI Companionship One of the Top Largest & Fastest-Growing AI Companies in the World 60 Million Users in 3 years — Help Us Reach 100M first, 500M next At EverAI, we’re shaping what it means to connect with AI. With 60 million users and&hellip;",
+      "publishedAt": "2026-11-23T17:55:38+00:00",
+      "salary": {
+        "min": 47000,
+        "max": 65000,
+        "currency": "EUR",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163997-performance-marketer-remote-worldwide",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163996",
+      "title": "Client Strategy Associate",
+      "company": "Rithum",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Rithum™ is the world’s most trusted commerce network, accelerating how brands, suppliers, and retailers work together to deliver seamless e-commerce experiences. We provide an unmatched platform for brands and retailers, enabling them to accelerate growth, optimize operations across channels, scale product offerings and enhance margins. Today, more than 40,0",
+      "publishedAt": "2026-11-23T17:55:36+00:00",
+      "salary": {
+        "min": 28,
+        "max": 30,
+        "currency": "USD",
+        "period": "hourly"
+      },
+      "url": "https://jobicy.com/jobs/163996-client-strategy-associate",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163995",
+      "title": "Software Engineer, AI Transformation",
+      "company": "Goodleap",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About GoodLeap: GoodLeap is a technology company delivering best-in-class financing and software products for sustainable solutions, from solar panels and batteries to energy-efficient HVAC, heat pumps, roofing, windows, and more. Over 1 million homeowners have benefited from our simple, fast, and frictionless technology that makes the adoption of these prod",
+      "publishedAt": "2026-11-23T17:55:34+00:00",
+      "salary": {
+        "min": 106100,
+        "max": 145100,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163995-software-engineer-ai-transformation",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163993",
+      "title": "Visual Designer",
+      "company": "R/GA",
+      "location": "Argentina",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "About R/GA R/GA is a global digital innovation agency specializing in digital product development, brand transformation, media, and communications for major companies. We are on a mission to help companies grow by enabling them to change, across their business, the experience they offer and the campaigns that take them to market. Our work tends to&hellip;",
+      "publishedAt": "2026-11-23T17:55:32+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163993-visual-designer-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163992",
+      "title": "Staff AI Research Engineer",
+      "company": "Standard Bots",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Standard Bots At Standard Bots, we're revolutionizing real-world automation by making robotic systems accessible to everyone. Our AI-powered platform enables robots to tackle unprecedented challenges through an intuitive instruction interface, bringing the power of software automation to physical spaces. About the Role We're seeking a Staff AI Research",
+      "publishedAt": "2026-11-23T17:55:30+00:00",
+      "salary": {
+        "min": 250000,
+        "max": 300000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163992-staff-ai-research-engineer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163991",
+      "title": "Customer Success Manager",
+      "company": "AssetWatch",
+      "location": "Canada, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "AssetWatch serves global manufacturers by powering manufacturing uptime through the delivery of an unparalleled condition monitoring experience, with a passion to care about the assets our customers care for every day. We are a devoted and capable team that includes world-renowned engineers and distinguished business leaders united by a common goal – To buil",
+      "publishedAt": "2026-11-23T17:55:28+00:00",
+      "salary": {
+        "min": 77000,
+        "max": 112000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163991-customer-success-manager-65",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163990",
+      "title": "Reseller Sales Specialist - Chicago, IL",
+      "company": "Huntress",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "What We Do: Cybercrime is growing, and more businesses are getting hit by threats that used to target only the biggest organizations. That pushes defenders like us to operate at the highest level, and it deepens our need for good people who want to make a meaningful impact. Founded in 2015 by former NSA cyber&hellip;",
+      "publishedAt": "2026-11-23T17:53:19+00:00",
+      "salary": {
+        "min": 175000,
+        "max": 185000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163990-reseller-sales-specialist-chicago-il",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163989",
+      "title": "Senior Security Engineer, Threat Intelligence (Cyber - Threat Hunting)",
+      "company": "CoreWeave",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "CoreWeave is The Essential Cloud for AI™. Built for pioneers by pioneers, CoreWeave delivers a platform of technology, tools, and teams that enables innovators to build and scale AI with confidence. Trusted by leading AI labs, startups, and global enterprises, CoreWeave combines superior infrastructure performance with deep technical expertise to accelerate ",
+      "publishedAt": "2026-11-23T17:53:17+00:00",
+      "salary": {
+        "min": 182000,
+        "max": 242000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163989-senior-security-engineer-threat-intelligence-cyber-threat-hunting",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163988",
+      "title": "Growth Product Leader",
+      "company": "iFIT",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "iFIT’s vision is to create the world's most holistic health and fitness platform, integrating all elements of health - physical fitness, mental health, nutrition and active recovery - into a seamless interactive experience. We develop proprietary software that learns and adjusts to the habits of each person as it delivers immersive content that guides them&h",
+      "publishedAt": "2026-11-23T17:53:16+00:00",
+      "salary": {
+        "min": 180000,
+        "max": 200000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163988-growth-product-leader",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163987",
+      "title": "Reseller Sales Specialist - Austin, TX",
+      "company": "Huntress",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "What We Do: Cybercrime is growing, and more businesses are getting hit by threats that used to target only the biggest organizations. That pushes defenders like us to operate at the highest level, and it deepens our need for good people who want to make a meaningful impact. Founded in 2015 by former NSA cyber&hellip;",
+      "publishedAt": "2026-11-23T17:53:14+00:00",
+      "salary": {
+        "min": 105000,
+        "max": 111000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163987-reseller-sales-specialist-austin-tx",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163986",
+      "title": "Senior Security Engineer, Threat Intelligence (Cyber - Actor Analysis)",
+      "company": "CoreWeave",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "CoreWeave is The Essential Cloud for AI™. Built for pioneers by pioneers, CoreWeave delivers a platform of technology, tools, and teams that enables innovators to build and scale AI with confidence. Trusted by leading AI labs, startups, and global enterprises, CoreWeave combines superior infrastructure performance with deep technical expertise to accelerate ",
+      "publishedAt": "2026-11-23T17:53:12+00:00",
+      "salary": {
+        "min": 182000,
+        "max": 242000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163986-senior-security-engineer-threat-intelligence-cyber-actor-analysis",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163985",
+      "title": "FP&A Manager - Subscriptions",
+      "company": "iFIT",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "iFIT’s vision is to create the world's most holistic health and fitness platform, integrating all elements of health - physical fitness, mental health, nutrition and active recovery - into a seamless interactive experience. We develop proprietary software that learns and adjusts to the habits of each person as it delivers immersive content that guides them&h",
+      "publishedAt": "2026-11-23T17:53:10+00:00",
+      "salary": {
+        "min": 130000,
+        "max": 140000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163985-fpa-manager-subscriptions",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163984",
+      "title": "GTM Systems Engineer",
+      "company": "Roboflow",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Who We Are Our mission is to make the world programmable. Sight is one of the key ways we understand the world, and soon this will be true for the software we use, too. We’re building the tools, community, and resources needed to make the world programmable with artificial intelligence. Roboflow simplifies building and using&hellip;",
+      "publishedAt": "2026-11-23T17:53:08+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163984-gtm-systems-engineer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163983",
+      "title": "Enterprise Sales Director",
+      "company": "Chili Piper",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "About Chili Piper Chili Piper is a B2B SaaS company that helps GTM teams turn inbound leads into qualified meetings - instantly. Our Demand Conversion Platform makes it easier for buyers and sellers to connect fast, without the usual friction in the funnel. We’re a fully remote, global team that loves building solutions that truly&hellip;",
+      "publishedAt": "2026-11-23T17:53:07+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163983-enterprise-sales-director-5",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163982",
+      "title": "Procurement Specialist",
+      "company": "Huntress",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "What We Do: Cybercrime is growing, and more businesses are getting hit by threats that used to target only the biggest organizations. That pushes defenders like us to operate at the highest level, and it deepens our need for good people who want to make a meaningful impact. Founded in 2015 by former NSA cyber&hellip;",
+      "publishedAt": "2026-11-23T17:53:05+00:00",
+      "salary": {
+        "min": 100000,
+        "max": 115000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163982-procurement-specialist-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163981",
+      "title": "Senior Data Platform Engineer - Weights & Biases",
+      "company": "CoreWeave",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "CoreWeave is The Essential Cloud for AI™. Built for pioneers by pioneers, CoreWeave delivers a platform of technology, tools, and teams that enables innovators to build and scale AI with confidence. Trusted by leading AI labs, startups, and global enterprises, CoreWeave combines superior infrastructure performance with deep technical expertise to accelerate ",
+      "publishedAt": "2026-11-23T17:53:03+00:00",
+      "salary": {
+        "min": 165000,
+        "max": 242000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163981-senior-data-platform-engineer-weights-biases",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163980",
+      "title": "Staff Software Engineer, Backend",
+      "company": "VTEX",
+      "location": "Brazil",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "ABOUT THE ROLE We are looking for a Senior Software Engineer (L4) to join VTEX’s DOM team, working on one of the most strategic initiatives in the platform: the evolution of our Order Management and Order Allocation systems. In this role, you will help design and build a new agent-based order workflow, enabling merchants to&hellip;",
+      "publishedAt": "2026-11-23T17:26:51+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163980-staff-software-engineer-backend-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163979",
+      "title": "Solutions Partner",
+      "company": "Skillsoft",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "At Skillsoft, we believe skills fuel growth. Our mission is to empower every organization and every learner to turn constant change into continuous growth. As part of the team, your skills will help organizations understand what skills they have, what they need next, and how to apply them in ways that drive real performance and&hellip;",
+      "publishedAt": "2026-11-23T17:26:49+00:00",
+      "salary": {
+        "min": 80000,
+        "max": 90000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163979-solutions-partner",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163978",
+      "title": "Senior Revenue Accountant",
+      "company": "Cologix, Inc.",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Our Company: Headquartered in Denver, Colorado, Cologix is a leading North America network-neutral interconnection and hyperscale edge data center company. Our platform gives customers access to 45+ digital edge and Scalelogix℠ hyperscale edge data centers in 13 markets across the United States and Canada along with a carrier-dense ecosystem of 710+ ne",
+      "publishedAt": "2026-11-23T17:26:30+00:00",
+      "salary": {
+        "min": 90000,
+        "max": 105000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163978-senior-revenue-accountant-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163977",
+      "title": "Sr. Human Resources Business Partner",
+      "company": "Vynca",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Join the dynamic journey at Vynca, where we're passionate about transforming care for individuals with complex needs. We’re more than just a team; we're a close-knit community. Our shared commitment to caring for each other and those we serve is what sets us apart. Guided by our unwavering core values: Excellence, Compassion, Curiosity, and Integrity,&hellip",
+      "publishedAt": "2026-11-23T17:26:28+00:00",
+      "salary": {
+        "min": 115000,
+        "max": 135000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163977-sr-human-resources-business-partner",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163976",
+      "title": "Territory Manager (South West Saskatchewan)",
+      "company": "Halter",
+      "location": "Canada",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Halter At Halter, we’re on a mission to enable farmers and graziers to run the most productive and sustainable operations. Our customers are using Halter to break free from the time-intensive constraints of conventional practices. Imagine watching 500 cattle stand up and walk calmly towards their next break? No quad bikes, no dogs, no&hellip;",
+      "publishedAt": "2026-11-23T17:26:26+00:00",
+      "salary": {
+        "min": 160000,
+        "max": 160000,
+        "currency": "CAD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163976-territory-manager-south-west-saskatchewan",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163975",
+      "title": "Senior Software Engineer (Platform Engineer), Cloud Storage",
+      "company": "VTEX",
+      "location": "Brazil",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "ABOUT THE ROLE As a Senior Software Engineer on Cloud Storage, you will join the core team responsible for the data backbone of our platform. We are looking for a platform-minded engineer to build and operate an ecosystem that encompasses everything from SQL (Aurora, RDS Postgres, SQL Server) and key-value stores (Redis/Valkey, DynamoDB) to Search&hellip;",
+      "publishedAt": "2026-11-23T17:26:24+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163975-senior-software-engineer-platform-engineer-cloud-storage",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163974",
+      "title": "Senior Director, Commercial Operations",
+      "company": "Skillsoft",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "At Skillsoft, we believe skills fuel growth. Our mission is to empower every organization and every learner to turn constant change into continuous growth. As part of the team, your skills will help organizations understand what skills they have, what they need next, and how to apply them in ways that drive real performance and&hellip;",
+      "publishedAt": "2026-11-23T17:26:23+00:00",
+      "salary": {
+        "min": 215000,
+        "max": 235000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163974-senior-director-commercial-operations-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163973",
+      "title": "IT Systems DevOps Engineer",
+      "company": "Cologix, Inc.",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Our Company: Headquartered in Denver, Colorado, Cologix is a leading North America network-neutral interconnection and hyperscale edge data center company. Our platform gives customers access to 45+ digital edge and Scalelogix℠ hyperscale edge data centers in 13 markets across the United States and Canada along with a carrier-dense ecosystem of 710+ ne",
+      "publishedAt": "2026-11-23T17:26:21+00:00",
+      "salary": {
+        "min": 100000,
+        "max": 130000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163973-it-systems-devops-engineer-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163972",
+      "title": "Data Engineering Intern",
+      "company": "Wurl",
+      "location": "Canada, USA",
+      "types": [
+        "Internship"
+      ],
+      "level": "Senior",
+      "excerpt": "About Wurl, LLC. At Wurl, our mission is to create innovative technologies and services that help accelerate the shift to streaming. At our core, we are innovators focused on driving the streaming industry forward with technologies that help connect viewers to the right content and ads. Our technology and data-driven solutions help companies reach new&hellip",
+      "publishedAt": "2026-11-23T17:26:19+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163972-data-engineering-intern",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163971",
+      "title": "Territory Manager (Pennsylvania)",
+      "company": "Halter",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Halter At Halter, we’re on a mission to enable farmers and graziers to run the most productive and sustainable operations. Our customers are using Halter to break free from the time-intensive constraints of conventional practices. Imagine watching 500 cattle stand up and walk calmly towards their next break? No quad bikes, no dogs, no&hellip;",
+      "publishedAt": "2026-11-23T17:26:17+00:00",
+      "salary": {
+        "min": 140000,
+        "max": 165000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163971-territory-manager-pennsylvania",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163967",
+      "title": "Product Manager - AI Investing",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:50:20+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163967-product-manager-ai-investing",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163966",
+      "title": "Product Engineer - AI Stockbroking",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:50:03+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163966-product-engineer-ai-stockbroking",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163965",
+      "title": "Product Manager - AI Finance",
+      "company": "BJAK",
+      "location": "Germany",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:50:01+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163965-product-manager-ai-finance",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163964",
+      "title": "Product Owner, Technical - AI Stockbroking",
+      "company": "BJAK",
+      "location": "Ireland",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:49:59+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163964-product-owner-technical-ai-stockbroking",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163963",
+      "title": "Product Owner, Technical - AI Investing",
+      "company": "BJAK",
+      "location": "Ireland",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:49:57+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163963-product-owner-technical-ai-investing",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163961",
+      "title": "Product Engineer - AI Neobank",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:49:34+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163961-product-engineer-ai-neobank",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163960",
+      "title": "Principal Software Engineer",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "The Role BJAK builds technology products used by millions of users across Southeast Asia. As our products and systems scale, we need technical leaders who can solve difficult engineering problems and raise the engineering bar around them. The Principal Software Engineer owns technical direction and execution for major products and systems. This is a hands-on",
+      "publishedAt": "2026-11-23T12:49:31+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163960-principal-software-engineer-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163959",
+      "title": "Lead Software Engineer",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "The Role BJAK builds technology products used by millions of users across Southeast Asia. As our products and systems scale, we need technical leaders who can solve difficult engineering problems and raise the engineering bar around them. The Lead Software Engineer owns technical direction and execution for major products and systems. This is a hands-on&hell",
+      "publishedAt": "2026-11-23T12:49:29+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163959-lead-software-engineer-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163958",
+      "title": "Product Engineer - AI Investing",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:49:27+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163958-product-engineer-ai-investing",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163957",
+      "title": "Technical Product Manager",
+      "company": "BJAK",
+      "location": "Spain",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:49:25+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163957-technical-product-manager-5",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163956",
+      "title": "Product Manager - AI Neobank App",
+      "company": "BJAK",
+      "location": "Netherlands",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:49:23+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163956-product-manager-ai-neobank-app",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163955",
+      "title": "Product Lead - AI Neobank App",
+      "company": "BJAK",
+      "location": "Germany",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:48:57+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163955-product-lead-ai-neobank-app",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163954",
+      "title": "Product Owner, Technical - AI Finance",
+      "company": "BJAK",
+      "location": "Spain",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:48:55+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163954-product-owner-technical-ai-finance",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163953",
+      "title": "Mobile UI Designer",
+      "company": "BJAK",
+      "location": "Ireland",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:48:53+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163953-mobile-ui-designer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163952",
+      "title": "NOC Incident Manager",
+      "company": "Airalo",
+      "location": "Spain",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Help Us Build The Future of Travel At Airalo, we're making it easier for people to stay connected wherever they travel. As the world's first eSIM store, we help millions of travelers access affordable mobile data in 200+ countries and regions around the world. Today, we're a team of 400+ people across 60+ countries, building&hellip;",
+      "publishedAt": "2026-11-23T12:48:51+00:00",
+      "salary": {
+        "min": 64800,
+        "max": 97200,
+        "currency": "EUR",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163952-noc-incident-manager",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163951",
+      "title": "Product Designer (UI/UX)",
+      "company": "BJAK",
+      "location": "Sweden",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:48:49+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163951-product-designer-ui-ux",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163950",
+      "title": "NOC Engineer Level 2",
+      "company": "Airalo",
+      "location": "Europe",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "Help Us Build The Future of Travel At Airalo, we're making it easier for people to stay connected wherever they travel. As the world's first eSIM store, we help millions of travelers access affordable mobile data in 200+ countries and regions around the world. Today, we're a team of 400+ people across 60+ countries, building&hellip;",
+      "publishedAt": "2026-11-23T12:48:48+00:00",
+      "salary": {
+        "min": 48000,
+        "max": 72000,
+        "currency": "EUR",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163950-noc-engineer-level-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163948",
+      "title": "Lead Brand Designer",
+      "company": "BJAK",
+      "location": "France",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:48:22+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163948-lead-brand-designer-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163946",
+      "title": "Mobile Engineer - AI Finance Agent",
+      "company": "BJAK",
+      "location": "Poland",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:48:20+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163946-mobile-engineer-ai-finance-agent",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163945",
+      "title": "Actuary, UK",
+      "company": "Lemonade",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "We’re looking for a technically savvy Pricing Actuary to join the UK team and support pricing adequacy, accuracy, and competitiveness of our European products. You will contribute your actuarial expertise as part of an interdisciplinary team that includes data scientists, insurance Product and Underwriting professionals. Working in collaboration, you’ll help",
+      "publishedAt": "2026-11-23T12:48:18+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163945-actuary-uk-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163944",
+      "title": "Strategic Account Executive, France",
+      "company": "GitLab",
+      "location": "France",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "GitLab is the intelligent orchestration platform for DevSecOps. GitLab enables organizations to increase developer productivity, improve operational efficiency, reduce security and compliance risk, and accelerate digital transformation. More than 50 million registered users and more than 50% of the Fortune 100* trust GitLab to ship better, more secure softwa",
+      "publishedAt": "2026-11-23T12:48:16+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163944-strategic-account-executive-france-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163943",
+      "title": "Senior Platform Engineer, Core Platform Team (100% Remote within Poland)",
+      "company": "Docplanner",
+      "location": "Poland",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Welcome to the good side of tech At Docplanner, we’re on a mission to help people live longer, healthier lives. We built the ultimate healthcare powerhouse: doctors partnered with AI. Having already built one of the world’s largest digital healthcare ecosystems—simplifying practice management for doctors and making care instantly accessible for millions of p",
+      "publishedAt": "2026-11-23T12:47:46+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163943-senior-platform-engineer-core-platform-team-100-remote-within-poland",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163941",
+      "title": "Staff Software Engineer",
+      "company": "BJAK",
+      "location": "Austria",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "The Role BJAK builds technology products used by millions of users across Southeast Asia. As our products and systems scale, we need technical leaders who can solve difficult engineering problems and raise the engineering bar around them. The Staff Software Engineer owns technical direction and execution for major products and systems. This is a hands-on&hel",
+      "publishedAt": "2026-11-23T12:47:44+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163941-staff-software-engineer-17",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163940",
+      "title": "CLX Property Advocate, UK",
+      "company": "Lemonade",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "We're looking for a CLX Property Advocate to help our UK customers through some of the most stressful moments they'll face as policyholders. You'll join our Claims Experience team and own property claims from first report to resolution, keeping every interaction fast, fair, and caring. This role is remote, and you'll need to be online&hellip;",
+      "publishedAt": "2026-11-23T12:47:43+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163940-clx-property-advocate-uk-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163939",
+      "title": "SMB Account Executive | France | Remote",
+      "company": "Grafana Labs",
+      "location": "France",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Grafana Labs is the company behind Grafana Cloud, the fully managed observability platform trusted by more than 10,000 organizations to ensure reliability, resolve incidents faster, and optimize telemetry at scale. Built on open source and open standards and designed for interoperability across any stack, Grafana Cloud brings AI to observability and observab",
+      "publishedAt": "2026-11-23T12:47:41+00:00",
+      "salary": {
+        "min": 87000,
+        "max": 94000,
+        "currency": "EUR",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163939-smb-account-executive-france-remote",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163938",
+      "title": "Staff Technical Writer",
+      "company": "GitLab",
+      "location": "Canada, Poland, UK, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "GitLab is the intelligent orchestration platform for DevSecOps. GitLab enables organizations to increase developer productivity, improve operational efficiency, reduce security and compliance risk, and accelerate digital transformation. More than 50 million registered users and more than 50% of the Fortune 100* trust GitLab to ship better, more secure softwa",
+      "publishedAt": "2026-11-23T12:47:10+00:00",
+      "salary": {
+        "min": 139200,
+        "max": 235200,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163938-staff-technical-writer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163937",
+      "title": "Senior Platform Engineer, Core Platform Team (100% Remote within Spain)",
+      "company": "Docplanner",
+      "location": "Spain",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Welcome to the good side of tech At Docplanner, we’re on a mission to help people live longer, healthier lives. We built the ultimate healthcare powerhouse: doctors partnered with AI. Having already built one of the world’s largest digital healthcare ecosystems—simplifying practice management for doctors and making care instantly accessible for millions of p",
+      "publishedAt": "2026-11-23T12:47:08+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163937-senior-platform-engineer-core-platform-team-100-remote-within-spain",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163935",
+      "title": "Sales Manager",
+      "company": "StackAdapt",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "StackAdapt is the leading technology company that empowers marketers to reach, engage, and convert audiences with precision. With 465 billion automated optimizations per second, the AI-powered StackAdapt Marketing Platform seamlessly connects brand and performance marketing to drive measurable results across the entire customer journey. The most forward-thin",
+      "publishedAt": "2026-11-23T12:47:06+00:00",
+      "salary": {
+        "min": 59027,
+        "max": 81162,
+        "currency": "GBP",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163935-sales-manager-8",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163933",
+      "title": "Mobile Developer - AI Finance Agent",
+      "company": "BJAK",
+      "location": "Sweden",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About BJAK The original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money. This is the origin of our name. Started in 2019, we built the first mobile-first, insurance platform, enabling insurance to be accessible online by millions in the region. Today, its the leading insurance platform&hellip;",
+      "publishedAt": "2026-11-23T12:47:04+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163933-mobile-developer-ai-finance-agent",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163932",
+      "title": "Actuarial Associate, UK",
+      "company": "Lemonade",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "We’re looking for a technically savvy Actuarial Pricing Associate to join the UK team and support pricing adequacy, accuracy, and competitiveness of our European products. You will contribute your actuarial expertise as part of an interdisciplinary team that includes data scientists, insurance Product and Underwriting professionals. Working in collaboration,",
+      "publishedAt": "2026-11-23T12:47:02+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163932-actuarial-associate-uk-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163930",
+      "title": "Solutions Consultant, Post Sales, Mid-Market",
+      "company": "Ramp",
+      "location": "Canada, USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About Ramp Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $275B in annualized spend flows in and out of 85,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books. The problems are high-stakes, data-dense, and unforgiving.",
+      "publishedAt": "2026-11-23T12:37:19+00:00",
+      "salary": {
+        "min": 168000,
+        "max": 231000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163930-solutions-consultant-post-sales-mid-market-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163929",
+      "title": "Product Owner",
+      "company": "Makai Labs",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "Product Owner About Makai Makai uses best-in-class AI and data to solve real-world operational and strategic challenges at scale. We help businesses with enterprise automation, human-machine teaming, product design and development, and market intelligence. Until now, people have had to learn and adapt to software. Makai creates solutions that adapt to people",
+      "publishedAt": "2026-11-23T12:36:58+00:00",
+      "salary": {
+        "min": 120000,
+        "max": 130000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163929-product-owner-4",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163928",
+      "title": "Senior Marketing Automation Specialist",
+      "company": "Anteriad",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Come Join Our Team At Anteriad and innovate the way B2B marketers make data-driven business decisions. About Anteriad We are not just another B2B solution provider. We're problem solvers. We believe that data is the key to unlocking effective solutions that span a range of marketing challenges - from customer acquisition to demand generation to&hellip;",
+      "publishedAt": "2026-11-23T12:36:56+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163928-senior-marketing-automation-specialist",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163926",
+      "title": "Manager, Account Executive, Strategic",
+      "company": "Ramp",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "About Ramp Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $275B in annualized spend flows in and out of 85,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books. The problems are high-stakes, data-dense, and unforgiving.",
+      "publishedAt": "2026-11-23T12:36:54+00:00",
+      "salary": {
+        "min": 580000,
+        "max": 620000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163926-manager-account-executive-strategic",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163925",
+      "title": "Senior Azure Platform / DevOps Engineer",
+      "company": "Makai Labs",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Senior Azure Platform / DevOps Engineer About Makai Makai uses best-in-class AI and data to solve real-world operational and strategic challenges at scale. We help businesses with enterprise automation, human-machine teaming, product design and development, and market intelligence. Until now, people have had to learn and adapt to software. Makai creates solu",
+      "publishedAt": "2026-11-23T12:36:53+00:00",
+      "salary": {
+        "min": 75,
+        "max": 100,
+        "currency": "USD",
+        "period": "hourly"
+      },
+      "url": "https://jobicy.com/jobs/163925-senior-azure-platform-devops-engineer",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163922",
+      "title": "Technical Consultant, Commercial",
+      "company": "Ramp",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About Ramp Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $275B in annualized spend flows in and out of 85,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books. The problems are high-stakes, data-dense, and unforgiving.",
+      "publishedAt": "2026-11-23T12:36:25+00:00",
+      "salary": {
+        "min": 138400,
+        "max": 190300,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163922-technical-consultant-commercial-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163921",
+      "title": "AI Engineer",
+      "company": "Makai Labs",
+      "location": "USA",
+      "types": [
+        "Contract"
+      ],
+      "level": "Senior",
+      "excerpt": "AI Engineer Who we are Makai Labs builds software that automates entire companies. We work across a diversified portfolio, which means our systems touch a wide range of domains, processes, and operational constraints. Our engineering team is small, senior, and high-output. We move fast, hold high standards, and trust each other to take ownership without&hell",
+      "publishedAt": "2026-11-23T12:36:23+00:00",
+      "salary": {
+        "min": 115000,
+        "max": 130000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163921-ai-engineer-6",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163920",
+      "title": "Marketing Data Insights Lead",
+      "company": "Anteriad",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Come Join Our Team At Anteriad and innovate the way B2B marketers make data-driven business decisions. About Anteriad We are not just another B2B solution provider. We're problem solvers. We believe that data is the key to unlocking effective solutions that span a range of marketing challenges - from customer acquisition to demand generation to&hellip;",
+      "publishedAt": "2026-11-23T12:36:22+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163920-marketing-data-insights-lead",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163919",
+      "title": "Software Engineer, Security, Stablecoin",
+      "company": "Ramp",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About Ramp Ramp is building the smart infrastructure for finance teams, embedded in the transaction flow of every dollar a business spends. We automate how over $275B in annualized spend flows in and out of 85,000+ companies: authorizing payments, flagging risk, categorizing spend, and closing books. The problems are high-stakes, data-dense, and unforgiving.",
+      "publishedAt": "2026-11-23T12:36:20+00:00",
+      "salary": {
+        "min": 189000,
+        "max": 330000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163919-software-engineer-security-stablecoin-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163918",
+      "title": "Senior Software Engineer",
+      "company": "Makai Labs",
+      "location": "USA",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Makai Makai uses best-in-class Al and data to solve real-world operational and strategic challenges at scale. Our Makai Automation Platform consists of a library of pre-built components and modules to facilitate enterprise automation via a unified human-machine teaming interface. Until now, people have had to learn and adapt to software. Makai creates ",
+      "publishedAt": "2026-11-23T12:36:18+00:00",
+      "salary": {
+        "min": 150000,
+        "max": 180000,
+        "currency": "USD",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163918-senior-software-engineer-29",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163913",
+      "title": "Product Manager - Security",
+      "company": "Nebius",
+      "location": "Europe",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Nebius: Nebius is leading a new era in cloud infrastructure for the global AI economy. We are building a full-stack AI cloud platform that supports developers and enterprises from data and model training through to production deployment, without the cost and complexity of building large in-house AI/ML infrastructure. Built by engineers, for engineers. ",
+      "publishedAt": "2026-11-23T10:28:49+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163913-product-manager-security-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163912",
+      "title": "Senior Third Party Risk Manager",
+      "company": "Monzo",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "We’re on a mission to make money work for everyone. We’re waving goodbye to the complicated and confusing ways of traditional banking. After starting as a prepaid card, our product offering has grown a lot in the last 10 years in the UK. As well as personal and business bank accounts, we offer joint&hellip;",
+      "publishedAt": "2026-11-23T10:28:32+00:00",
+      "salary": {
+        "min": 85000,
+        "max": 115000,
+        "currency": "GBP",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163912-senior-third-party-risk-manager",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163911",
+      "title": "Senior Sales Engineer, UK",
+      "company": "Cribl",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "Join the company that’s building the telemetry infrastructure for the AI era. At Cribl, we partner with IT and Security teams at many of the world’s biggest enterprises, including half of the Fortune 100, to bridge the gap between AI ambition and infrastructure reality. As the AI Platform for Telemetry, we give customers the choice,&hellip;",
+      "publishedAt": "2026-11-23T10:28:30+00:00",
+      "salary": {
+        "min": 95000,
+        "max": 127000,
+        "currency": "GBP",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163911-senior-sales-engineer-uk-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163910",
+      "title": "Offensive Security Engineer",
+      "company": "Nebius",
+      "location": "Europe",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "About Nebius: Nebius is leading a new era in cloud infrastructure for the global AI economy. We are building a full-stack AI cloud platform that supports developers and enterprises from data and model training through to production deployment, without the cost and complexity of building large in-house AI/ML infrastructure. Built by engineers, for engineers. ",
+      "publishedAt": "2026-11-23T10:28:28+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163910-offensive-security-engineer-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163909",
+      "title": "Lead Product Designer, Growth",
+      "company": "Monzo",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "We’re on a mission to make money work for everyone. We’re waving goodbye to the complicated and confusing ways of traditional banking. After starting as a prepaid card, our product offering has grown a lot in the last 10 years in the UK. As well as personal and business bank accounts, we offer joint&hellip;",
+      "publishedAt": "2026-11-23T10:28:10+00:00",
+      "salary": {
+        "min": 90000,
+        "max": 120000,
+        "currency": "GBP",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163909-lead-product-designer-growth-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163908",
+      "title": "Senior Customer Success Engineer",
+      "company": "Cribl",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Join the company that’s building the telemetry infrastructure for the AI era. At Cribl, we partner with IT and Security teams at many of the world’s biggest enterprises, including half of the Fortune 100, to bridge the gap between AI ambition and infrastructure reality. As the AI Platform for Telemetry, we give customers the choice,&hellip;",
+      "publishedAt": "2026-11-23T10:28:08+00:00",
+      "salary": {
+        "min": 80400,
+        "max": 95000,
+        "currency": "GBP",
+        "period": "yearly"
+      },
+      "url": "https://jobicy.com/jobs/163908-senior-customer-success-engineer-3",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163907",
+      "title": "Network Security Engineer",
+      "company": "Nebius",
+      "location": "Europe",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About Nebius: Nebius is leading a new era in cloud infrastructure for the global AI economy. We are building a full-stack AI cloud platform that supports developers and enterprises from data and model training through to production deployment, without the cost and complexity of building large in-house AI/ML infrastructure. Built by engineers, for engineers. ",
+      "publishedAt": "2026-11-23T10:28:06+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163907-network-security-engineer-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163906",
+      "title": "Pre-Sales Engineer Romania",
+      "company": "Ajax Systems",
+      "location": "Romania",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Senior",
+      "excerpt": "Ajax Systems is an international tech company and the largest manufacturer of security systems in Europe, with over 4.5 million end users and 330K PRO users in more than 180 countries worldwide. The company offers end-to-end solutions for protecting homes and businesses оf any scale. To date, Ajax product portfolio includes 280 devices for intrusion&hellip;",
+      "publishedAt": "2026-11-23T10:28:04+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163906-pre-sales-engineer-romania",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163905",
+      "title": "Strategic Account Executive, Life Science",
+      "company": "Databricks",
+      "location": "Denmark",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Director",
+      "excerpt": "SLSQ327R4 Do you want to help solve the world's toughest problems with big data and AI? This is what we do every day at Databricks. We are looking for a creative, execution-oriented Strategic Account Executive to join the team to maximise the phenomenal market opportunity that exists for Databricks within the Life Science industry. Your&hellip;",
+      "publishedAt": "2026-11-23T10:28:02+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163905-strategic-account-executive-life-science-2",
+      "source": "Jobicy"
+    },
+    {
+      "id": "163904",
+      "title": "Business Services Assistant",
+      "company": "Ping Identity",
+      "location": "UK",
+      "types": [
+        "Full-Time"
+      ],
+      "level": "Any",
+      "excerpt": "About Ping Identity: At Ping Identity, we believe in making digital experiences both secure and seamless for all users, without compromise. We call this digital freedom. And it's not just something we provide our customers. It's something that inspires our company. People don't come here to join a culture that's built on digital freedom. They&hellip;",
+      "publishedAt": "2026-11-23T10:28:00+00:00",
+      "salary": null,
+      "url": "https://jobicy.com/jobs/163904-business-services-assistant",
+      "source": "Jobicy"
+    }
+  ]
 }
