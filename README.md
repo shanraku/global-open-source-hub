@@ -45,6 +45,8 @@ Explore the [Global Jobs page](jobs.html) to search independent job platforms by
 This is a **job discovery directory**, not a live global vacancy database. Search results are provided by independent services and are not verified or endorsed by this hub. Applicants should confirm every vacancy on the employer's official careers page. The hub does not charge job seekers, collect CVs or guarantee employment. See [Global Jobs scope and safety](docs/GLOBAL_JOBS.md).
 
 
+The Global Jobs page also includes a private community-submission workflow: signed-in users can suggest useful opportunities and track their own review status. Suggestions remain private and pending until a human moderator reviews them.
+
 ## Run locally
 
 Requires a modern browser. Serve the repository using any static file server; for example:
