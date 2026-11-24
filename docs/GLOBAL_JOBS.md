@@ -7,7 +7,7 @@ The Global Jobs page is a free discovery layer inside Global Open Source Hub. It
 - This is **not** a global jobs database and does not crawl or aggregate every vacancy.
 - Search links open independent providers. Their availability, coverage, ranking, sign-in requirements, fees and terms can change.
 - Search results are not vetted or endorsed by this project. Applicants must verify a vacancy on the employer's official careers page.
-- No account, payment, personal profile or CV upload is collected by this static page.
+- Browsing the directory and external job searches do not require an account. Optional personal features (saving listings and submitting suggestions) require a free account; the hub does not collect CVs or payment details.
 - The page does not promise a job, income, visa, interview or placement.
 - Do not add automated scraping, bypass logins, collect personal data, or publish unverified job listings.
 - Never charge job seekers to access this directory or apply through it.
