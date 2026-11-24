@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 
 const endpoint = 'https://jobicy.com/api/jobs?count=100';
 const response = await fetch(endpoint, {
