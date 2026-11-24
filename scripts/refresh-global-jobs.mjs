@@ -52,5 +52,5 @@ const output = {
   jobs
 };
 await mkdir('data', { recursive: true });
-await writeFile('data/jobs.json', JSON.stringify(output, null, 2) + '\\n');
+await writeFile('data/jobs.json', JSON.stringify(output, null, 2));
 console.log(`Saved ${jobs.length} normalized Jobicy listings.`);
