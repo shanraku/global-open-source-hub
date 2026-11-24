@@ -3,7 +3,7 @@
   "source": "Jobicy public Jobs API",
   "sourceUrl": "https://jobicy.com/jobs-rss-feed",
   "apiUrl": "https://jobicy.com/api/jobs?count=100",
-  "fetchedAt": "2026-11-24T05:47:02.083Z",
+  "fetchedAt": "2026-11-24T06:05:35.222Z",
   "publicationWindow": "The provider API returns listings published in the last 7 days; new listings may appear after a 3-hour delay.",
   "attribution": "Every listing is attributed to Jobicy and links to its canonical Jobicy page.",
   "jobs": [
