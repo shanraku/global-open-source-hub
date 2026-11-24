@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10101d">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Admin Review — Global Open Source Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin-review.css">
+  <script type="module" src="admin-review.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">G</span><span>Open Source <b>Hub</b></span></a>
+    <nav aria-label="Admin navigation"><a href="jobs.html">Global Jobs</a><a href="index.html">Home</a></nav>
+  </header>
+  <main class="admin-main">
+    <section class="admin-hero">
+      <div class="eyebrow">PRIVATE MODERATION WORKSPACE</div>
+      <h1>Review community <span>submissions.</span></h1>
+      <p>Check the source and details before approving. Approved eligible suggestions are published to the Hub; corrections are marked approved for follow-up only.</p>
+    </section>
+    <section class="admin-panel" aria-live="polite">
+      <div class="admin-toolbar">
+        <div><h2>Submission queue</h2><p id="admin-identity">Checking your account…</p></div>
+        <label>Show
+          <select id="status-filter">
+            <option value="pending">Pending review</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+            <option value="all">All submissions</option>
+          </select>
+        </label>
+      </div>
+      <p class="admin-message" id="admin-message" role="status">Verifying administrator access…</p>
+      <div class="admin-list" id="admin-list"></div>
+      <a class="button secondary admin-login-link" href="jobs.html#hub-account">Sign in on Global Jobs</a>
+    </section>
+    <p class="admin-safety">Admin actions are enforced by Supabase Row Level Security and a server-checked role claim. Never share your password or verification codes.</p>
+  </main>
+  <footer><a class="brand" href="index.html"><span class="brand-mark">G</span><span>Open Source <b>Hub</b></span></a><p>Private admin workspace · Created by SUNRAKU</p></footer>
+</body>
+</html>
