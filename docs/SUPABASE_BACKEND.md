@@ -40,3 +40,7 @@ The initial schema is in `supabase/migrations/20261124033636_global_hub_foundati
 ## Saved external opportunities
 
 The Global Jobs page lets authenticated users save external Jobicy feed listings to `public.saved_external_opportunities`. This table stores only a small listing snapshot and canonical Jobicy URL; it does not copy the full job description or claim the listing is verified. Rows are private to their owner through RLS. The browser uses the publishable key only. The feature is intentionally limited to HTTPS URLs on the exact `jobicy.com` hostname.
+
+## Submission moderation policy
+
+The migration `20261124070000_lock_submissions_to_pending.sql` restricts the authenticated insert policy on `public.submissions`: users may insert only rows whose `user_id` matches `auth.uid()` and whose `status` is `pending`. Users cannot self-approve submissions. The table remains RLS-protected, and users can read only their own submissions.

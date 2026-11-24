@@ -8,3 +8,19 @@
 .saved-opportunity-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 #saved-status[data-state=error]{color:#ff9d9d}
 #saved-status[data-state=info]{color:var(--mint)}
+
+/* Community opportunity submissions */
+.community-submit-form{display:grid;gap:14px;max-width:720px;margin-top:22px;padding:22px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}
+.community-submit-form label{display:grid;gap:7px;color:var(--muted);font-size:12px}
+.community-submit-form input,.community-submit-form select,.community-submit-form textarea{width:100%;border:1px solid var(--line);border-radius:9px;background:#0d0d18;color:var(--text);padding:12px;font:inherit;font-size:13px}
+.community-submit-form input,.community-submit-form select{min-height:44px}
+.community-submit-form textarea{resize:vertical;line-height:1.5}
+.community-submit-form button{justify-self:start;min-height:44px;padding:10px 18px;border:0;cursor:pointer}
+.community-submit-form button:disabled{opacity:.6;cursor:wait}
+#submission-status[data-state=error],#my-submissions-status[data-state=error]{color:#ff9d9d}
+#submission-status[data-state=info]{color:var(--mint)}
+.user-submission-card{min-height:0}
+.submission-status{display:inline-flex;padding:5px 9px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted)}
+.submission-status[data-status=pending]{color:#e8c77d;border-color:#e8c77d55}
+.submission-status[data-status=approved]{color:var(--mint);border-color:#83f0cf55}
+.submission-status[data-status=rejected]{color:#ff9d9d;border-color:#ff9d9d55}
