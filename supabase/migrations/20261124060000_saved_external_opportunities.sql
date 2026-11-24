@@ -7,7 +7,7 @@ create table if not exists public.saved_external_opportunities (
   organization text check (char_length(organization) <= 160),
   location text check (char_length(location) <= 160),
   source_name text not null default 'Jobicy' check (char_length(source_name) <= 120),
-  source_url text not null check (source_url ~ '^https://jobicy\\.com/'),
+  source_url text not null check (left(source_url, length('https://jobicy.com/')) = 'https://jobicy.com/'),
   published_at timestamptz,
   created_at timestamptz not null default now(),
   unique (user_id, source_url)
